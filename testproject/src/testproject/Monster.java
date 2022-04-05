@@ -1,10 +1,11 @@
 package testproject;
 
-public class Monster {
+public class Monster implements Purchaseable{
 	private String name;
 	private int damage;
 	private int maxHealth;
 	private int health;
+	private int price;
 	private boolean isAwake;
 	
 	public Monster(String name, int damage, int maxHealth){
@@ -35,6 +36,9 @@ public class Monster {
 	}
 	public int getHealth() {
 		return health;
+	}
+	public int getPrice() {
+		return price;
 	}
 	public void dealDamage(int damageDealt) {
 		health-=damageDealt;

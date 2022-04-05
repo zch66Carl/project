@@ -54,7 +54,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean addItem(Item item) {
+	public boolean addItem(Purchaseable item) {
 		if(!inventory.contains(item)) {
 			inventory.add(item);
 			return true;
@@ -62,7 +62,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean removeItem(Item item) {
+	public boolean removeItem(Purchaseable item) {
 		if(inventory.contains(item)) {
 			inventory.remove(item);
 			return true;
