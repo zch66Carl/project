@@ -45,6 +45,7 @@ public class Monster implements Purchaseable{
 		if(health<=0) {
 			health=0;
 			isAwake=false;
+			System.out.println(String.format("%s fainted!", name));
 		}
 	}
 	public void heal(int healAmount) {
@@ -56,5 +57,18 @@ public class Monster implements Purchaseable{
 	}
 	public void setIsAwake(boolean isAwake) {
 		this.isAwake=isAwake;
+	}
+
+	void makeMove(Monster enemy) {
+		System.out.println(String.format("%s deals %s damage to %s", name, damage, enemy.getName()));
+		enemy.dealDamage(damage);
+	}
+	void rest() {
+		health=maxHealth;
+		isAwake=true;
+	}
+	
+	public String toString() {
+		return String.format("%s, health: %s, damage: %s", name, health, damage);
 	}
 }
