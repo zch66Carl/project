@@ -10,6 +10,7 @@ public class WildBattle {
 	}
 	
 	void battle(Player player) {
+		
 		Display.displayText(String.format("A wild %s appears, battle start!", wildMonster.getName()),null, null);
 		
 		boolean outcome=false;
