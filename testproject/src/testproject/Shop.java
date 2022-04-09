@@ -30,7 +30,7 @@ public class Shop {
 	public void buyItem(Player player, int itemIndex) {
 		int currentGold = player.getGold();
 		if(currentGold >= stock.get(itemIndex).getPrice()) {
-			player.addItem(stock.get(itemIndex));
+			player.addItem((Item) stock.get(itemIndex));
 			currentGold -= stock.get(itemIndex).getPrice();
 		}
 	}

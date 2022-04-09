@@ -10,7 +10,7 @@ public class WildBattle {
 	}
 	
 	void battle(Player player) {
-		System.out.println(String.format("A wild %s appears, battle start!", wildMonster.getName()));
+		Display.displayText(String.format("A wild %s appears, battle start!", wildMonster.getName()),null, null);
 		
 		boolean outcome=false;
 		
@@ -19,7 +19,7 @@ public class WildBattle {
 				break;
 			}
 			
-			System.out.println("Player turn.");
+			Display.displayText("Player turn.", null, null);
 			player.makeMove(wildMonster);
 			
 			if(!wildMonster.isAwake()) {
@@ -27,19 +27,19 @@ public class WildBattle {
 				break;
 			}
 			
-			System.out.println(String.format("Wild Monster turn: %s", wildMonster.toString()));
+			Display.displayText(String.format("Wild Monster turn: %s", wildMonster.toString()), null, null);
 			wildMonster.makeMove(player.getActiveMonster());
 		}
 		
 		if(outcome) {
-			System.out.println("You won!");
-			System.out.println(String.format("%s joins your team!", wildMonster.getName()));
+			Display.displayText("You won!",null,null);
+			Display.displayText(String.format("%s joins your team!", wildMonster.getName()),null,null);
 			wildMonster.rest();
 			player.addMonster(wildMonster);
 			return;
 		}
 		else {
-			System.out.println(String.format("%s eliminated your entire team! So Powerful", wildMonster.getName()));
+			Display.displayText(String.format("%s eliminated your entire team! So Powerful", wildMonster.getName()), null, null);
 			return;
 		}
 	}
@@ -49,7 +49,7 @@ public class WildBattle {
 		ArrayList<Monster> team = new ArrayList<Monster>();
 		team.add(new Monster("goat", 20, 30));
 		team.add(new Monster("crow", 30, 5));
-		Player player = new Player("player_name", 0, team, new ArrayList<Purchaseable>());
+		Player player = new Player("player_name", 0, team, new ArrayList<Item>());
 		battle.battle(player);
 		System.out.println(player.toString());
 	}

@@ -1,17 +1,16 @@
 package testproject;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Random;
 
 public class Player {
 	private String name;
 	private int gold;
 	private ArrayList<Monster> team = new ArrayList<Monster>();
-	private ArrayList<Purchaseable> inventory = new ArrayList<Purchaseable>();
+	private ArrayList<Item> inventory = new ArrayList<Item>();
 	private int activeMonsterIndex;
 	
-	public Player(String name, int gold, ArrayList<Monster> team, ArrayList<Purchaseable> inventory) {
+	public Player(String name, int gold, ArrayList<Monster> team, ArrayList<Item> inventory) {
 		this.name=name;
 		this.gold=gold;
 		this.team=team;
@@ -38,7 +37,7 @@ public class Player {
 		inventory.add(item);
 	}
 	
-	public ArrayList<Purchaseable> getInventory() {
+	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
 	public void setActiveMonsterIndex(int index) {
@@ -65,7 +64,7 @@ public class Player {
 		return false;
 	}
 	
-	public boolean addItem(Purchaseable item) {
+	public boolean addItem(Item item) {
 		if(!inventory.contains(item)) {
 			inventory.add(item);
 			return true;
@@ -99,28 +98,27 @@ public class Player {
 	}
 	
 	public void makeMove(Monster enemy) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Active Monster is: "+getActiveMonster().toString());
-		System.out.println("Enter 0 to attack, 1 to use an item, or 2 to swap the monster on the field.");
-		int move = sc.nextInt();
+		Display.displayText("Active Monster is: "+getActiveMonster().toString(), null, null);
+		Display.displayText("Enter 0 to attack, 1 to use an item, or 2 to swap the monster on the field.", null, null);
+		int move = Display.getInput(null);
 		if(move==0) {
-			System.out.println(String.format("Dealt %s damage to %s.", getActiveMonster().getDamage(), enemy.getName()));
+			Display.displayText(String.format("Dealt %s damage to %s.", getActiveMonster().getDamage(), enemy.getName()), null, null);
 			enemy.dealDamage(getActiveMonster().getDamage());
 		}
 		else if(move==1) {
-			System.out.println("Items not usable yet :(");
+			Display.displayText("Items not usable yet :(", null, null);
 		}
 		else if(move==2) {
-			System.out.println("Options are:");
+			Display.displayText("Options are:", null, null);
 			for(int i=0; i<team.size(); i++) {
-				if(team.get(i).isAwake()) System.out.println(i+": "+team.get(i).toString());
+				if(team.get(i).isAwake()) Display.displayText(i+": "+team.get(i).toString(), null, null);
 			}
-			int newActive = sc.nextInt();
+			int newActive = Display.getInput(null);
 			if(newActive>0 && newActive<team.size() && team.get(newActive).isAwake()) {
 				activeMonsterIndex=newActive;
 			}
 			else {
-				System.out.println("Invalid number");
+				Display.displayText("Invalid number", null, null);
 			}
 		}
 	}
