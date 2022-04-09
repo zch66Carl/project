@@ -1,0 +1,28 @@
+always:
+documentation,
+unit tests - for random gen/battles focus more on the validity of the outcome than specifics,
+update uml,
+
+
+week one of break:
+monster subclasses - special moves, overides when different reaction needed,
+item subclasses,
+display classs to differentiate command line and gui,
+random generaton of shop - static number of stuff per day
+random generation of monsters - one function per sub class
+random generation of players - just generate some monsters and items
+player moves/enemy moves - delegate to player/monster
+reordering monsters (as first awake monster takes over on faint)
+
+week two of break:
+game environment,
+difficulty scaling,
+random generation balancing,
+levels,
+random events,
+setup at start of game
+end game/scoring
+
+week three:
+testing
+gui
