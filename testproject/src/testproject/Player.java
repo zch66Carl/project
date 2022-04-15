@@ -33,9 +33,15 @@ public class Player {
 		return gold;
 	}
 	
-	public void setInventory(Item item) {
-		inventory.add(item);
+	public void setInventory() {
+		inventory.add(new HealingItem("Small",0));
+		inventory.add(new HealingItem("Medium",0));
+		inventory.add(new HealingItem("Large",0));
+		inventory.add(new StatsItem("Small",0));
+		inventory.add(new StatsItem("Medium",0));
+		inventory.add(new StatsItem("Large",0));
 	}
+	
 	
 	public ArrayList<Item> getInventory() {
 		return inventory;
@@ -64,12 +70,14 @@ public class Player {
 		return false;
 	}
 	
-	public boolean addItem(Item item) {
-		if(!inventory.contains(item)) {
-			inventory.add(item);
-			return true;
+	public void addItem(Item item) {
+		for(Item items: inventory) {
+			int currentQuantity = items.getQuantity();
+			if(items.equals(item)) {
+				currentQuantity += 1;
+				items.setQuantity(currentQuantity);
+			} 
 		}
-		return false;
 	}
 	
 	public boolean removeItem(Purchaseable item) {

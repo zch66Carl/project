@@ -7,13 +7,23 @@ public class Monster implements Purchaseable{
 	private int health;
 	private int price;
 	private boolean isAwake;
+	private int quantity;
 
 	public Monster(String name, int damage, int maxHealth){
 		this.name=name;
 		this.damage=damage;
 		this.maxHealth=maxHealth;
 		health=maxHealth;
+		quantity=1;
+		price=50;
 		isAwake=true;
+	}
+	
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity=quantity;
 	}
 	
 	public String getName() {
