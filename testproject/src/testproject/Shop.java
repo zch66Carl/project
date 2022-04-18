@@ -14,7 +14,7 @@ public class Shop {
 		Random rand = new Random();
 		stock[0] = new Monster("Monster 1", rand.nextInt(11)+15, rand.nextInt(21)+35);
 		stock[1] = new Monster("Monster 2", rand.nextInt(11)+15, rand.nextInt(21)+35);
-		stock[2] = new Monster("Monster 3", rand.nextInt(11)+15, rand.nextInt(21)+35);
+		stock[2] = new FlyingMonster("Monster 3 (Flying)", rand.nextInt(11)+15, rand.nextInt(21)+35);
 		stock[3] = new HealingItem("Small", rand.nextInt(5)+1);
 		stock[4] = new HealingItem("Medium",rand.nextInt(5)+1);
 		stock[5] = new HealingItem("Large",rand.nextInt(5)+1);

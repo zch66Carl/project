@@ -29,7 +29,7 @@ public class Item implements Purchaseable{
 	public int getQuantity() {
 		return quantity;
 	}
-	public void useItem(Item item) {
+	public void useItem() {
 		quantity -= 1;
 	}
 	
