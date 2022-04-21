@@ -3,13 +3,17 @@ package testproject;
 import java.util.Random;
 import java.util.ArrayList;
 public class Shop {
+	/**
+	 * Shop for player to buy/sell items and monsters
+	 */
 	private Purchaseable[] stock = new Purchaseable[9];
-	
 	public Purchaseable[] getStock() {
 		return stock;
 	}
 	
-	
+	/**
+	 * Refresh available stock to buy
+	 */
 	public void refreshStock() {
 		Random rand = new Random();
 		stock[0] = new Monster("Monster 1", rand.nextInt(11)+15, rand.nextInt(21)+35);
@@ -23,6 +27,9 @@ public class Shop {
 		stock[8] = new StatsItem("Large", rand.nextInt(5)+1);
 	}
 	
+	/**
+	 * Adds special items and monsters to the shop's refresh
+	 */
 	public void specialRefresh() {
 		//To be implemented with special monsters and escape rope
 	}
@@ -49,9 +56,23 @@ public class Shop {
 				System.out.println("Monster Purchased");
 			}
 		}
-		
-	
 	}
+	
+	public void sellItem(Player player, Item item) {
+		for(Item items: player.getInventory()) {
+			if(items.equals(item)&&items.getQuantity()>0) {
+				items.setQuantity(items.getQuantity()-1);
+				player.setGold(player.getGold()+items.getPrice());
+			}
+		}
+	}
+	
+	public void sellMonster(Player player, Monster monster) {
+		int sellPrice = monster.getPrice();
+		player.removeMonster(monster);
+		player.setGold(player.getGold()+sellPrice);
+	}
+	
 	
 	public static void main(String[] arg) {
 		ArrayList<Monster> team = new ArrayList<Monster>();
