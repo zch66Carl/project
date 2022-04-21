@@ -51,6 +51,9 @@ public class Monster implements Purchaseable{
 	
 	public void levelUp() {
 			this.level+=1;
+			this.damage+=5;
+			this.maxHealth+=15;
+			rest();
 			this.setCurrentXp(0);
 			setXpRequired();
 	}
