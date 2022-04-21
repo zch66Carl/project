@@ -10,6 +10,7 @@ public class Player {
 	private ArrayList<Item> inventory = new ArrayList<Item>();
 	private int activeMonsterIndex;
 	
+	
 	public Player(String name, int gold, ArrayList<Monster> team, ArrayList<Item> inventory) {
 		this.name=name;
 		this.gold=gold;
@@ -33,6 +34,9 @@ public class Player {
 		return gold;
 	}
 	
+	public ArrayList<Monster> getTeam() {
+		return team;
+	}
 	public void setInventory() {
 		inventory.add(new HealingItem("Small",0));
 		inventory.add(new HealingItem("Medium",0));

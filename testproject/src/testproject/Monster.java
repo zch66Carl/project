@@ -7,6 +7,9 @@ public class Monster implements Purchaseable{
 	private int health;
 	private int price;
 	private boolean isAwake;
+	private int level;
+	private int currentXp;
+	private int xpRequired;
 	private int quantity;
 
 	public Monster(String name, int damage, int maxHealth){
@@ -14,11 +17,43 @@ public class Monster implements Purchaseable{
 		this.damage=damage;
 		this.maxHealth=maxHealth;
 		health=maxHealth;
+		level=1;
+		currentXp=0;
+		xpRequired=50;
 		quantity=1;
 		price=50;
 		isAwake=true;
 	}
 	
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+	
+	public void setCurrentXp(int xp) {
+		currentXp = xp;
+	}
+	
+	public int getCurrentXp() {
+		return currentXp;
+	}
+	
+	public void setXpRequired() {
+		xpRequired += 30*level;
+	}
+	
+	public int getXpRequired() {
+		return xpRequired;
+	}
+	
+	public void levelUp() {
+			this.level+=1;
+			this.setCurrentXp(0);
+			setXpRequired();
+	}
 	public int getQuantity() {
 		return quantity;
 	}

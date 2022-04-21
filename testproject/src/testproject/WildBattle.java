@@ -9,6 +9,16 @@ public class WildBattle {
 		this.wildMonster=wildMonster;
 	}
 	
+	public void reward(Player player) {
+		for(Monster activeMonster: player.getTeam()) {
+			activeMonster.setCurrentXp(activeMonster.getCurrentXp()+50);
+			if(activeMonster.getCurrentXp()>=activeMonster.getXpRequired()) {
+				activeMonster.levelUp();
+			}
+		}
+		
+	}
+	
 	void battle(Player player) {
 		
 		Display.displayText(String.format("A wild %s appears, battle start!", wildMonster.getName()),null, null);
