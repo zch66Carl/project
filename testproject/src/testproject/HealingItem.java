@@ -31,6 +31,11 @@ public class HealingItem extends Item{
 		return healAmount;
 	}
 	
+	public void useItem(Monster monster) {
+		monster.heal(healAmount);
+		super.useItem();
+	}
+	
 	
 	public String toString() {
 		return String.format("%s, recovers %d, price %d, quantity %d", super.getName(),getHealAmount(),super.getPrice(),super.getQuantity());

@@ -68,8 +68,15 @@ public class Monster implements Purchaseable{
 	public void setIsAwake(boolean isAwake) {
 		this.isAwake=isAwake;
 	}
-
+	
+	void preTurnLogic() {
+		
+	}
 	void makeMove(Monster enemy) {
+		Display.displayText(String.format("Dealt %s damage to %s.", damage, enemy.getName()), null, null);
+		enemy.dealDamage(damage);
+	}
+	void makeRandomMove(Monster enemy) {
 		Display.displayText(String.format("%s deals %s damage to %s", name, damage, enemy.getName()), null, null);
 		enemy.dealDamage(damage);
 	}

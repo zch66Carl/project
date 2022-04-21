@@ -20,6 +20,7 @@ public class WildBattle {
 				break;
 			}
 			
+			player.getActiveMonster().preTurnLogic();
 			Display.displayText("Player turn.", null, null);
 			player.makeMove(wildMonster);
 			
@@ -28,8 +29,9 @@ public class WildBattle {
 				break;
 			}
 			
+			wildMonster.preTurnLogic();
 			Display.displayText(String.format("Wild Monster turn: %s", wildMonster.toString()), null, null);
-			wildMonster.makeMove(player.getActiveMonster());
+			wildMonster.makeRandomMove(player.getActiveMonster());
 		}
 		
 		if(outcome) {
@@ -49,9 +51,19 @@ public class WildBattle {
 		WildBattle battle = new WildBattle(new Monster("lizard", 15, 40));
 		ArrayList<Monster> team = new ArrayList<Monster>();
 		team.add(new Monster("goat", 20, 30));
-		team.add(new Monster("crow", 30, 5));
+		team.add(new FlyingMonster("crow", 30, 20));
 		Player player = new Player("player_name", 0, team, new ArrayList<Item>());
 		battle.battle(player);
+		
+		System.out.println("Player post battle 1:");
+		System.out.println(player.toString());
+		
+		System.out.println("Next battle against flying enemy with item:");
+		player.refreshTeam();
+		WildBattle battle2 = new WildBattle(new FlyingMonster("eagle", 5, 100));
+		player.addItem(new HealingItem("Small", 1));
+		
+		battle2.battle(player);
 		System.out.println(player.toString());
 	}
 }

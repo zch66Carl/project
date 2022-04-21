@@ -110,8 +110,7 @@ public class Player {
 		Display.displayText("Enter 0 to attack, 1 to use an item, or 2 to swap the monster on the field.", null, null);
 		int move = Display.getInput(null);
 		if(move==0) {
-			Display.displayText(String.format("Dealt %s damage to %s.", getActiveMonster().getDamage(), enemy.getName()), null, null);
-			enemy.dealDamage(getActiveMonster().getDamage());
+			getActiveMonster().makeMove(enemy);
 		}
 		else if(move==1) {
 			Display.displayText("Items not usable yet :(", null, null);
@@ -133,6 +132,12 @@ public class Player {
 	public void makeRandomMove(Monster enemy) {
 		Random rand = new Random();
 		//TODO
+	}
+	
+	public void refreshTeam() {
+		for(Monster m:team) {
+			m.rest();
+		}
 	}
 
 	public String toString() {
