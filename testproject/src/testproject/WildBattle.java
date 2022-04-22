@@ -2,6 +2,10 @@ package testproject;
 
 import java.util.ArrayList;
 
+/**
+ * This class implements a battle against a single wild monster, which will join the player's
+ * team when defeated.
+ */
 public class WildBattle {
 	private Monster wildMonster;
 	
@@ -19,7 +23,13 @@ public class WildBattle {
 		
 	}
 	
-	void battle(Player player) {
+	/**
+	 * 
+	 *  Controls the flow of the battle, delegating decision making to the Player and Monster
+	 *  entities involved.
+	 * @param player The player entity participating in the battle.
+	 */
+	public void battle(Player player) {
 		
 		Display.displayText(String.format("A wild %s appears, battle start!", wildMonster.getName()),null, null);
 		
@@ -56,7 +66,15 @@ public class WildBattle {
 			return;
 		}
 	}
-	
+
+	/**
+	 * Quality control tests for the WildBattle class, includes test against specialised monsters,
+	 *  as well as players with varying inventories, teams, etc.
+	 * After each battle the current state of the player's team is printed to verify that defeated
+	 *  monsters join the player's team.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		WildBattle battle = new WildBattle(new Monster("lizard", 15, 40));
 		ArrayList<Monster> team = new ArrayList<Monster>();

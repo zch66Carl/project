@@ -3,6 +3,13 @@ package testproject;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * 
+ * The Player class contains the player's name, gold, team and inventory. It is also responsible
+ *  for making the player or enemy's move before delegating to a specific monster if attack is
+ *  chosen.
+ *
+ */
 public class Player {
 	private String name;
 	private int gold;
@@ -96,6 +103,12 @@ public class Player {
 	public Monster getActiveMonster() {
 		return team.get(activeMonsterIndex);
 	}
+	
+	/**
+	 * A function to check whether the team can still fight and set the active monster
+	 *  variable if the prievious active monster fainted.
+	 * @return Returns true if there is at least one monster in the team still able to fight.
+	 */
 	public boolean checkIfActiveMonster() {
 		if(!team.get(activeMonsterIndex).isAwake()) {
 			for(int i=0; i<team.size(); i++) {
@@ -109,6 +122,11 @@ public class Player {
 		return true;
 	}
 	
+	/**
+	 * Takes player input to choose which move to make out of attack, use item, switch monster
+	 *  and flee.
+	 * @param enemy The enemy monster the current move is against.
+	 */
 	public void makeMove(Monster enemy) {
 		Display.displayText("Active Monster is: "+getActiveMonster().toString(), null, null);
 		Display.displayText("Enter 0 to attack, 1 to use an item, or 2 to swap the monster on the field.", null, null);
@@ -131,19 +149,31 @@ public class Player {
 			else {
 				Display.displayText("Invalid number", null, null);
 			}
+			//TODO: make changing monster remove any status effects from the monster used before such as isFlying.
 		}
 	}
+	
+	/**
+	 * Same as makeMove, but randomly chooses an option instead of taking player input.
+	 * @param enemy The enemy monster.
+	 */
 	public void makeRandomMove(Monster enemy) {
 		Random rand = new Random();
 		//TODO
 	}
 	
+	/**
+	 * Full reset of the team's status (set health to full and remove status effects, etc.).
+	 */
 	public void refreshTeam() {
 		for(Monster m:team) {
 			m.rest();
 		}
 	}
 
+	/**
+	 * String representation of the player name and all the Monsters in the players team.
+	 */
 	public String toString() {
 		String monstersString = new String();
 		for(Monster m : team) monstersString+=m.toString()+"\n";

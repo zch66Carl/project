@@ -1,5 +1,11 @@
 package testproject;
 
+/**
+ * The Monster class, containing all required information for use in shops, leveling up and battle.
+ * Also is responsible for move making when chossing specific attacks, and handles all currently
+ * effective status effects. Special moves and such are implemented via subclasses.
+ *
+ */
 public class Monster implements Purchaseable{
 	private String name;
 	private int damage;
@@ -88,6 +94,11 @@ public class Monster implements Purchaseable{
 	public int getPrice() {
 		return price;
 	}
+	
+	/**
+	 * Deals damage to the Monster, making them faint if health goes below zero.
+	 * @param damageDealt The damage to deal to this Monster.
+	 */
 	public void dealDamage(int damageDealt) {
 		health-=damageDealt;
 		if(health<=0) {
@@ -96,6 +107,11 @@ public class Monster implements Purchaseable{
 			Display.displayText(String.format("%s fainted!", name),null,null);
 		}
 	}
+	
+	/**
+	 * Heals by a certain amount.
+	 * @param healAmount The amount to heal by.
+	 */
 	public void heal(int healAmount) {
 		health+=healAmount;
 		if(health>maxHealth) health=maxHealth;
@@ -107,22 +123,41 @@ public class Monster implements Purchaseable{
 		this.isAwake=isAwake;
 	}
 	
-	void preTurnLogic() {
+	/**
+	 * Relevant for some subclasses.
+	 */
+	public void preTurnLogic() {
 		
 	}
-	void makeMove(Monster enemy) {
+	
+	/**
+	 * For the base Monster there is only one attack possible, dealing damage to the enemy.
+	 * @param enemy
+	 */
+	public void makeMove(Monster enemy) {
 		Display.displayText(String.format("Dealt %s damage to %s.", damage, enemy.getName()), null, null);
 		enemy.dealDamage(damage);
 	}
-	void makeRandomMove(Monster enemy) {
+	/**
+	 * Same as makeMove, but makes a random move instead of taking user input.
+	 * @param enemy
+	 */
+	public void makeRandomMove(Monster enemy) {
 		Display.displayText(String.format("%s deals %s damage to %s", name, damage, enemy.getName()), null, null);
 		enemy.dealDamage(damage);
 	}
-	void rest() {
+	
+	/**
+	 * Sets health to full and removes any status effects.
+	 */
+	public void rest() {
 		health=maxHealth;
 		isAwake=true;
 	}
 	
+	/**
+	 * String representation of the Monster.
+	 */
 	public String toString() {
 		return String.format("%s, health: %s, damage: %s", name, health, damage);
 	}
