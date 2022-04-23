@@ -22,4 +22,12 @@ public class Display {
 		}
 		return 0;
 	}
+	
+	public static String getStringInput(DisplayType displayType) {
+		if(isCommandLine) {
+			Scanner sc = new Scanner(System.in);
+			return sc.nextLine();
+		}
+		return "";
+	}
 }
