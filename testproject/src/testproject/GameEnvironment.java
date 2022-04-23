@@ -2,6 +2,11 @@ package testproject;
 
 import java.util.ArrayList;
 
+import testproject.display.Display;
+import testproject.items.Item;
+import testproject.monsters.FlyingMonster;
+import testproject.monsters.Monster;
+
 /**
  * The environment managing the structure of the game, including days, choosing actions on each day and
  *  difficulty;
@@ -54,16 +59,45 @@ public class GameEnvironment {
 		
 	}
 	
+	public void updateBattles(int day) {
+		if(day%5==0) wildBattle = new WildBattle(new Monster("wildGuy", 20, 50));
+		else wildBattle=null;
+		
+		battles.clear();
+		for(int i=0; i<3; i++) {
+			battles.add(null);//TODO: add TeamBattle constructure.
+		}
+	}
 	
-	
+	/**
+	 * Runs each day, TODO: each option aside from choose battle should be relegated to the
+	 *  relevant class, e.g. shopping should be a method in the shop class, so don't need
+	 *  to have public methods for such. e.g. Choose an item and use on a monster can happen both
+	 *  during battle and in game environment between battles so should be in player class once.
+	 */
 	public void runGame() {
 		for(int day = 0; day<numDays; day++) {
-			//Restock shop, battle, rest team, etc.
+			player.refreshTeam();
+			shop.refreshStock();
+			updateBattles(day);
+			Display.displayText("Day "+day+":", null, null);
 			while(true) {
 				//options: choose and fight a battle, shop, view and use items, view, rename and reorder monster
 				//			and end day
-				break;
+				Display.displayText("Choose an option:", null, null);
+				Display.displayText("0: fight a battle.", null, null);
+				Display.displayText("1: shop.", null, null);
+				Display.displayText("2: view inventory.", null, null);
+				Display.displayText("3: view team.", null, null);
+				Display.displayText("4: end day.", null, null);
+				int option = Display.getInput(null);
+				if(option==0) chooseBattle();
+				else if(option==1) continue;//need shop method.
+				else if(option==2) viewInventory();
+				else if(option==3) viewTeam();
+				else break;
 			}
+			Display.displayText("Day "+day+" over.", null, null);
 		}
 	}
 	

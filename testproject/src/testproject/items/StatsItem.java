@@ -1,5 +1,4 @@
-package testproject;
-
+package testproject.items;
 
 public class StatsItem extends Item{
 	private int damageIncrease;

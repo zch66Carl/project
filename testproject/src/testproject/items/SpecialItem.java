@@ -1,4 +1,6 @@
-package testproject;
+package testproject.items;
+
+import testproject.WildBattle;
 
 public class SpecialItem extends Item{
 

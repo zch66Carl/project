@@ -1,6 +1,13 @@
 package testproject;
 
 import java.util.Random;
+
+import testproject.items.HealingItem;
+import testproject.items.Item;
+import testproject.items.StatsItem;
+import testproject.monsters.FlyingMonster;
+import testproject.monsters.Monster;
+
 import java.util.ArrayList;
 public class Shop {
 	/**

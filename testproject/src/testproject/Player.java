@@ -3,6 +3,12 @@ package testproject;
 import java.util.ArrayList;
 import java.util.Random;
 
+import testproject.display.Display;
+import testproject.items.HealingItem;
+import testproject.items.Item;
+import testproject.items.StatsItem;
+import testproject.monsters.Monster;
+
 /**
  * 
  * The Player class contains the player's name, gold, team and inventory. It is also responsible
@@ -24,13 +30,6 @@ public class Player {
 		this.team=team;
 		this.inventory=inventory;
 		activeMonsterIndex=0;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getName() {
-		return name;
 	}
 	
 	public void setGold(int gold) {
@@ -57,6 +56,7 @@ public class Player {
 	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
+	
 	public void setActiveMonsterIndex(int index) {
 		activeMonsterIndex = index;
 	}

@@ -1,4 +1,4 @@
-package testproject;
+package testproject.display;
 
 public enum DisplayType {
 	PLAYER_TEXT,

@@ -1,4 +1,6 @@
-package testproject;
+package testproject.items;
+
+import testproject.Purchaseable;
 
 public class Item implements Purchaseable{
 	private int price;

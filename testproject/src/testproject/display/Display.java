@@ -1,4 +1,4 @@
-package testproject;
+package testproject.display;
 
 import java.util.Scanner;
 

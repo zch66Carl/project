@@ -1,6 +1,8 @@
-package testproject;
+package testproject.monsters;
 
 import java.util.Random;
+
+import testproject.display.Display;
 
 /**
  * A special type of Monster, with a fly move, that allows them to not take damage in the next turn.

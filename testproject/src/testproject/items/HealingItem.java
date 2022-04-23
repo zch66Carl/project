@@ -1,5 +1,6 @@
-package testproject;
+package testproject.items;
 
+import testproject.monsters.Monster;
 
 public class HealingItem extends Item{
 	private int healAmount;

@@ -2,6 +2,12 @@ package testproject;
 
 import java.util.ArrayList;
 
+import testproject.display.Display;
+import testproject.items.HealingItem;
+import testproject.items.Item;
+import testproject.monsters.FlyingMonster;
+import testproject.monsters.Monster;
+
 /**
  * This class implements a battle against a single wild monster, which will join the player's
  * team when defeated.

@@ -1,4 +1,7 @@
-package testproject;
+package testproject.monsters;
+
+import testproject.Purchaseable;
+import testproject.display.Display;
 
 /**
  * The Monster class, containing all required information for use in shops, leveling up and battle.
