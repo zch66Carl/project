@@ -48,24 +48,38 @@ public class GameEnvironment {
 	}
 	
 	public void chooseBattle() {
-		
+		Display.displayText("Choose which battle to fight.", null, null);
+		int i=0;
+		for(TeamBattle tb : battles) Display.displayText((i++) + ": " + tb.getEnemyName(), null, null);
+		if(wildBattle != null) Display.displayText((i++) + ": Wild Battle!", null, null);
+		Display.displayText(i + ": Cancel selection.", null, null);
+		int choice = Display.getInput(null);
+		if(choice==i) return;
+		if(choice>=battles.size()) {
+			if(wildBattle.battle(player)) wildBattle=null;
+			return;
+		}
+		if(battles.get(choice).battle(player)) {
+			battles.remove(choice);
+		}
+		return;
 	}
 	
 	public void viewInventory() {
-		
+		//TODO: delegate to player
 	}
 	
 	public void viewTeam() {
-		
+		//TODO: delegate to player
 	}
 	
 	public void updateBattles(int day) {
-		if(day%5==0) wildBattle = new WildBattle(new Monster("wildGuy", 20, 50));
+		if(day%5==0) wildBattle = new WildBattle(Generation.generateMonster(day, difficulty, false, true));
 		else wildBattle=null;
 		
 		battles.clear();
 		for(int i=0; i<3; i++) {
-			battles.add(null);//TODO: add TeamBattle constructure.
+			battles.add(new TeamBattle(Generation.generateEnemyTeam(day, difficulty)));
 		}
 	}
 	

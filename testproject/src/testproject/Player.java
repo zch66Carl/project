@@ -32,6 +32,10 @@ public class Player {
 		activeMonsterIndex=0;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	public void setGold(int gold) {
 		this.gold = gold;
 	}
@@ -160,6 +164,7 @@ public class Player {
 	public void makeRandomMove(Monster enemy) {
 		Random rand = new Random();
 		//TODO
+		Display.displayText("Player.makeRandomMove() Not implemented yet :(", null, null);
 	}
 	
 	/**

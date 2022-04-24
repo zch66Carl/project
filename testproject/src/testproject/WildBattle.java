@@ -35,7 +35,7 @@ public class WildBattle {
 	 *  entities involved.
 	 * @param player The player entity participating in the battle.
 	 */
-	public void battle(Player player) {
+	public boolean battle(Player player) {
 		
 		Display.displayText(String.format("A wild %s appears, battle start!", wildMonster.getName()),null, null);
 		
@@ -65,12 +65,12 @@ public class WildBattle {
 			Display.displayText(String.format("%s joins your team!", wildMonster.getName()),null,null);
 			wildMonster.rest();
 			player.addMonster(wildMonster);
-			return;
 		}
 		else {
 			Display.displayText(String.format("%s eliminated your entire team! So Powerful", wildMonster.getName()), null, null);
-			return;
 		}
+		wildMonster.rest();
+		return outcome;
 	}
 
 	/**
