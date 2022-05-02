@@ -11,8 +11,12 @@ import testproject.monsters.Monster;
  *
  */
 public class Generation {
+	private static int uniqueName = 101;
+	
 	public static Monster generateMonster(int day, int diff, boolean isPlayerMonster, boolean isWildMonster) {
-		return new Monster("a", 0, 0);
+		String name = ""+uniqueName++;//TODO: actual names
+		
+		return new Monster(name, 0, 0);
 	}
 	
 	public static Item generateItem(int day, int diff, boolean enemyItem) {
@@ -20,6 +24,6 @@ public class Generation {
 	}
 	
 	public static Player generateEnemyTeam(int day, int diff) {
-		return new Player("bob", 0, new ArrayList<Monster>(), new ArrayList<Item>());
+		return new Player("bob"+uniqueName++, 0, new ArrayList<Monster>(), new ArrayList<Item>());
 	}
 }

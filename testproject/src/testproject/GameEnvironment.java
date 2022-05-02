@@ -45,6 +45,8 @@ public class GameEnvironment {
 		int mon = Display.getInput(null);
 		if(mon==0) player.addMonster(one);
 		else player.addMonster(two);
+		
+		battles = new ArrayList<TeamBattle>();
 	}
 	
 	public void chooseBattle() {
@@ -69,10 +71,6 @@ public class GameEnvironment {
 		//TODO: delegate to player
 	}
 	
-	public void viewTeam() {
-		//TODO: delegate to player
-	}
-	
 	public void updateBattles(int day) {
 		if(day%5==0) wildBattle = new WildBattle(Generation.generateMonster(day, difficulty, false, true));
 		else wildBattle=null;
@@ -90,9 +88,9 @@ public class GameEnvironment {
 	 *  during battle and in game environment between battles so should be in player class once.
 	 */
 	public void runGame() {
-		for(int day = 0; day<numDays; day++) {
+		for(int day = 1; day<=numDays; day++) {
 			player.refreshTeam();
-			shop.refreshStock();
+			shop.refreshStock(day, difficulty);
 			updateBattles(day);
 			Display.displayText("Day "+day+":", null, null);
 			while(true) {
@@ -106,13 +104,14 @@ public class GameEnvironment {
 				Display.displayText("4: end day.", null, null);
 				int option = Display.getInput(null);
 				if(option==0) chooseBattle();
-				else if(option==1) continue;//need shop method.
-				else if(option==2) viewInventory();
-				else if(option==3) viewTeam();
+				else if(option==1) shop.shop(player);
+				else if(option==2) player.viewInventory();
+				else if(option==3) player.viewTeam();
 				else break;
 			}
 			Display.displayText("Day "+day+" over.", null, null);
 		}
+		Display.displayText("Game over!", null, null);
 	}
 	
 	/**

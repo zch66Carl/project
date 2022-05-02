@@ -21,7 +21,7 @@ public class Shop {
 	/**
 	 * Refresh available stock to buy
 	 */
-	public void refreshStock() {
+	public void refreshStock(int day, int diff) {
 		Random rand = new Random();
 		stock[0] = new Monster("Monster 1", rand.nextInt(11)+15, rand.nextInt(21)+35);
 		stock[1] = new Monster("Monster 2", rand.nextInt(11)+15, rand.nextInt(21)+35);
@@ -80,6 +80,10 @@ public class Shop {
 		player.setGold(player.getGold()+sellPrice);
 	}
 	
+	public void shop(Player player) {
+		
+	}
+	
 	
 	public static void main(String[] arg) {
 		ArrayList<Monster> team = new ArrayList<Monster>();
@@ -90,7 +94,7 @@ public class Shop {
 		Player player = new Player("Player 1", 500, team, new ArrayList<Item>());
 		player.setInventory();
 		Shop shop = new Shop();
-		shop.refreshStock();
+		shop.refreshStock(1, 2);
 		
 		for(int n=0;n<9;n++) {
 			System.out.println(shop.stock[n]);

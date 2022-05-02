@@ -103,6 +103,35 @@ public class Player {
 		return false;
 	}
 	
+	public void viewTeam() {
+		Display.displayText("Team is:", null, null);
+		for(int i = 0; i<team.size(); i++) {
+			Display.displayText(i + ": " + team.get(i).toString(), null, null);
+		}
+		Display.displayText("Choose an option:", null,null);
+		Display.displayText("0: return to prievious menu.", null, null);
+		Display.displayText("1: rename a monster.", null, null);
+		Display.displayText("2: reorder monsters.", null, null);
+		int inp = Display.getInput(null);
+		if(inp == 0) return;
+		Display.displayText("Enter monster index.", null, null);
+		int monInd = Display.getInput(null);
+		if(inp == 1) {
+			Display.displayText("Enter new name.", null, null);
+			String newName = Display.getStringInput(null);
+			team.get(monInd).setName(newName);
+		}
+		if(inp == 2) {
+			Monster mon = team.get(monInd);
+			team.remove(mon);
+			team.add(0, mon);
+		}
+		viewTeam();
+	}
+
+	public void viewInventory() {
+		//TODO: print items and allow user to return to prev menu or use an item.
+	}
 	
 	public Monster getActiveMonster() {
 		return team.get(activeMonsterIndex);
@@ -165,6 +194,7 @@ public class Player {
 		Random rand = new Random();
 		//TODO
 		Display.displayText("Player.makeRandomMove() Not implemented yet :(", null, null);
+		getActiveMonster().makeRandomMove(enemy);
 	}
 	
 	/**
