@@ -67,12 +67,8 @@ public class GameEnvironment {
 		return;
 	}
 	
-	public void viewInventory() {
-		//TODO: delegate to player
-	}
-	
 	public void updateBattles(int day) {
-		if(day%5==0) wildBattle = new WildBattle(Generation.generateMonster(day, difficulty, false, true));
+		if(day%5==1) wildBattle = new WildBattle(Generation.generateMonster(day, difficulty, false, true));
 		else wildBattle=null;
 		
 		battles.clear();

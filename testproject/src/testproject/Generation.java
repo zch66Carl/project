@@ -24,6 +24,9 @@ public class Generation {
 	}
 	
 	public static Player generateEnemyTeam(int day, int diff) {
-		return new Player("bob"+uniqueName++, 0, new ArrayList<Monster>(), new ArrayList<Item>());
+		ArrayList<Monster> mon = new ArrayList<Monster>();
+		mon.add(generateMonster(day, diff, false, false));
+		mon.add(generateMonster(day, diff, false, false));
+		return new Player("bob"+uniqueName++, 0, mon, new ArrayList<Item>());
 	}
 }

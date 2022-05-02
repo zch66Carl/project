@@ -23,6 +23,11 @@ public class Display {
 		return 0;
 	}
 	
+	/**
+	 * If commandline then gets the whole line of input
+	 * @param displayType
+	 * @return
+	 */
 	public static String getStringInput(DisplayType displayType) {
 		if(isCommandLine) {
 			Scanner sc = new Scanner(System.in);

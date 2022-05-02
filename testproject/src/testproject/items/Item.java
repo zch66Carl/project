@@ -1,6 +1,8 @@
 package testproject.items;
 
+import testproject.Player;
 import testproject.Purchaseable;
+import testproject.monsters.Monster;
 
 public class Item implements Purchaseable{
 	private int price;
@@ -31,7 +33,7 @@ public class Item implements Purchaseable{
 	public int getQuantity() {
 		return quantity;
 	}
-	public void useItem() {
+	public void useItem(Player player, Monster monster) {
 		quantity -= 1;
 	}
 	

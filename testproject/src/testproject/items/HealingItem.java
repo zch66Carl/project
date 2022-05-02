@@ -1,5 +1,6 @@
 package testproject.items;
 
+import testproject.Player;
 import testproject.monsters.Monster;
 
 public class HealingItem extends Item{
@@ -32,9 +33,9 @@ public class HealingItem extends Item{
 		return healAmount;
 	}
 	
-	public void useItem(Monster monster) {
+	public void useItem(Player player, Monster monster) {
 		monster.heal(healAmount);
-		super.useItem();
+		super.useItem(player, monster);
 	}
 	
 	

@@ -120,6 +120,7 @@ public class Monster implements Purchaseable{
 		if(health>maxHealth) health=maxHealth;
 	}
 	public boolean isAwake() {
+		if(health<=0) isAwake = false;
 		return isAwake;
 	}
 	public void setIsAwake(boolean isAwake) {

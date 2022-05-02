@@ -103,6 +103,9 @@ public class Player {
 		return false;
 	}
 	
+	/**
+	 * Lets the player view their team, rename monsters, and reorder the team.
+	 */
 	public void viewTeam() {
 		Display.displayText("Team is:", null, null);
 		for(int i = 0; i<team.size(); i++) {
@@ -130,7 +133,14 @@ public class Player {
 	}
 
 	public void viewInventory() {
-		//TODO: print items and allow user to return to prev menu or use an item.
+		Display.displayText("Your inventory: ", null, null);
+		for(int i=0; i<inventory.size(); i++) {
+			Display.displayText((i+1)+": "+inventory.get(i).toString(), null, null);
+		}
+		Display.displayText("Enter 0 to return or an item index to use that item.", null, null);
+		int inp = Display.getInput(null);
+		if(inp==0) return;
+		inventory.get(inp).useItem(this, getActiveMonster());
 	}
 	
 	public Monster getActiveMonster() {
@@ -168,7 +178,7 @@ public class Player {
 			getActiveMonster().makeMove(enemy);
 		}
 		else if(move==1) {
-			Display.displayText("Items not usable yet :(", null, null);
+			viewInventory();
 		}
 		else if(move==2) {
 			Display.displayText("Options are:", null, null);
@@ -184,6 +194,7 @@ public class Player {
 			}
 			//TODO: make changing monster remove any status effects from the monster used before such as isFlying.
 		}
+		//TODO: fleeing battle
 	}
 	
 	/**
