@@ -16,7 +16,7 @@ public class Generation {
 	public static Monster generateMonster(int day, int diff, boolean isPlayerMonster, boolean isWildMonster) {
 		String name = ""+uniqueName++;//TODO: actual names
 		
-		return new Monster(name, 0, 0);
+		return new Monster(name, 10, 30);
 	}
 	
 	public static Item generateItem(int day, int diff, boolean enemyItem) {

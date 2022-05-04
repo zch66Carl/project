@@ -2,6 +2,7 @@ package testproject;
 
 import java.util.Random;
 
+import testproject.display.Display;
 import testproject.items.HealingItem;
 import testproject.items.Item;
 import testproject.items.StatsItem;
@@ -81,7 +82,18 @@ public class Shop {
 	}
 	
 	public void shop(Player player) {
-		
+		while(true) {
+			Display.displayText("Current stock:", null, null);
+			for(int i=0; i<9; i++) {
+				if(stock[i]==null) continue;
+				Display.displayText(i+1 + ": "+stock[i].getName()+", price "+stock[i].getPrice() + ", quantity "+stock[i].getQuantity(), null, null);
+			}
+			Display.displayText("Enter 0 to return or an index to buy a item or monster:", null, null);
+			int inp = Display.getInput(null);
+			if(inp == 0) return;
+			buyItem(player, inp-1);
+			//TODO: add an option to sell an item/monster
+		}
 	}
 	
 	

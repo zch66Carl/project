@@ -3,6 +3,7 @@ package testproject;
 import java.util.ArrayList;
 
 import testproject.display.Display;
+import testproject.items.HealingItem;
 import testproject.items.Item;
 import testproject.monsters.FlyingMonster;
 import testproject.monsters.Monster;
@@ -45,6 +46,7 @@ public class GameEnvironment {
 		int mon = Display.getInput(null);
 		if(mon==0) player.addMonster(one);
 		else player.addMonster(two);
+		player.addItem(new HealingItem("Small", 1));
 		
 		battles = new ArrayList<TeamBattle>();
 	}
@@ -62,6 +64,7 @@ public class GameEnvironment {
 			return;
 		}
 		if(battles.get(choice).battle(player)) {
+			player.setGold(player.getGold() + 10);//TODO: adjust based on day and diff
 			battles.remove(choice);
 		}
 		return;

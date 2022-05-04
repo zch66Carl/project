@@ -28,7 +28,10 @@ public class Player {
 		this.name=name;
 		this.gold=gold;
 		this.team=team;
-		this.inventory=inventory;
+		setInventory();
+		for(Item item : inventory) {
+			addItem(item);
+		}
 		activeMonsterIndex=0;
 	}
 	
