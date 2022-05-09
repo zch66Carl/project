@@ -34,6 +34,7 @@ public class HealingItem extends Item{
 	}
 	
 	public void useItem(Player player, Monster monster) {
+		//TODO: don't heal fainted monsters
 		monster.heal(healAmount);
 		super.useItem(player, monster);
 	}
