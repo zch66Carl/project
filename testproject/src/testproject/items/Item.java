@@ -4,6 +4,9 @@ import testproject.Player;
 import testproject.Purchaseable;
 import testproject.monsters.Monster;
 
+//TODO: consolidate all types of items into this class and deleste subclasses as only need heal, statbuff and revive
+//		-> three variables, healAmmount, buffAmount and isRevive
+
 public class Item implements Purchaseable{
 	private int price;
 	private String name;
