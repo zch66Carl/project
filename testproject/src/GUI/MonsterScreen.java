@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 public class MonsterScreen {
 
 	private JFrame frame;
-	private JTextField textField;
+	private JTextField renameMonsterTextBox;
 
 	/**
 	 * Launch the application.
@@ -51,11 +51,11 @@ public class MonsterScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Eagle");
-		lblNewLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(201, 10, 119, 33);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel monsterName = new JLabel("Eagle");
+		monsterName.setFont(new Font("SimSun", Font.PLAIN, 14));
+		monsterName.setHorizontalAlignment(SwingConstants.CENTER);
+		monsterName.setBounds(201, 10, 119, 33);
+		frame.getContentPane().add(monsterName);
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -63,42 +63,42 @@ public class MonsterScreen {
 		panel.setBounds(31, 53, 451, 185);
 		frame.getContentPane().add(panel);
 		
-		JLabel lblNewLabel_4 = new JLabel("Monster Information");
-		lblNewLabel_4.setFont(new Font("SimSun", Font.BOLD, 14));
-		lblNewLabel_4.setBounds(137, 0, 149, 31);
-		panel.add(lblNewLabel_4);
+		JLabel monsterInfoLabel = new JLabel("Monster Information");
+		monsterInfoLabel.setFont(new Font("SimSun", Font.BOLD, 14));
+		monsterInfoLabel.setBounds(137, 0, 149, 31);
+		panel.add(monsterInfoLabel);
 		
-		JLabel lblNewLabel_5 = new JLabel("Max Health:");
-		lblNewLabel_5.setBounds(10, 29, 73, 25);
-		panel.add(lblNewLabel_5);
+		JLabel maxHealthLabel = new JLabel("Max Health:");
+		maxHealthLabel.setBounds(10, 29, 73, 25);
+		panel.add(maxHealthLabel);
 		
-		JLabel lblNewLabel_6 = new JLabel("Damage:");
-		lblNewLabel_6.setBounds(10, 64, 73, 25);
-		panel.add(lblNewLabel_6);
+		JLabel damageLabel = new JLabel("Damage:");
+		damageLabel.setBounds(10, 64, 73, 25);
+		panel.add(damageLabel);
 		
-		JLabel lblNewLabel_7 = new JLabel("Current Health:");
-		lblNewLabel_7.setBounds(10, 102, 90, 15);
-		panel.add(lblNewLabel_7);
+		JLabel currentHealthLabel = new JLabel("Current Health:");
+		currentHealthLabel.setBounds(10, 102, 90, 15);
+		panel.add(currentHealthLabel);
 		
-		JLabel lblNewLabel_8 = new JLabel("Ability:");
-		lblNewLabel_8.setBounds(10, 136, 84, 15);
-		panel.add(lblNewLabel_8);
+		JLabel abilityLabel = new JLabel("Ability:");
+		abilityLabel.setBounds(10, 136, 84, 15);
+		panel.add(abilityLabel);
 		
-		JLabel lblNewLabel_20 = new JLabel("800");
-		lblNewLabel_20.setBounds(183, 34, 54, 15);
-		panel.add(lblNewLabel_20);
+		JLabel maxHealth = new JLabel("800");
+		maxHealth.setBounds(183, 34, 54, 15);
+		panel.add(maxHealth);
 		
-		JLabel lblNewLabel_21 = new JLabel("15-150");
-		lblNewLabel_21.setBounds(183, 69, 54, 15);
-		panel.add(lblNewLabel_21);
+		JLabel damage = new JLabel("15-150");
+		damage.setBounds(183, 69, 54, 15);
+		panel.add(damage);
 		
-		JLabel lblNewLabel_22 = new JLabel("35");
-		lblNewLabel_22.setBounds(183, 102, 54, 15);
-		panel.add(lblNewLabel_22);
+		JLabel currentHealth = new JLabel("35");
+		currentHealth.setBounds(183, 102, 54, 15);
+		panel.add(currentHealth);
 		
-		JLabel lblNewLabel_23 = new JLabel("Fly");
-		lblNewLabel_23.setBounds(183, 136, 54, 15);
-		panel.add(lblNewLabel_23);
+		JLabel ability = new JLabel("Fly");
+		ability.setBounds(183, 136, 54, 15);
+		panel.add(ability);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setBounds(296, 29, 134, 119);
@@ -106,39 +106,43 @@ public class MonsterScreen {
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setIcon(new ImageIcon(MonsterScreen.class.getResource("/GUI/images/eagle_resized.jpg")));
 		
-		JLabel lblNewLabel_1 = new JLabel("Rename Monster:");
-		lblNewLabel_1.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1.setBounds(31, 263, 112, 15);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel renameMonsterLabel = new JLabel("Rename Monster:");
+		renameMonsterLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
+		renameMonsterLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		renameMonsterLabel.setBounds(31, 263, 112, 15);
+		frame.getContentPane().add(renameMonsterLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(201, 260, 171, 21);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		renameMonsterTextBox = new JTextField();
+		renameMonsterTextBox.setBounds(201, 260, 171, 21);
+		frame.getContentPane().add(renameMonsterTextBox);
+		renameMonsterTextBox.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Add to team(Position):");
-		lblNewLabel_2.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_2.setBounds(31, 309, 171, 15);
-		frame.getContentPane().add(lblNewLabel_2);
+		JLabel addToTeamLabel = new JLabel("Add to team(Position):");
+		addToTeamLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
+		addToTeamLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		addToTeamLabel.setBounds(31, 309, 171, 15);
+		frame.getContentPane().add(addToTeamLabel);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
-		comboBox.setBounds(235, 305, 34, 23);
-		frame.getContentPane().add(comboBox);
+		JComboBox positionOfTeamSelection = new JComboBox();
+		positionOfTeamSelection.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		positionOfTeamSelection.setBounds(235, 305, 34, 23);
+		frame.getContentPane().add(positionOfTeamSelection);
 		
-		JButton btnNewButton = new JButton("Add");
-		btnNewButton.setBounds(279, 305, 93, 23);
-		frame.getContentPane().add(btnNewButton);
+		JButton addButton = new JButton("Add");
+		addButton.setBounds(279, 305, 93, 23);
+		frame.getContentPane().add(addButton);
 		
-		JButton btnNewButton_1 = new JButton("Back");
-		btnNewButton_1.setFont(new Font("SimSun", Font.PLAIN, 16));
-		btnNewButton_1.setBounds(186, 357, 134, 49);
-		frame.getContentPane().add(btnNewButton_1);
+		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("SimSun", Font.PLAIN, 16));
+		backButton.setBounds(186, 357, 134, 49);
+		frame.getContentPane().add(backButton);
 		
-		JButton btnNewButton_2 = new JButton("Remove");
-		btnNewButton_2.setBounds(382, 305, 93, 23);
-		frame.getContentPane().add(btnNewButton_2);
+		JButton removeButton = new JButton("Remove");
+		removeButton.setBounds(382, 305, 93, 23);
+		frame.getContentPane().add(removeButton);
+		
+		JButton confirmRenameButton = new JButton("Confirm");
+		confirmRenameButton.setBounds(386, 259, 89, 23);
+		frame.getContentPane().add(confirmRenameButton);
 	}
 }

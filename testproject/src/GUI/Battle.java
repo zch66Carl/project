@@ -49,87 +49,87 @@ public class Battle {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Wild Battle");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("SimSun", Font.BOLD, 14));
-		lblNewLabel.setBounds(27, 10, 165, 41);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel battleType = new JLabel("Wild Battle");
+		battleType.setHorizontalAlignment(SwingConstants.CENTER);
+		battleType.setFont(new Font("SimSun", Font.BOLD, 14));
+		battleType.setBounds(27, 10, 165, 41);
+		frame.getContentPane().add(battleType);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(27, 59, 487, 466);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(Battle.class.getResource("/GUI/images/goat_resized.jpg")));
-		lblNewLabel_2.setBounds(185, 369, 60, 60);
-		panel.add(lblNewLabel_2);
+		JLabel playerMonsterIcon = new JLabel("");
+		playerMonsterIcon.setIcon(new ImageIcon(Battle.class.getResource("/GUI/images/goat_resized.jpg")));
+		playerMonsterIcon.setBounds(185, 369, 60, 60);
+		panel.add(playerMonsterIcon);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("");
-		lblNewLabel_2_1.setIcon(new ImageIcon(Battle.class.getResource("/GUI/images/eagle_resized.jpg")));
-		lblNewLabel_2_1.setBounds(185, 46, 60, 60);
-		panel.add(lblNewLabel_2_1);
+		JLabel enemyMonsterIcon = new JLabel("");
+		enemyMonsterIcon.setIcon(new ImageIcon(Battle.class.getResource("/GUI/images/eagle_resized.jpg")));
+		enemyMonsterIcon.setBounds(185, 46, 60, 60);
+		panel.add(enemyMonsterIcon);
 		
-		JLabel lblNewLabel_1 = new JLabel("miss");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(185, 152, 54, 15);
-		panel.add(lblNewLabel_1);
+		JLabel enemyActionDisplay = new JLabel("miss");
+		enemyActionDisplay.setHorizontalAlignment(SwingConstants.CENTER);
+		enemyActionDisplay.setBounds(185, 152, 54, 15);
+		panel.add(enemyActionDisplay);
 		
-		JLabel lblNewLabel_3 = new JLabel("-35");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setBounds(185, 319, 54, 15);
-		panel.add(lblNewLabel_3);
+		JLabel playerActionDisplay = new JLabel("-35");
+		playerActionDisplay.setHorizontalAlignment(SwingConstants.CENTER);
+		playerActionDisplay.setBounds(185, 319, 54, 15);
+		panel.add(playerActionDisplay);
 		
-		JLabel lblNewLabel_5 = new JLabel("25");
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_5.setBounds(143, 21, 54, 15);
-		panel.add(lblNewLabel_5);
+		JLabel enemyCurrentHealth = new JLabel("25");
+		enemyCurrentHealth.setHorizontalAlignment(SwingConstants.RIGHT);
+		enemyCurrentHealth.setBounds(143, 21, 54, 15);
+		panel.add(enemyCurrentHealth);
 		
-		JLabel lblNewLabel_5_1 = new JLabel("65");
-		lblNewLabel_5_1.setBounds(223, 21, 54, 15);
-		panel.add(lblNewLabel_5_1);
+		JLabel enemyMaxHealth = new JLabel("65");
+		enemyMaxHealth.setBounds(223, 21, 54, 15);
+		panel.add(enemyMaxHealth);
 		
 		JLabel lblNewLabel_6 = new JLabel("/");
 		lblNewLabel_6.setBounds(207, 21, 14, 15);
 		panel.add(lblNewLabel_6);
 		
-		JLabel lblNewLabel_5_2 = new JLabel("45");
-		lblNewLabel_5_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_5_2.setBounds(143, 441, 54, 15);
-		panel.add(lblNewLabel_5_2);
+		JLabel playerCurrentHealth = new JLabel("45");
+		playerCurrentHealth.setHorizontalAlignment(SwingConstants.RIGHT);
+		playerCurrentHealth.setBounds(143, 441, 54, 15);
+		panel.add(playerCurrentHealth);
 		
 		JLabel lblNewLabel_6_1 = new JLabel("/");
 		lblNewLabel_6_1.setBounds(207, 441, 14, 15);
 		panel.add(lblNewLabel_6_1);
 		
-		JLabel lblNewLabel_5_1_1 = new JLabel("77");
-		lblNewLabel_5_1_1.setBounds(223, 441, 54, 15);
-		panel.add(lblNewLabel_5_1_1);
+		JLabel playerMaxHealth = new JLabel("77");
+		playerMaxHealth.setBounds(223, 441, 54, 15);
+		panel.add(playerMaxHealth);
 		
-		JButton btnNewButton = new JButton("Attack");
-		btnNewButton.setBounds(564, 327, 177, 41);
-		frame.getContentPane().add(btnNewButton);
+		JButton attackButton = new JButton("Attack");
+		attackButton.setBounds(564, 327, 177, 41);
+		frame.getContentPane().add(attackButton);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBackground(Color.WHITE);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Small Healing Potion", "Medium Healing Potion", "Large Healing Potion", "Small Attack Potion", "Medium Attack Potion", "Large Attack Potion"}));
-		comboBox.setBounds(564, 378, 177, 23);
-		frame.getContentPane().add(comboBox);
+		JComboBox itemSelectionDropDownBox = new JComboBox();
+		itemSelectionDropDownBox.setBackground(Color.WHITE);
+		itemSelectionDropDownBox.setModel(new DefaultComboBoxModel(new String[] {"Small Healing Potion", "Medium Healing Potion", "Large Healing Potion", "Small Attack Potion", "Medium Attack Potion", "Large Attack Potion"}));
+		itemSelectionDropDownBox.setBounds(564, 378, 177, 23);
+		frame.getContentPane().add(itemSelectionDropDownBox);
 		
-		JLabel lblNewLabel_4 = new JLabel("2");
-		lblNewLabel_4.setBounds(751, 382, 54, 15);
-		frame.getContentPane().add(lblNewLabel_4);
+		JLabel itemQuantity = new JLabel("2");
+		itemQuantity.setBounds(751, 382, 54, 15);
+		frame.getContentPane().add(itemQuantity);
 		
-		JButton btnUseItem = new JButton("Use Item");
-		btnUseItem.setBounds(564, 411, 177, 41);
-		frame.getContentPane().add(btnUseItem);
+		JButton useItemButton = new JButton("Use Item");
+		useItemButton.setBounds(564, 411, 177, 41);
+		frame.getContentPane().add(useItemButton);
 		
-		JButton btnEscapeBattle = new JButton("Escape Battle");
-		btnEscapeBattle.setBounds(564, 484, 177, 41);
-		frame.getContentPane().add(btnEscapeBattle);
+		JButton escapeBattleButton = new JButton("Escape Battle");
+		escapeBattleButton.setBounds(564, 484, 177, 41);
+		frame.getContentPane().add(escapeBattleButton);
 		
-		JButton btnChangeMonster = new JButton("Change Monster");
-		btnChangeMonster.setBounds(564, 276, 177, 41);
-		frame.getContentPane().add(btnChangeMonster);
+		JButton changeMonsterButton = new JButton("Change Monster");
+		changeMonsterButton.setBounds(564, 276, 177, 41);
+		frame.getContentPane().add(changeMonsterButton);
 	}
 }
