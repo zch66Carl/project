@@ -43,84 +43,75 @@ public class MainScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Player 1");
-		lblNewLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel.setBounds(40, 10, 116, 33);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel playerName = new JLabel("Player 1");
+		playerName.setFont(new Font("SimSun", Font.PLAIN, 14));
+		playerName.setBounds(40, 10, 116, 33);
+		frame.getContentPane().add(playerName);
 		
-		JLabel lblNewLabel_1 = new JLabel("Gold");
-		lblNewLabel_1.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(135, 19, 54, 15);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel goldLabel = new JLabel("Gold");
+		goldLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
+		goldLabel.setBounds(135, 19, 54, 15);
+		frame.getContentPane().add(goldLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("500");
-		lblNewLabel_2.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(177, 19, 54, 15);
-		frame.getContentPane().add(lblNewLabel_2);
+		JLabel currentGold = new JLabel("500");
+		currentGold.setFont(new Font("SimSun", Font.PLAIN, 14));
+		currentGold.setBounds(177, 19, 54, 15);
+		frame.getContentPane().add(currentGold);
 		
-		JLabel lblNewLabel_3 = new JLabel("Day");
-		lblNewLabel_3.setFont(new Font("SimSun", Font.PLAIN, 16));
-		lblNewLabel_3.setBounds(444, 18, 54, 15);
-		frame.getContentPane().add(lblNewLabel_3);
+		JLabel dayLabel = new JLabel("Day");
+		dayLabel.setFont(new Font("SimSun", Font.PLAIN, 16));
+		dayLabel.setBounds(444, 18, 54, 15);
+		frame.getContentPane().add(dayLabel);
 		
-		JLabel lblNewLabel_4 = new JLabel("5");
-		lblNewLabel_4.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel_4.setBounds(483, 19, 54, 15);
-		frame.getContentPane().add(lblNewLabel_4);
+		JLabel currentDay = new JLabel("5");
+		currentDay.setFont(new Font("SimSun", Font.PLAIN, 14));
+		currentDay.setBounds(483, 19, 54, 15);
+		frame.getContentPane().add(currentDay);
 		
-		JButton btnNewButton = new JButton("Items");
-		btnNewButton.setFont(new Font("SimSun", Font.PLAIN, 14));
-		btnNewButton.setBounds(40, 88, 165, 66);
-		frame.getContentPane().add(btnNewButton);
+		JButton itemButton = new JButton("Items");
+		itemButton.setFont(new Font("SimSun", Font.PLAIN, 14));
+		itemButton.setBounds(40, 88, 165, 66);
+		frame.getContentPane().add(itemButton);
 		
-		JButton btnTeam = new JButton("Team");
-		btnTeam.setFont(new Font("SimSun", Font.PLAIN, 14));
-		btnTeam.setBounds(230, 88, 165, 66);
-		frame.getContentPane().add(btnTeam);
+		JButton teamButton = new JButton("Team");
+		teamButton.setFont(new Font("SimSun", Font.PLAIN, 14));
+		teamButton.setBounds(230, 88, 165, 66);
+		frame.getContentPane().add(teamButton);
 		
 		JButton btnShop = new JButton("Shop");
 		btnShop.setFont(new Font("SimSun", Font.PLAIN, 14));
 		btnShop.setBounds(422, 88, 165, 66);
 		frame.getContentPane().add(btnShop);
 		
-		JButton btnWildBattle = new JButton("Wild Battle");
-		btnWildBattle.setFont(new Font("SimSun", Font.PLAIN, 14));
-		btnWildBattle.setBounds(40, 187, 165, 66);
-		frame.getContentPane().add(btnWildBattle);
+		JButton battleButton = new JButton("Battle");
+		battleButton.setFont(new Font("SimSun", Font.PLAIN, 14));
+		battleButton.setBounds(144, 187, 165, 66);
+		frame.getContentPane().add(battleButton);
 		
-		JButton btnPlayerBattle = new JButton("Player Battle");
-		btnPlayerBattle.setFont(new Font("SimSun", Font.PLAIN, 14));
-		btnPlayerBattle.setBounds(230, 187, 165, 66);
-		frame.getContentPane().add(btnPlayerBattle);
+		JLabel scoreLabel = new JLabel("Score");
+		scoreLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
+		scoreLabel.setBounds(255, 19, 54, 15);
+		frame.getContentPane().add(scoreLabel);
 		
-		JButton btnNewButton_1 = new JButton("End Game");
-		btnNewButton_1.setBounds(541, 282, 93, 23);
-		frame.getContentPane().add(btnNewButton_1);
-		
-		JLabel lblNewLabel_5 = new JLabel("Score");
-		lblNewLabel_5.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel_5.setBounds(255, 19, 54, 15);
-		frame.getContentPane().add(lblNewLabel_5);
-		
-		JLabel lblNewLabel_5_1 = new JLabel("2350");
-		lblNewLabel_5_1.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel_5_1.setBounds(305, 19, 54, 15);
-		frame.getContentPane().add(lblNewLabel_5_1);
+		JLabel currentScore = new JLabel("2350");
+		currentScore.setFont(new Font("SimSun", Font.PLAIN, 14));
+		currentScore.setBounds(305, 19, 54, 15);
+		frame.getContentPane().add(currentScore);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("of");
 		lblNewLabel_3_1.setFont(new Font("SimSun", Font.PLAIN, 16));
 		lblNewLabel_3_1.setBounds(506, 19, 54, 15);
 		frame.getContentPane().add(lblNewLabel_3_1);
 		
-		JLabel lblNewLabel_4_1 = new JLabel("15");
-		lblNewLabel_4_1.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel_4_1.setBounds(547, 19, 54, 15);
-		frame.getContentPane().add(lblNewLabel_4_1);
+		JLabel totalDays = new JLabel("15");
+		totalDays.setFont(new Font("SimSun", Font.PLAIN, 14));
+		totalDays.setBounds(547, 19, 54, 15);
+		frame.getContentPane().add(totalDays);
 		
-		JButton btnSleep = new JButton("Sleep");
-		btnSleep.setFont(new Font("SimSun", Font.PLAIN, 14));
-		btnSleep.setBounds(422, 187, 165, 66);
-		frame.getContentPane().add(btnSleep);
+		JButton sleepButton = new JButton("Sleep");
+		sleepButton.setFont(new Font("SimSun", Font.PLAIN, 14));
+		sleepButton.setBounds(333, 187, 165, 66);
+		frame.getContentPane().add(sleepButton);
 	}
 
 }

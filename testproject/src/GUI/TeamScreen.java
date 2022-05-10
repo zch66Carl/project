@@ -54,93 +54,93 @@ public class TeamScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Team");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel.setBounds(29, 10, 125, 31);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel teamScreenLabel = new JLabel("Team");
+		teamScreenLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		teamScreenLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
+		teamScreenLabel.setBounds(29, 10, 125, 31);
+		frame.getContentPane().add(teamScreenLabel);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(39, 51, 774, 140);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Active Team");
-		lblNewLabel_1.setBounds(332, 10, 92, 15);
-		lblNewLabel_1.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_1);
+		JLabel activeTeamLabel = new JLabel("Active Team");
+		activeTeamLabel.setBounds(332, 10, 92, 15);
+		activeTeamLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
+		activeTeamLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(activeTeamLabel);
 		
-		JButton btnNewButton = new JButton("Monster 1");
-		btnNewButton.setBounds(29, 47, 126, 49);
-		panel.add(btnNewButton);
+		JButton monsterOneButton = new JButton("Monster 1");
+		monsterOneButton.setBounds(29, 47, 126, 49);
+		panel.add(monsterOneButton);
 		
-		JButton btnMonster = new JButton("Monster 2");
-		btnMonster.setBounds(177, 47, 126, 49);
-		panel.add(btnMonster);
+		JButton monsterTwoButton = new JButton("Monster 2");
+		monsterTwoButton.setBounds(177, 47, 126, 49);
+		panel.add(monsterTwoButton);
 		
-		JButton btnMonster_1 = new JButton("Monster 3");
-		btnMonster_1.setBounds(326, 47, 126, 49);
-		panel.add(btnMonster_1);
+		JButton monsterThreeButton = new JButton("Monster 3");
+		monsterThreeButton.setBounds(326, 47, 126, 49);
+		panel.add(monsterThreeButton);
 		
-		JButton btnMonster_2 = new JButton("Monster 4");
-		btnMonster_2.setBounds(477, 47, 126, 49);
-		panel.add(btnMonster_2);
+		JButton monsterFourButton = new JButton("Monster 4");
+		monsterFourButton.setBounds(477, 47, 126, 49);
+		panel.add(monsterFourButton);
 		
-		JButton btnMonster_3 = new JButton("Monster 5");
-		btnMonster_3.setBounds(638, 47, 126, 49);
-		panel.add(btnMonster_3);
+		JButton monsterFiveButton = new JButton("Monster 5");
+		monsterFiveButton.setBounds(638, 47, 126, 49);
+		panel.add(monsterFiveButton);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBounds(39, 225, 774, 209);
 		frame.getContentPane().add(panel_1);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Backup Monsters");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(304, 10, 148, 15);
-		panel_1.add(lblNewLabel_1_1);
+		JLabel backupMonsterLabel = new JLabel("Backup Monsters");
+		backupMonsterLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		backupMonsterLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
+		backupMonsterLabel.setBounds(304, 10, 148, 15);
+		panel_1.add(backupMonsterLabel);
 		
-		JButton btnNewButton_1 = new JButton("Monster 1");
-		btnNewButton_1.setBounds(29, 47, 126, 49);
-		panel_1.add(btnNewButton_1);
+		JButton backupOneButton = new JButton("Monster 1");
+		backupOneButton.setBounds(29, 47, 126, 49);
+		panel_1.add(backupOneButton);
 		
-		JButton btnMonster_4 = new JButton("Monster 2");
-		btnMonster_4.setBounds(177, 47, 126, 49);
-		panel_1.add(btnMonster_4);
+		JButton backupTwoButton = new JButton("Monster 2");
+		backupTwoButton.setBounds(177, 47, 126, 49);
+		panel_1.add(backupTwoButton);
 		
-		JButton btnMonster_1_1 = new JButton("Monster 3");
-		btnMonster_1_1.setBounds(326, 47, 126, 49);
-		panel_1.add(btnMonster_1_1);
+		JButton backupThreeButton = new JButton("Monster 3");
+		backupThreeButton.setBounds(326, 47, 126, 49);
+		panel_1.add(backupThreeButton);
 		
-		JButton btnMonster_2_1 = new JButton("Monster 4");
-		btnMonster_2_1.setBounds(477, 47, 126, 49);
-		panel_1.add(btnMonster_2_1);
+		JButton backupFourButton = new JButton("Monster 4");
+		backupFourButton.setBounds(477, 47, 126, 49);
+		panel_1.add(backupFourButton);
 		
-		JButton btnMonster_3_1 = new JButton("Monster 5");
-		btnMonster_3_1.setBounds(638, 47, 126, 49);
-		panel_1.add(btnMonster_3_1);
+		JButton backupFiveButton = new JButton("Monster 5");
+		backupFiveButton.setBounds(638, 47, 126, 49);
+		panel_1.add(backupFiveButton);
 		
-		JButton btnNewButton_1_1 = new JButton("Monster 6");
-		btnNewButton_1_1.setBounds(29, 129, 126, 49);
-		panel_1.add(btnNewButton_1_1);
+		JButton backupSixButton = new JButton("Monster 6");
+		backupSixButton.setBounds(29, 129, 126, 49);
+		panel_1.add(backupSixButton);
 		
-		JButton btnMonster_4_1 = new JButton("Monster 7");
-		btnMonster_4_1.setBounds(177, 129, 126, 49);
-		panel_1.add(btnMonster_4_1);
+		JButton backupSevenButton = new JButton("Monster 7");
+		backupSevenButton.setBounds(177, 129, 126, 49);
+		panel_1.add(backupSevenButton);
 		
-		JButton btnMonster_1_1_1 = new JButton("Monster 8");
-		btnMonster_1_1_1.setBounds(326, 129, 126, 49);
-		panel_1.add(btnMonster_1_1_1);
+		JButton backupEightButton = new JButton("Monster 8");
+		backupEightButton.setBounds(326, 129, 126, 49);
+		panel_1.add(backupEightButton);
 		
-		JButton btnMonster_2_1_1 = new JButton("Monster 9");
-		btnMonster_2_1_1.setBounds(477, 129, 126, 49);
-		panel_1.add(btnMonster_2_1_1);
+		JButton backupNineButton = new JButton("Monster 9");
+		backupNineButton.setBounds(477, 129, 126, 49);
+		panel_1.add(backupNineButton);
 		
-		JButton btnMonster_3_1_1 = new JButton("Monster 10");
-		btnMonster_3_1_1.setBounds(638, 129, 126, 49);
-		panel_1.add(btnMonster_3_1_1);
+		JButton backupTenButton = new JButton("Monster 10");
+		backupTenButton.setBounds(638, 129, 126, 49);
+		panel_1.add(backupTenButton);
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {

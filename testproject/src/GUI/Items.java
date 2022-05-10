@@ -44,73 +44,73 @@ public class Items {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Player 1's items");
-		lblNewLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel.setBounds(45, 10, 140, 35);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel itemScreenLabel = new JLabel("Player 1's items");
+		itemScreenLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
+		itemScreenLabel.setBounds(45, 10, 140, 35);
+		frame.getContentPane().add(itemScreenLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Small Healing Potion");
-		lblNewLabel_1.setBounds(45, 55, 128, 35);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel smallHealingPotionLabel = new JLabel("Small Healing Potion");
+		smallHealingPotionLabel.setBounds(45, 55, 128, 35);
+		frame.getContentPane().add(smallHealingPotionLabel);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Medium Healing Potion");
-		lblNewLabel_1_1.setBounds(45, 100, 128, 35);
-		frame.getContentPane().add(lblNewLabel_1_1);
+		JLabel mediumHealingPotionLabel = new JLabel("Medium Healing Potion");
+		mediumHealingPotionLabel.setBounds(45, 100, 128, 35);
+		frame.getContentPane().add(mediumHealingPotionLabel);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Large Healing Potion");
-		lblNewLabel_1_2.setBounds(45, 145, 128, 35);
-		frame.getContentPane().add(lblNewLabel_1_2);
+		JLabel largeHealingPotionLabel = new JLabel("Large Healing Potion");
+		largeHealingPotionLabel.setBounds(45, 145, 128, 35);
+		frame.getContentPane().add(largeHealingPotionLabel);
 		
-		JLabel lblNewLabel_1_3 = new JLabel("Small Attack Potion");
-		lblNewLabel_1_3.setBounds(266, 55, 128, 35);
-		frame.getContentPane().add(lblNewLabel_1_3);
+		JLabel smallAttackPotionLabel = new JLabel("Small Attack Potion");
+		smallAttackPotionLabel.setBounds(266, 55, 128, 35);
+		frame.getContentPane().add(smallAttackPotionLabel);
 		
-		JLabel lblNewLabel_1_4 = new JLabel("Medium Attack Potion");
-		lblNewLabel_1_4.setBounds(266, 100, 128, 35);
-		frame.getContentPane().add(lblNewLabel_1_4);
+		JLabel mediumAttackPotionLabel = new JLabel("Medium Attack Potion");
+		mediumAttackPotionLabel.setBounds(266, 100, 128, 35);
+		frame.getContentPane().add(mediumAttackPotionLabel);
 		
-		JLabel lblNewLabel_1_5 = new JLabel("Large Attack Potion");
-		lblNewLabel_1_5.setBounds(266, 145, 128, 35);
-		frame.getContentPane().add(lblNewLabel_1_5);
+		JLabel largeAttackPotionLabel = new JLabel("Large Attack Potion");
+		largeAttackPotionLabel.setBounds(266, 145, 128, 35);
+		frame.getContentPane().add(largeAttackPotionLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("1");
-		lblNewLabel_2.setBounds(202, 65, 54, 15);
-		frame.getContentPane().add(lblNewLabel_2);
+		JLabel smallHealingPotionAmount = new JLabel("1");
+		smallHealingPotionAmount.setBounds(202, 65, 54, 15);
+		frame.getContentPane().add(smallHealingPotionAmount);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("3");
-		lblNewLabel_2_1.setBounds(202, 110, 54, 15);
-		frame.getContentPane().add(lblNewLabel_2_1);
+		JLabel mediumHealingPotionAmount = new JLabel("3");
+		mediumHealingPotionAmount.setBounds(202, 110, 54, 15);
+		frame.getContentPane().add(mediumHealingPotionAmount);
 		
-		JLabel lblNewLabel_2_2 = new JLabel("5");
-		lblNewLabel_2_2.setBounds(202, 155, 54, 15);
-		frame.getContentPane().add(lblNewLabel_2_2);
+		JLabel largeHealingPotionAmount = new JLabel("5");
+		largeHealingPotionAmount.setBounds(202, 155, 54, 15);
+		frame.getContentPane().add(largeHealingPotionAmount);
 		
-		JLabel lblNewLabel_2_3 = new JLabel("12");
-		lblNewLabel_2_3.setBounds(404, 65, 54, 15);
-		frame.getContentPane().add(lblNewLabel_2_3);
+		JLabel smallAttackPotionAmount = new JLabel("12");
+		smallAttackPotionAmount.setBounds(404, 65, 54, 15);
+		frame.getContentPane().add(smallAttackPotionAmount);
 		
-		JLabel lblNewLabel_2_4 = new JLabel("2");
-		lblNewLabel_2_4.setBounds(404, 110, 54, 15);
-		frame.getContentPane().add(lblNewLabel_2_4);
+		JLabel mediumAttackPotionAmount = new JLabel("2");
+		mediumAttackPotionAmount.setBounds(404, 110, 54, 15);
+		frame.getContentPane().add(mediumAttackPotionAmount);
 		
-		JLabel lblNewLabel_2_5 = new JLabel("0");
-		lblNewLabel_2_5.setBounds(404, 155, 54, 15);
-		frame.getContentPane().add(lblNewLabel_2_5);
+		JLabel largeAttackPotionAmount = new JLabel("0");
+		largeAttackPotionAmount.setBounds(404, 155, 54, 15);
+		frame.getContentPane().add(largeAttackPotionAmount);
 		
-		JLabel lblNewLabel_3 = new JLabel("Special Item");
-		lblNewLabel_3.setBounds(468, 65, 82, 15);
-		frame.getContentPane().add(lblNewLabel_3);
+		JLabel specialItemLabel = new JLabel("Special Item");
+		specialItemLabel.setBounds(468, 65, 82, 15);
+		frame.getContentPane().add(specialItemLabel);
 		
-		JLabel lblNewLabel_4 = new JLabel("2");
-		lblNewLabel_4.setBounds(600, 65, 54, 15);
-		frame.getContentPane().add(lblNewLabel_4);
+		JLabel specialItemAmount = new JLabel("2");
+		specialItemAmount.setBounds(600, 65, 54, 15);
+		frame.getContentPane().add(specialItemAmount);
 		
-		JButton btnNewButton = new JButton("Shop");
-		btnNewButton.setBounds(123, 213, 133, 29);
-		frame.getContentPane().add(btnNewButton);
+		JButton shopButton = new JButton("Shop");
+		shopButton.setBounds(123, 213, 133, 29);
+		frame.getContentPane().add(shopButton);
 		
-		JButton btnExit = new JButton("Back");
-		btnExit.setBounds(417, 213, 133, 29);
-		frame.getContentPane().add(btnExit);
+		JButton backButton = new JButton("Back");
+		backButton.setBounds(417, 213, 133, 29);
+		frame.getContentPane().add(backButton);
 	}
 }
