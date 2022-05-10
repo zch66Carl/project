@@ -2,6 +2,8 @@ package testproject;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import testproject.ItemBuilder.ItemSize;
 import testproject.monsters.Monster;
 
 /**
@@ -22,13 +24,17 @@ public class Generation {
 	}
 	
 	public static Item generateItem(int day, int diff, boolean enemyItem) {
-		ItemBuilder.ItemSize[] itemSize = {ItemBuilder.ItemSize.SMALL, ItemBuilder.ItemSize.MEDIUM, ItemBuilder.ItemSize.LARGE};
-		String[] itemType = {"Healing Item","Stats Item"};
 		Random rand = new Random();
-		if(itemType[rand.nextInt(1)]=="Healing Item") {
-			return ItemBuilder.createHeal(rand.nextInt(20)+10, itemSize[rand.nextInt(2)]);
+		int itemType = rand.nextInt(11);//1/11 chance to generate revive, roughly one every two days, equal chance 5/11 to get heal or buff
+		int itemSize = rand.nextInt(41) + day;//medium most likely, small less likely as days coninue, and large more likely
+		ItemSize size = (itemSize < 15 ? ItemSize.SMALL : (itemSize < 35 ? ItemSize.MEDIUM : ItemSize.LARGE));
+		int price = (size == ItemSize.SMALL ? 5 + day : (size==ItemSize.MEDIUM ? 10 + 2*day : 15 + 3*day));
+		if(itemType<5) return ItemBuilder.createHeal(price, size);
+		else if(itemType<10) return ItemBuilder.createBuff(price, size);
+		else {
+			price = 20 + 3*day;
+			return ItemBuilder.createRevive(price);
 		}
-		return ItemBuilder.createBuff(rand.nextInt(20)+10, itemSize[rand.nextInt(2)]);
 	}
 	
 	public static Player generateEnemyTeam(int day, int diff) {

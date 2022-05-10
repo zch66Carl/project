@@ -2,7 +2,6 @@ package testproject;
 
 import java.util.Random;
 
-import testproject.ItemBuilder.ItemSize;
 import testproject.monsters.FlyingMonster;
 import testproject.monsters.Monster;
 
@@ -17,80 +16,36 @@ public class Shop {
 	}
 	
 	/**
-	 * Refresh available stock to buy
+	 * Refresh available stock to buy - 3  monsters and 9 items
 	 */
 	public void refreshStock(int day, int diff) {
+		//TODO: use random gen 
 		Random rand = new Random();
 		stock[0] = new Monster("Monster 1", rand.nextInt(11)+15, rand.nextInt(21)+35);
 		stock[1] = new Monster("Monster 2", rand.nextInt(11)+15, rand.nextInt(21)+35);
 		stock[2] = new FlyingMonster("Monster 3 (Flying)", rand.nextInt(11)+15, rand.nextInt(21)+35);
-		stock[3] = ItemBuilder.createHeal(rand.nextInt(20)+10, ItemSize.SMALL);
-		stock[4] = ItemBuilder.createHeal(rand.nextInt(20)+10, ItemSize.MEDIUM);
-		stock[5] = ItemBuilder.createHeal(rand.nextInt(20)+10, ItemSize.LARGE);
-		stock[6] = ItemBuilder.createBuff(rand.nextInt(20)+10, ItemSize.SMALL);
-		stock[7] = ItemBuilder.createBuff(rand.nextInt(20)+10, ItemSize.MEDIUM);
-		stock[8] = ItemBuilder.createBuff(rand.nextInt(20)+10, ItemSize.LARGE);
-	}
-	
-	/**
-	 * Adds special items and monsters to the shop's refresh
-	 */
-	public void specialRefresh() {
-		//To be implemented with special monsters and escape rope
+		for(int i=3; i<9; i++) stock[i] = Generation.generateItem(day, diff, false);
 	}
 	
 		
-	public void buyItem(Player player, int itemIndex) {
+	public String buyPurchaseable(Player player, int itemIndex) {
 		int currentGold = player.getGold();
-		int stockQuantity = stock[itemIndex].getQuantity();
-		System.out.println("Current gold " + currentGold);
-		if((currentGold >= stock[itemIndex].getPrice())&&(stock[itemIndex].getQuantity()>0)) {
-			if(itemIndex>=3&&itemIndex<9) {
-				player.addItem((Item)stock[itemIndex]);
-				currentGold -= stock[itemIndex].getPrice();
-				stockQuantity -= 1;
-				stock[itemIndex].setQuantity(stockQuantity);
-				player.setGold(currentGold);
-				System.out.println("Item purchased");
-			}else if(itemIndex>=0 && itemIndex<3) {
-				player.addMonster((Monster)stock[itemIndex]);
-				currentGold -= stock[itemIndex].getPrice();
-				stockQuantity -= 1;
-				stock[itemIndex].setQuantity(stockQuantity);
-				player.setGold(currentGold);
-				System.out.println("Monster Purchased");
-			}
+		if(currentGold >= stock[itemIndex].getPrice()) {
+			player.setGold(currentGold - stock[itemIndex].getPrice()); 
+			if(itemIndex >= 3) player.addItem((Item)stock[itemIndex]);
+			else player.addMonster((Monster)stock[itemIndex]);
+			String ret = "Bought " + stock[itemIndex].getName();
+			stock[itemIndex] = null;
+			return ret;
 		}
+		return "Not enough gold.";
 	}
 	
-	public void sellItem(Player player, Item item) {
-		for(Item items: player.getInventory()) {
-			if(items.equals(item)&&items.getQuantity()>0) {
-				items.setQuantity(items.getQuantity()-1);
-				player.setGold(player.getGold()+items.getPrice());
-			}
-		}
-	}
-	
-	public void sellMonster(Player player, Monster monster) {
-		int sellPrice = monster.getPrice();
-		player.removeMonster(monster);
-		player.setGold(player.getGold()+sellPrice);
-	}
-	
-	public void shop(Player player) {
-		while(true) {
-			Display.displayText("Current stock:", null, null);
-			for(int i=0; i<9; i++) {
-				if(stock[i]==null) continue;
-				Display.displayText(i+1 + ": "+stock[i].getName()+", price "+stock[i].getPrice() + ", quantity "+stock[i].getQuantity(), null, null);
-			}
-			Display.displayText("Enter 0 to return or an index to buy a item or monster:", null, null);
-			int inp = Display.getInput(null);
-			if(inp == 0) return;
-			buyItem(player, inp-1);
-			//TODO: add an option to sell an item/monster
-		}
+	public String sellPurchaseable(Player player, Purchaseable purchase) {
+		player.setGold(player.getGold() + purchase.getSellPrice());
+		if(purchase instanceof Monster) player.removeMonster((Monster) purchase);
+		else player.removeItem((Item) purchase);
+		return "Sold " + purchase.getName() + " for " + purchase.getSellPrice() + " gold.";
 	}
 	
 	
@@ -101,7 +56,6 @@ public class Shop {
 		
 		
 		Player player = new Player("Player 1", 500, team, new ArrayList<Item>());
-		player.setInventory();
 		Shop shop = new Shop();
 		shop.refreshStock(1, 2);
 		
@@ -109,16 +63,15 @@ public class Shop {
 			System.out.println(shop.stock[n]);
 		}
 	
-		shop.buyItem(player, 3);
-		shop.buyItem(player, 2);
-		shop.buyItem(player, 8);
-		shop.buyItem(player, 8);
+		shop.buyPurchaseable(player, 3);
+		shop.buyPurchaseable(player, 2);
+		shop.buyPurchaseable(player, 8);
+		shop.buyPurchaseable(player, 8);
 		System.out.println(player.getInventory());
 		System.out.println(shop.stock[2].getPrice());
 		System.out.println(player.getGold());
 		System.out.println(player);
 		System.out.println(shop.stock[3]);
-		System.out.println(shop.stock[2].getQuantity());
 		
 	}
 	
