@@ -2,7 +2,6 @@ package testproject;
 
 import java.util.ArrayList;
 
-import testproject.items.Item;
 import testproject.monsters.Monster;
 
 /**

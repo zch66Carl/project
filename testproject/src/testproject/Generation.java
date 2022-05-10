@@ -2,9 +2,6 @@ package testproject;
 
 import java.util.ArrayList;
 import java.util.Random;
-import testproject.items.HealingItem;
-import testproject.items.Item;
-import testproject.items.StatsItem;
 import testproject.monsters.Monster;
 
 /**
@@ -25,13 +22,13 @@ public class Generation {
 	}
 	
 	public static Item generateItem(int day, int diff, boolean enemyItem) {
-		String[] itemSize = {"Small","Medium","Large"};
+		ItemBuilder.ItemSize[] itemSize = {ItemBuilder.ItemSize.SMALL, ItemBuilder.ItemSize.MEDIUM, ItemBuilder.ItemSize.LARGE};
 		String[] itemType = {"Healing Item","Stats Item"};
 		Random rand = new Random();
 		if(itemType[rand.nextInt(1)]=="Healing Item") {
-			return new HealingItem(itemSize[rand.nextInt(2)],rand.nextInt(4));
+			return ItemBuilder.createHeal(rand.nextInt(20)+10, itemSize[rand.nextInt(2)]);
 		}
-		return new StatsItem(itemSize[rand.nextInt(2)], rand.nextInt(4));
+		return ItemBuilder.createBuff(rand.nextInt(20)+10, itemSize[rand.nextInt(2)]);
 	}
 	
 	public static Player generateEnemyTeam(int day, int diff) {

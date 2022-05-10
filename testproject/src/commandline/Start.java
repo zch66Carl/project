@@ -1,8 +1,7 @@
 package commandline;
 
 import testproject.GameEnvironment;
-import testproject.items.HealingItem;
-import testproject.items.Item;
+import testproject.ItemBuilder;
 import testproject.monsters.FlyingMonster;
 import testproject.monsters.Monster;
 
@@ -31,7 +30,7 @@ public class Start {
 		if(monst==0) env.getPlayer().addMonster(one);
 		else env.getPlayer().addMonster(two);
 		
-		env.getPlayer().addItem(new HealingItem("Small", 1));
+		env.getPlayer().addItem(ItemBuilder.createHeal(10, ItemBuilder.ItemSize.SMALL));
 		
 		Main mainRun = new Main(env);
 		mainRun.run();

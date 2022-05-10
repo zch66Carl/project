@@ -2,10 +2,7 @@ package testproject;
 
 import java.util.Random;
 
-import testproject.display.Display;
-import testproject.items.HealingItem;
-import testproject.items.Item;
-import testproject.items.StatsItem;
+import testproject.ItemBuilder.ItemSize;
 import testproject.monsters.FlyingMonster;
 import testproject.monsters.Monster;
 
@@ -27,12 +24,12 @@ public class Shop {
 		stock[0] = new Monster("Monster 1", rand.nextInt(11)+15, rand.nextInt(21)+35);
 		stock[1] = new Monster("Monster 2", rand.nextInt(11)+15, rand.nextInt(21)+35);
 		stock[2] = new FlyingMonster("Monster 3 (Flying)", rand.nextInt(11)+15, rand.nextInt(21)+35);
-		stock[3] = new HealingItem("Small", rand.nextInt(5)+1);
-		stock[4] = new HealingItem("Medium",rand.nextInt(5)+1);
-		stock[5] = new HealingItem("Large",rand.nextInt(5)+1);
-		stock[6] = new StatsItem("Small", rand.nextInt(5)+1);
-		stock[7] = new StatsItem("Medium", rand.nextInt(5)+1);
-		stock[8] = new StatsItem("Large", rand.nextInt(5)+1);
+		stock[3] = ItemBuilder.createHeal(rand.nextInt(20)+10, ItemSize.SMALL);
+		stock[4] = ItemBuilder.createHeal(rand.nextInt(20)+10, ItemSize.MEDIUM);
+		stock[5] = ItemBuilder.createHeal(rand.nextInt(20)+10, ItemSize.LARGE);
+		stock[6] = ItemBuilder.createBuff(rand.nextInt(20)+10, ItemSize.SMALL);
+		stock[7] = ItemBuilder.createBuff(rand.nextInt(20)+10, ItemSize.MEDIUM);
+		stock[8] = ItemBuilder.createBuff(rand.nextInt(20)+10, ItemSize.LARGE);
 	}
 	
 	/**

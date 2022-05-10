@@ -1,7 +1,8 @@
 package testproject.monsters;
 
+import java.util.ArrayList;
+
 import testproject.Purchaseable;
-import testproject.display.Display;
 
 /**
  * The Monster class, containing all required information for use in shops, leveling up and battle.
@@ -19,7 +20,8 @@ public class Monster implements Purchaseable{
 	private int level;
 	private int currentXp;
 	private int xpRequired;
-	private int quantity;
+	
+	ArrayList<String> attacks;
 
 	public Monster(String name, int damage, int maxHealth){
 		this.name=name;
@@ -29,9 +31,11 @@ public class Monster implements Purchaseable{
 		level=1;
 		currentXp=0;
 		xpRequired=50;
-		quantity=1;
 		price=50;
 		isAwake=true;
+		
+		attacks = new ArrayList<String>();
+		attacks.add(0, "Basic Attack");
 	}
 	
 	public void setLevel(int level) {
@@ -66,12 +70,6 @@ public class Monster implements Purchaseable{
 			this.setCurrentXp(0);
 			setXpRequired();
 	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity=quantity;
-	}
 	
 	public String getName() {
 		return name;
@@ -97,18 +95,28 @@ public class Monster implements Purchaseable{
 	public int getPrice() {
 		return price;
 	}
+	public int getSellPrice() {
+		return price / 2;
+	}
+	
+	public ArrayList<String> getAttackStrings(){
+		return attacks;
+	}
 	
 	/**
 	 * Deals damage to the Monster, making them faint if health goes below zero.
 	 * @param damageDealt The damage to deal to this Monster.
 	 */
-	public void dealDamage(int damageDealt) {
+	public String dealDamage(int damageDealt) {
+		String ret = new String();
+		ret = "Dealt " + damageDealt + " damage to " + name;
 		health-=damageDealt;
 		if(health<=0) {
 			health=0;
 			isAwake=false;
-			Display.displayText(String.format("%s fainted!", name),null,null);
+			ret += "\n" + name + " fainted!";
 		}
+		return ret;
 	}
 	
 	/**
@@ -138,17 +146,16 @@ public class Monster implements Purchaseable{
 	 * For the base Monster there is only one attack possible, dealing damage to the enemy.
 	 * @param enemy
 	 */
-	public void makeMove(Monster enemy) {
-		Display.displayText(String.format("Dealt %s damage to %s.", damage, enemy.getName()), null, null);
-		enemy.dealDamage(damage);
+	public String makeMove(int move, Monster enemy) {
+		if(move == 0) return enemy.dealDamage(damage);
+		return "";
 	}
 	/**
 	 * Same as makeMove, but makes a random move instead of taking user input.
 	 * @param enemy
 	 */
-	public void makeRandomMove(Monster enemy) {
-		Display.displayText(String.format("%s deals %s damage to %s", name, damage, enemy.getName()), null, null);
-		enemy.dealDamage(damage);
+	public String makeRandomMove(Monster enemy) {
+		return enemy.dealDamage(damage);
 	}
 	
 	/**
@@ -163,6 +170,6 @@ public class Monster implements Purchaseable{
 	 * String representation of the Monster.
 	 */
 	public String toString() {
-		return String.format("%s, health: %s, damage: %s", name, health, damage);
+		return String.format("%s, health: %s, damage: %s, %s", name, health, damage, isAwake ? "awake" : "fainted");
 	}
 }

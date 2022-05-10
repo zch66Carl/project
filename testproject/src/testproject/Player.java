@@ -3,10 +3,6 @@ package testproject;
 import java.util.ArrayList;
 import java.util.Random;
 
-import testproject.display.Display;
-import testproject.items.HealingItem;
-import testproject.items.Item;
-import testproject.items.StatsItem;
 import testproject.monsters.Monster;
 
 /**
@@ -28,10 +24,7 @@ public class Player {
 		this.name=name;
 		this.gold=gold;
 		this.team=team;
-		setInventory();
-		for(Item item : inventory) {
-			addItem(item);
-		}
+		this.inventory = inventory;
 		activeMonsterIndex=0;
 	}
 	
@@ -52,14 +45,6 @@ public class Player {
 	
 	public ArrayList<Monster> getTeam() {
 		return team;
-	}
-	public void setInventory() {
-		inventory.add(new HealingItem("Small",0));
-		inventory.add(new HealingItem("Medium",0));
-		inventory.add(new HealingItem("Large",0));
-		inventory.add(new StatsItem("Small",0));
-		inventory.add(new StatsItem("Medium",0));
-		inventory.add(new StatsItem("Large",0));
 	}
 	
 	
@@ -92,32 +77,15 @@ public class Player {
 	}
 	
 	public void addItem(Item item) {
-		for(Item items: inventory) {
-			int currentQuantity = items.getQuantity();
-			if(items.equals(item)) {
-				currentQuantity += 1;
-				items.setQuantity(currentQuantity);
-			} 
-		}
+		inventory.add(item);
 	}
 	
-	public boolean removeItem(Purchaseable item) {
+	public boolean removeItem(Item item) {
 		if(inventory.contains(item)) {
 			inventory.remove(item);
 			return true;
 		}
 		return false;
-	}
-
-	public void viewInventory() {
-		Display.displayText("Your inventory: ", null, null);
-		for(int i=0; i<inventory.size(); i++) {
-			Display.displayText((i+1)+": "+inventory.get(i).toString(), null, null);
-		}
-		Display.displayText("Enter 0 to return or an item index to use that item.", null, null);
-		int inp = Display.getInput(null);
-		if(inp==0) return;
-		inventory.get(inp).useItem(this, getActiveMonster());
 	}
 	
 	public Monster getActiveMonster() {
@@ -142,47 +110,15 @@ public class Player {
 		return true;
 	}
 	
-	/**
-	 * Takes player input to choose which move to make out of attack, use item, switch monster
-	 *  and flee.
-	 * @param enemy The enemy monster the current move is against.
-	 */
-	public void makeMove(Monster enemy) {
-		Display.displayText("Active Monster is: "+getActiveMonster().toString(), null, null);
-		Display.displayText("Enter 0 to attack, 1 to use an item, or 2 to swap the monster on the field.", null, null);
-		int move = Display.getInput(null);
-		if(move==0) {
-			getActiveMonster().makeMove(enemy);
-		}
-		else if(move==1) {
-			viewInventory();
-		}
-		else if(move==2) {
-			Display.displayText("Options are:", null, null);
-			for(int i=0; i<team.size(); i++) {
-				if(team.get(i).isAwake()) Display.displayText(i+": "+team.get(i).toString(), null, null);
-			}
-			int newActive = Display.getInput(null);
-			if(newActive>0 && newActive<team.size() && team.get(newActive).isAwake()) {
-				activeMonsterIndex=newActive;
-			}
-			else {
-				Display.displayText("Invalid number", null, null);
-			}
-			//TODO: make changing monster remove any status effects from the monster used before such as isFlying.
-		}
-		//TODO: fleeing battle
-	}
 	
 	/**
 	 * Same as makeMove, but randomly chooses an option instead of taking player input.
 	 * @param enemy The enemy monster.
 	 */
-	public void makeRandomMove(Monster enemy) {
+	public String makeRandomMove(Monster enemy) {
 		Random rand = new Random();
-		//TODO
-		Display.displayText("Player.makeRandomMove() Not implemented yet :(", null, null);
-		getActiveMonster().makeRandomMove(enemy);
+		//TODO implement fully
+		return getActiveMonster().makeRandomMove(enemy);
 	}
 	
 	/**
