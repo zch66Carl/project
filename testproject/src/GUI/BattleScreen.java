@@ -6,16 +6,38 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import testproject.GameEnvironment;
+import testproject.monsters.Monster;
+
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
-public class Battle {
+public class BattleScreen {
 
 	private JFrame frame;
+	private GameEnvironment env;
+	
+	public BattleScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
+		initialize();
+		frame.setVisible(true);
+	}
+	
+	public void closeWindow() {
+		frame.dispose();
+	}
+	
+	public void finishedWindow() {
+		env.closeBattleScreen(this);
+	}
 
 	/**
 	 * Launch the application.
@@ -24,7 +46,7 @@ public class Battle {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Battle window = new Battle();
+					BattleScreen window = new BattleScreen();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +58,7 @@ public class Battle {
 	/**
 	 * Create the application.
 	 */
-	public Battle() {
+	public BattleScreen() {
 		initialize();
 	}
 
@@ -61,12 +83,12 @@ public class Battle {
 		panel.setLayout(null);
 		
 		JLabel playerMonsterIcon = new JLabel("");
-		playerMonsterIcon.setIcon(new ImageIcon(Battle.class.getResource("/GUI/images/goat_resized.jpg")));
+		playerMonsterIcon.setIcon(new ImageIcon(BattleScreen.class.getResource("/GUI/images/goat_resized.jpg")));
 		playerMonsterIcon.setBounds(185, 369, 60, 60);
 		panel.add(playerMonsterIcon);
 		
 		JLabel enemyMonsterIcon = new JLabel("");
-		enemyMonsterIcon.setIcon(new ImageIcon(Battle.class.getResource("/GUI/images/eagle_resized.jpg")));
+		enemyMonsterIcon.setIcon(new ImageIcon(BattleScreen.class.getResource("/GUI/images/eagle_resized.jpg")));
 		enemyMonsterIcon.setBounds(185, 46, 60, 60);
 		panel.add(enemyMonsterIcon);
 		
@@ -131,5 +153,11 @@ public class Battle {
 		JButton changeMonsterButton = new JButton("Change Monster");
 		changeMonsterButton.setBounds(564, 276, 177, 41);
 		frame.getContentPane().add(changeMonsterButton);
+		
+		JList<Monster> list = new JList<Monster>();
+		DefaultListModel<Monster> monsterListModel = new DefaultListModel<Monster>();
+		
+		list.setBounds(564, 59, 177, 193);
+		frame.getContentPane().add(list);
 	}
 }

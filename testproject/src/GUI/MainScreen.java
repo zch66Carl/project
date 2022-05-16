@@ -4,12 +4,32 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import testproject.GameEnvironment;
+
 import java.awt.Font;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainScreen {
 
 	private JFrame frame;
+	private GameEnvironment env;
+	
+	public MainScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
+		initialize();
+		frame.setVisible(true);
+	}
+	
+	public void closeWindow() {
+		frame.dispose();
+	}
+	
+	public void finishedWindow() {
+		env.closeMainScreen(this);
+	}
 
 	/**
 	 * Launch the application.
@@ -69,21 +89,45 @@ public class MainScreen {
 		frame.getContentPane().add(currentDay);
 		
 		JButton itemButton = new JButton("Items");
+		itemButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				env.launchItemsScreen();
+				finishedWindow();
+			}
+		});
 		itemButton.setFont(new Font("SimSun", Font.PLAIN, 14));
 		itemButton.setBounds(40, 88, 165, 66);
 		frame.getContentPane().add(itemButton);
 		
 		JButton teamButton = new JButton("Team");
+		teamButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				env.launchTeamScreen();
+				finishedWindow();
+			}
+		});
 		teamButton.setFont(new Font("SimSun", Font.PLAIN, 14));
 		teamButton.setBounds(230, 88, 165, 66);
 		frame.getContentPane().add(teamButton);
 		
 		JButton btnShop = new JButton("Shop");
+		btnShop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				env.launchShopScreen();
+				finishedWindow();
+			}
+		});
 		btnShop.setFont(new Font("SimSun", Font.PLAIN, 14));
 		btnShop.setBounds(422, 88, 165, 66);
 		frame.getContentPane().add(btnShop);
 		
 		JButton battleButton = new JButton("Battle");
+		battleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				env.launchBattleScreen();
+				finishedWindow();
+			}
+		});
 		battleButton.setFont(new Font("SimSun", Font.PLAIN, 14));
 		battleButton.setBounds(144, 187, 165, 66);
 		frame.getContentPane().add(battleButton);
@@ -109,6 +153,11 @@ public class MainScreen {
 		frame.getContentPane().add(totalDays);
 		
 		JButton sleepButton = new JButton("Sleep");
+		sleepButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				env.getPlayer().refreshTeam();
+			}
+		});
 		sleepButton.setFont(new Font("SimSun", Font.PLAIN, 14));
 		sleepButton.setBounds(333, 187, 165, 66);
 		frame.getContentPane().add(sleepButton);

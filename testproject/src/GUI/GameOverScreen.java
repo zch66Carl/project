@@ -5,13 +5,32 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import testproject.GameEnvironment;
+
 import java.awt.Font;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GameOverScreen {
 
 	private JFrame frame;
-
+	private GameEnvironment env;
+	
+	public GameOverScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
+		initialize();
+		frame.setVisible(true);
+	}
+	
+	public void closeWindow() {
+		frame.dispose();
+	}
+	
+	public void finishedWindow() {
+		env.closeGameOverScreen(this);
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -75,11 +94,21 @@ public class GameOverScreen {
 		frame.getContentPane().add(currentGold);
 		
 		JButton restartButton = new JButton("Restart Game");
+		restartButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				finishedWindow();
+			}
+		});
 		restartButton.setFont(new Font("SimSun", Font.PLAIN, 18));
 		restartButton.setBounds(45, 372, 203, 59);
 		frame.getContentPane().add(restartButton);
 		
 		JButton exitGameButton = new JButton("Exit Game");
+		exitGameButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				closeWindow();
+			}
+		});
 		exitGameButton.setFont(new Font("SimSun", Font.PLAIN, 18));
 		exitGameButton.setBounds(421, 372, 203, 59);
 		frame.getContentPane().add(exitGameButton);

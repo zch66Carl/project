@@ -6,15 +6,34 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import testproject.GameEnvironment;
+
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Shop {
+public class ShopScreen {
 
 	private JFrame frame;
-
+	private GameEnvironment env;
+	
+	public ShopScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
+		initialize();
+		frame.setVisible(true);
+	}
+	
+	public void closeWindow() {
+		frame.dispose();
+	}
+	
+	public void finishedWindow() {
+		env.closeShopScreen(this);
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -22,7 +41,7 @@ public class Shop {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Shop window = new Shop();
+					ShopScreen window = new ShopScreen();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +53,7 @@ public class Shop {
 	/**
 	 * Create the application.
 	 */
-	public Shop() {
+	public ShopScreen() {
 		initialize();
 	}
 
@@ -139,6 +158,12 @@ public class Shop {
 		frame.getContentPane().add(buyLabel);
 		
 		JButton inventoryButton = new JButton("Inventory");
+		inventoryButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				env.launchItemsScreen();
+				closeWindow();
+			}
+		});
 		inventoryButton.setBounds(184, 16, 93, 23);
 		frame.getContentPane().add(inventoryButton);
 		
@@ -251,6 +276,11 @@ public class Shop {
 		frame.getContentPane().add(lblNewLabel_9_2);
 		
 		JButton mainScreenButton = new JButton("Main Screen");
+		mainScreenButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				finishedWindow();
+			}
+		});
 		mainScreenButton.setBounds(287, 16, 119, 23);
 		frame.getContentPane().add(mainScreenButton);
 	}

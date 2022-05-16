@@ -7,6 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import testproject.GameEnvironment;
+
 import javax.swing.JProgressBar;
 import javax.swing.JButton;
 import javax.swing.JPopupMenu;
@@ -17,11 +20,27 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TeamScreen {
 
 	private JFrame frame;
-
+	private GameEnvironment env;
+	
+	public TeamScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
+		initialize();
+		frame.setVisible(true);
+	}
+	
+	public void closeWindow() {
+		frame.dispose();
+	}
+	
+	public void finishedWindow() {
+		env.closeTeamScreen(this);
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -141,6 +160,15 @@ public class TeamScreen {
 		JButton backupTenButton = new JButton("Monster 10");
 		backupTenButton.setBounds(638, 129, 126, 49);
 		panel_1.add(backupTenButton);
+		
+		JButton btnNewButton = new JButton("Back");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				finishedWindow();
+			}
+		});
+		btnNewButton.setBounds(362, 456, 132, 43);
+		frame.getContentPane().add(btnNewButton);
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {

@@ -8,6 +8,9 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
+
+import testproject.GameEnvironment;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -18,6 +21,21 @@ public class MonsterScreen {
 
 	private JFrame frame;
 	private JTextField renameMonsterTextBox;
+	private GameEnvironment env;
+	
+	public MonsterScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
+		initialize();
+		frame.setVisible(true);
+	}
+	
+	public void closeWindow() {
+		frame.dispose();
+	}
+	
+	public void finishedWindow() {
+		env.closeMonsterScreen(this);
+	}
 
 	/**
 	 * Launch the application.

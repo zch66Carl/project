@@ -5,13 +5,32 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+
+import testproject.GameEnvironment;
+
 import java.awt.Font;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Items {
+public class ItemScreen {
 
 	private JFrame frame;
-
+	private GameEnvironment env;
+	
+	public ItemScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
+		initialize();
+		frame.setVisible(true);
+	}
+	
+	public void closeWindow() {
+		frame.dispose();
+	}
+	
+	public void finishedWindow() {
+		env.closeItemsScreen(this);
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -19,7 +38,7 @@ public class Items {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Items window = new Items();
+					ItemScreen window = new ItemScreen();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +50,7 @@ public class Items {
 	/**
 	 * Create the application.
 	 */
-	public Items() {
+	public ItemScreen() {
 		initialize();
 	}
 
@@ -106,10 +125,21 @@ public class Items {
 		frame.getContentPane().add(specialItemAmount);
 		
 		JButton shopButton = new JButton("Shop");
+		shopButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				env.launchShopScreen();
+				closeWindow();
+			}
+		});
 		shopButton.setBounds(123, 213, 133, 29);
 		frame.getContentPane().add(shopButton);
 		
 		JButton backButton = new JButton("Back");
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				finishedWindow();
+			}
+		});
 		backButton.setBounds(417, 213, 133, 29);
 		frame.getContentPane().add(backButton);
 	}
