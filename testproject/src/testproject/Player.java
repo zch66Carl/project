@@ -98,6 +98,7 @@ public class Player {
 	 * @return Returns true if there is at least one monster in the team still able to fight.
 	 */
 	public boolean checkIfActiveMonster() {
+		if(team.size()==0) return false;
 		if(!team.get(activeMonsterIndex).isAwake()) {
 			for(int i=0; i<team.size(); i++) {
 				if(team.get(i).isAwake()) {

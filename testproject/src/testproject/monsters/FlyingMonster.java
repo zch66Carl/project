@@ -10,8 +10,8 @@ import java.util.Random;
 public class FlyingMonster extends Monster {
 	private boolean isFlying;
 	
-	public FlyingMonster(String name, int damage, int maxHealth) {
-		super(name, damage, maxHealth);
+	public FlyingMonster(String name, int startLevel) {
+		super(name, startLevel);
 		isFlying=false;
 		super.getAttackStrings().add(1, "Fly");
 	}

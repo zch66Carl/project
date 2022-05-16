@@ -1,6 +1,7 @@
 package testproject.monsters;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import testproject.Purchaseable;
 
@@ -12,26 +13,35 @@ import testproject.Purchaseable;
  */
 public class Monster implements Purchaseable{
 	private String name;
+	private int price;
+	
 	private int damage;
 	private int maxHealth;
 	private int health;
-	private int price;
 	private boolean isAwake;
+	
+	private int maxLevel = 35;//max level is maxDays(25)+2(hard diff)+5(wild monster) + 3 for safety.
+	private int rewardXP = 5;
+	private int[] xpRequired = {5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 10, 10, 15, 15, 15, 15, 15, 15, 15, 15, 15, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20};
+	private int[] levelDamage    = {5,  8,  11, 15, 20, 25, 30,  36,  42,  48,  54,  60,  66,  72,  78,  84,  90,  98,  106, 112, 120, 130, 140, 150, 160, 170, 180, 190, 200, 215, 230,  245,  260,  280,  300};
+	private int[] levelMaxHealth = {20, 30, 45, 60, 75, 90, 110, 130, 150, 170, 190, 220, 250, 290, 320, 350, 380, 410, 430, 470, 510, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1200, 1250};
 	private int level;
-	private int currentXp;
-	private int xpRequired;
+	private int xp;
 	
 	ArrayList<String> attacks;
 
-	public Monster(String name, int damage, int maxHealth){
+	public Monster(String name, int startLevel){
 		this.name=name;
-		this.damage=damage;
-		this.maxHealth=maxHealth;
+		
+		level=startLevel;
+		xp=0;
+		Random rand = new Random();
+		damage = levelDamage[level] + rand.nextInt(6)-2;
+		maxHealth = levelMaxHealth[level] + rand.nextInt(6) - 2;
 		health=maxHealth;
-		level=1;
-		currentXp=0;
-		xpRequired=50;
-		price=50;
+		
+		price = 3*level + rand.nextInt(5);
+		
 		isAwake=true;
 		
 		attacks = new ArrayList<String>();
@@ -46,29 +56,23 @@ public class Monster implements Purchaseable{
 		return level;
 	}
 	
-	public void setCurrentXp(int xp) {
-		currentXp = xp;
+	public void reward() {
+		xp += rewardXP;
 	}
 	
-	public int getCurrentXp() {
-		return currentXp;
-	}
-	
-	public void setXpRequired() {
-		xpRequired += 30*level;
-	}
-	
-	public int getXpRequired() {
-		return xpRequired;
-	}
-	
-	public void levelUp() {
-			this.level+=1;
-			this.damage+=5;
-			this.maxHealth+=15;
-			rest();
-			this.setCurrentXp(0);
-			setXpRequired();
+	public String levelUpCheck() {
+			if(xp < xpRequired[level]) return null;
+			xp = 0;
+			if(level==maxLevel-1) return null;
+			level++;
+			Random rand = new Random();
+			damage = levelDamage[level] + rand.nextInt(6)-2;
+			maxHealth = levelMaxHealth[level] + rand.nextInt(6)-2;
+			health = maxHealth;
+			
+			price += rand.nextInt(4) + 1;
+			
+			return name + " levelled up! " + "level: " + level + ", damage: " + damage + ", health: " + maxHealth;
 	}
 	
 	public String getName() {

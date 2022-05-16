@@ -75,8 +75,14 @@ public class GameEnvironment {
 		updateBattles();
 	}
 	
-	public void postDayLogic() {
+	public ArrayList<String> postDayLogic() {
+		ArrayList<String> ret = new ArrayList<String>();
+		for(Monster monst : player.getTeam()) {
+			String tmp = monst.levelUpCheck();
+			if(tmp!=null) ret.add(tmp);
+		}
 		//TODO: random events
 		//TODO: return Array of String messages about random events to display.
+		return ret;
 	}
 }

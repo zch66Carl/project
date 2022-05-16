@@ -91,7 +91,9 @@ public class BattleCommandLine {
 		
 		if(outcome) {
 			IO.textOut("You won!");
-			//TODO: reward - xp and gold etc.
+			for(Monster monst : pla.getTeam()) {
+				monst.reward();
+			}
 			if(isWildBattle) {
 				wildMonster.rest();
 				pla.addMonster(wildMonster);

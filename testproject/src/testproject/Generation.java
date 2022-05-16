@@ -14,13 +14,22 @@ public class Generation {
 	private static int uniqueName = 101;
 	
 	public static Monster generateMonster(int day, int diff, boolean isPlayerMonster, boolean isWildMonster) {
+		int level = day;
+		if(!isPlayerMonster) {
+			level+=diff-2;//-1 from player if easy, same if normal, +1 if hard.
+		}
+		if(isWildMonster) {
+			level+=5;//wild monster should be quite high level
+		}
 		String[] descriptive = {"Fiery","Glowing","Prismatic","Bold","Ebony","Emerald","Golden","Ivory","Scarlet",
 								"Violet","Icy","Azure"};
 		String[] types = {"Goat","Eagle","Fox","Bat","Lion","Owl","Wolf","Rhino"};
 		Random rand = new Random();
 		String name = descriptive[rand.nextInt(12)]+" "+types[rand.nextInt(7)];
 		
-		return new Monster(name, 10, 30);
+		//TODO: decide specific type of monster, store names in monster classes e.g. so OWL is always a flying monster
+		
+		return new Monster(name, level);
 	}
 	
 	public static Item generateItem(int day, int diff, boolean enemyItem) {

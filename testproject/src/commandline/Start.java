@@ -2,7 +2,6 @@ package commandline;
 
 import testproject.GameEnvironment;
 import testproject.ItemBuilder;
-import testproject.monsters.FlyingMonster;
 import testproject.monsters.Monster;
 
 public class Start {
@@ -21,8 +20,8 @@ public class Start {
 		env.getPlayer().setName(name);
 		
 		//select starting monster.
-		Monster one = new Monster("Basic", 10, 30);
-		Monster two = new FlyingMonster("Flying", 5, 30);
+		Monster one = new Monster("one", 1);
+		Monster two = new Monster("two", 1);
 		IO.textOut("Choose a starting monster:");
 		IO.textOut("0 "+one.toString());
 		IO.textOut("1 "+two.toString());

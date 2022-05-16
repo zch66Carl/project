@@ -1,8 +1,6 @@
 package testproject;
 
-import java.util.Random;
 
-import testproject.monsters.FlyingMonster;
 import testproject.monsters.Monster;
 
 import java.util.ArrayList;
@@ -19,11 +17,7 @@ public class Shop {
 	 * Refresh available stock to buy - 3  monsters and 9 items
 	 */
 	public void refreshStock(int day, int diff) {
-		//TODO: use random gen 
-		Random rand = new Random();
-		stock[0] = new Monster("Monster 1", rand.nextInt(11)+15, rand.nextInt(21)+35);
-		stock[1] = new Monster("Monster 2", rand.nextInt(11)+15, rand.nextInt(21)+35);
-		stock[2] = new FlyingMonster("Monster 3 (Flying)", rand.nextInt(11)+15, rand.nextInt(21)+35);
+		for(int i=0; i<3; i++) stock[i] = Generation.generateMonster(day, diff, true, false);
 		for(int i=3; i<9; i++) stock[i] = Generation.generateItem(day, diff, false);
 	}
 	
@@ -52,7 +46,7 @@ public class Shop {
 	public static void main(String[] arg) {
 		ArrayList<Monster> team = new ArrayList<Monster>();
 		
-		team.add(new Monster("Tiger", 26, 75));
+		team.add(new Monster("Tiger", 3));
 		
 		
 		Player player = new Player("Player 1", 500, team, new ArrayList<Item>());

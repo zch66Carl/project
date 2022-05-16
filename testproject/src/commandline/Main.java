@@ -1,5 +1,7 @@
 package commandline;
 
+import java.util.ArrayList;
+
 import testproject.GameEnvironment;
 import testproject.Player;
 
@@ -40,9 +42,18 @@ public class Main {
 				}
 				else break;
 			}
-			env.postDayLogic();
-			//TODO: check for random events and display info.
+			
 			IO.textOut("Day "+day+" over.");
+			ArrayList<String> overnightMessages = env.postDayLogic();
+			if(overnightMessages.size() > 0) {
+				IO.textOut("Overnight:");
+				for(String str : overnightMessages) {
+					IO.textOut(str);
+				}
+			}
+			else {
+				IO.textOut("It was a quiet night.");
+			}
 		}
 		GameOverCommandLine gameOver = new GameOverCommandLine();
 		gameOver.run(env);
