@@ -15,6 +15,7 @@ import testproject.monsters.Monster;
 public class Player {
 	private String name;
 	private int gold;
+	private int score;
 	private ArrayList<Monster> team = new ArrayList<Monster>();
 	private ArrayList<Item> inventory = new ArrayList<Item>();
 	private int activeMonsterIndex;
@@ -23,6 +24,7 @@ public class Player {
 	public Player(String name, int gold, ArrayList<Monster> team, ArrayList<Item> inventory) {
 		this.name=name;
 		this.gold=gold;
+		this.score = 0;
 		this.team=team;
 		this.inventory = inventory;
 		activeMonsterIndex=0;
@@ -43,6 +45,10 @@ public class Player {
 		return gold;
 	}
 	
+	public int getScore() {
+		return score;
+	}
+	
 	public ArrayList<Monster> getTeam() {
 		return team;
 	}
@@ -54,6 +60,7 @@ public class Player {
 	
 	public void setActiveMonsterIndex(int index) {
 		activeMonsterIndex = index;
+		team.get(index).setWasActiveDuringBattle(true);
 	}
 	
 	public int getActiveMonsterIndex() {
@@ -103,6 +110,7 @@ public class Player {
 			for(int i=0; i<team.size(); i++) {
 				if(team.get(i).isAwake()) {
 					activeMonsterIndex=i;
+					team.get(i).setWasActiveDuringBattle(true);
 					return true;
 				}
 			}
@@ -111,6 +119,22 @@ public class Player {
 		return true;
 	}
 	
+	
+	public void preBattle() {
+		for(Monster monst : team) {
+			monst.setWasActiveDuringBattle(false);
+		}
+	}
+	
+	public void rewardPostBattle(int day, int diff, boolean wasWildBattle) {
+		for(Monster monst : team) {
+			monst.reward();
+		}
+		score += 10 * diff;
+		if(!wasWildBattle) {
+			gold += 10 + day + 5 * diff;
+		}
+	}
 	
 	/**
 	 * Same as makeMove, but randomly chooses an option instead of taking player input.
@@ -135,10 +159,6 @@ public class Player {
 	 * String representation of the player name and all the Monsters in the players team.
 	 */
 	public String toString() {
-		String monstersString = new String();
-		for(Monster m : team) monstersString+=m.toString()+"\n";
-		return String.format("Player: %s\n"
-				+ "Monsters:\n"
-				+ "%s", name, monstersString);
+		return name + ", gold: " + gold + ", score: " + score + ", team size: " + team.size() + ".";
 	}
 }

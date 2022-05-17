@@ -20,8 +20,11 @@ public class Monster implements Purchaseable{
 	private int health;
 	private boolean isAwake;
 	
+	private boolean wasActiveDuringBattle;
+	
 	private int maxLevel = 35;//max level is maxDays(25)+2(hard diff)+5(wild monster) + 3 for safety.
-	private int rewardXP = 5;
+	private int rewardXP = 6;
+	private int passiveXP = 3;//was part of battle but wasn't active
 	private int[] xpRequired = {5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 10, 10, 15, 15, 15, 15, 15, 15, 15, 15, 15, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20};
 	private int[] levelDamage    = {5,  8,  11, 15, 20, 25, 30,  36,  42,  48,  54,  60,  66,  72,  78,  84,  90,  98,  106, 112, 120, 130, 140, 150, 160, 170, 180, 190, 200, 215, 230,  245,  260,  280,  300};
 	private int[] levelMaxHealth = {20, 30, 45, 60, 75, 90, 110, 130, 150, 170, 190, 220, 250, 290, 320, 350, 380, 410, 430, 470, 510, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1200, 1250};
@@ -48,6 +51,13 @@ public class Monster implements Purchaseable{
 		attacks.add(0, "Basic Attack");
 	}
 	
+	public void setWasActiveDuringBattle(boolean newBool) {
+		wasActiveDuringBattle = newBool;
+	}
+	public boolean getWasAciveDuringBattle() {
+		return wasActiveDuringBattle;
+	}
+	
 	public void setLevel(int level) {
 		this.level = level;
 	}
@@ -57,7 +67,8 @@ public class Monster implements Purchaseable{
 	}
 	
 	public void reward() {
-		xp += rewardXP;
+		if(wasActiveDuringBattle) xp += rewardXP;
+		else xp += passiveXP;
 	}
 	
 	public String levelUpCheck() {
@@ -174,6 +185,6 @@ public class Monster implements Purchaseable{
 	 * String representation of the Monster.
 	 */
 	public String toString() {
-		return String.format("%s, health: %s, damage: %s, %s", name, health, damage, isAwake ? "awake" : "fainted");
+		return String.format("%s, health: %s/%s, damage: %s, level: %s, %s", name, health, maxHealth, damage, level, isAwake ? "awake." : "fainted.");
 	}
 }

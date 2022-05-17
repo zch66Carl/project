@@ -91,13 +91,12 @@ public class BattleCommandLine {
 		
 		if(outcome) {
 			IO.textOut("You won!");
-			for(Monster monst : pla.getTeam()) {
-				monst.reward();
-			}
 			if(isWildBattle) {
 				wildMonster.rest();
+				IO.textOut(wildMonster.getName() + " joins your team!");
 				pla.addMonster(wildMonster);
 			}
+			pla.rewardPostBattle(env.getCurDay(), env.getDifficulty(), isWildBattle);
 		}
 		else {
 			if(isWildBattle) IO.textOut(wildMonster.getName() + " eliminated your entire team! So Powerful");

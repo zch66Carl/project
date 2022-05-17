@@ -16,7 +16,8 @@ public class Main {
 	public void run() {
 		for(day = 1; day<=env.getNumDays(); day++) {
 			env.preDayLogic(day);
-			IO.textOut("Day "+day+":");
+			IO.textOut("Day "+day+", " + (env.getNumDays() - day + 1) + " days remaining.");
+			IO.textOut(env.getPlayer().toString());
 			while(true) {
 				//options: choose and fight a battle, shop, view and use items, view, rename and reorder monster
 				//			and end day

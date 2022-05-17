@@ -40,6 +40,9 @@ public class GameEnvironment {
 	public int getNumDays() {
 		return numDays;
 	}
+	public int getCurDay() {
+		return curDay;
+	}
 	public void setDifficulty(int newDiff) {
 		difficulty = newDiff;
 	}
