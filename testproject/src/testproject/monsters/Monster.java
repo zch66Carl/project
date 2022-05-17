@@ -43,7 +43,7 @@ public class Monster implements Purchaseable{
 		maxHealth = levelMaxHealth[level] + rand.nextInt(6) - 2;
 		health=maxHealth;
 		
-		price = 3*level + rand.nextInt(5);
+		price = 3*level + rand.nextInt(8);
 		
 		isAwake=true;
 		

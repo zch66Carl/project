@@ -95,6 +95,7 @@ public class BattleCommandLine {
 				wildMonster.rest();
 				IO.textOut(wildMonster.getName() + " joins your team!");
 				pla.addMonster(wildMonster);
+				TeamSizeLimit.check(pla);
 			}
 			pla.rewardPostBattle(env.getCurDay(), env.getDifficulty(), isWildBattle);
 		}

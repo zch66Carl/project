@@ -159,6 +159,6 @@ public class Player {
 	 * String representation of the player name and all the Monsters in the players team.
 	 */
 	public String toString() {
-		return name + ", gold: " + gold + ", score: " + score + ", team size: " + team.size() + ".";
+		return name + ", gold: " + gold + ", score: " + score + ", team size: " + team.size() + "/4.";
 	}
 }

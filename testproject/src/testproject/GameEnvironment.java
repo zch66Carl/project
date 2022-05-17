@@ -121,7 +121,8 @@ public class GameEnvironment {
 		else wildMonster=null;
 		
 		battles.clear();
-		for(int i=0; i<3; i++) {
+		int numBattles = 3 + curDay / 6; //3 battles on first 5 days, 4 on days 6-11, 5 on rest (max day 15)
+		for(int i=0; i<numBattles; i++) {
 			battles.add(Generation.generateEnemyTeam(curDay, difficulty));
 		}
 	}

@@ -11,7 +11,6 @@ import testproject.monsters.Monster;
  *
  */
 public class Generation {
-	private static int uniqueName = 101;
 	
 	public static Monster generateMonster(int day, int diff, boolean isPlayerMonster, boolean isWildMonster) {
 		int level = day;
@@ -36,6 +35,7 @@ public class Generation {
 		Random rand = new Random();
 		int itemType = rand.nextInt(11);//1/11 chance to generate revive, roughly one every two days, equal chance 5/11 to get heal or buff
 		int itemSize = rand.nextInt(41) + day;//medium most likely, small less likely as days coninue, and large more likely
+		if(enemyItem) itemSize += 5;//Makes better items more common for enemies.
 		ItemSize size = (itemSize < 15 ? ItemSize.SMALL : (itemSize < 35 ? ItemSize.MEDIUM : ItemSize.LARGE));
 		int price = (size == ItemSize.SMALL ? 5 + day : (size==ItemSize.MEDIUM ? 10 + 2*day : 15 + 3*day));
 		if(itemType<5) return ItemBuilder.createHeal(price, size);
@@ -48,8 +48,22 @@ public class Generation {
 	
 	public static Player generateEnemyTeam(int day, int diff) {
 		ArrayList<Monster> mon = new ArrayList<Monster>();
-		mon.add(generateMonster(day, diff, false, false));
-		mon.add(generateMonster(day, diff, false, false));
-		return new Player("bob"+uniqueName++, 0, mon, new ArrayList<Item>());
+		int numMonsters = 2 + day / 6;//team size of 2 untill day 5, 3 from 6-11,4 from 12 to 15
+		for(int i=0; i<numMonsters; i++) {
+			mon.add(Generation.generateMonster(day, diff, false, false));
+		}
+		
+		ArrayList<Item> items = new ArrayList<Item>();
+		int numItems = 1 + day / 4; //1 from 1-3, 2 from 4-7, 3 from 8-11, 4 from 12-15
+		for(int i=0; i<numItems; i++) {
+			items.add(Generation.generateItem(day, diff, true));
+		}
+		
+		Random rand = new Random();
+		String[] descriptors = {"Dangerous", "Goofy", "Deadly", "Cheeky", "Dastardly", "Venemous", "Sneaky", "Furious"};
+		String[] names = {"Dave", "Emily", "Bob", "Robert", "Janus", "John", "Philip", "Steve", "Lisa", "Caroline"};
+		String name = descriptors[rand.nextInt(descriptors.length)] + " " +names[rand.nextInt(names.length)];
+		
+		return new Player(name, 0, mon, items);
 	}
 }

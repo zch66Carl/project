@@ -18,7 +18,7 @@ public class ShopCommandLine {
 		}
 		
 		IO.textOut("Current inventory:");
-		for(int i=0; i<inv.size(); i++) IO.textOut((i+1) + ": " + inv.get(i).getName() +", sell price: " + inv.get(i).getSellPrice());
+		for(int i=0; i<inv.size(); i++) IO.textOut((i+1) + ": " + inv.get(i).toString() +", sell price: " + inv.get(i).getSellPrice());
 		IO.textOut("Enter 0 to return to shop or an item index to sell that item:");
 		int inp = IO.getInt(0, inv.size());
 		if(inp == 0) return;
@@ -67,7 +67,7 @@ public class ShopCommandLine {
 			
 			IO.textOut("Current stock:");
 			for(int i=0;i<stock.size(); i++) {
-				IO.textOut((i+1) + ": " + stock.get(i).getName() + ", price: " + stock.get(i).getPrice());
+				IO.textOut((i+1) + ": " + stock.get(i).toString() + ", price: " + stock.get(i).getPrice());
 			}
 			
 			IO.textOut("Enter 0 to exit shop, an index to buy an item or " + (stock.size() + 1) + " to sell a monster or an item.");
@@ -75,6 +75,7 @@ public class ShopCommandLine {
 			if(inp==0) return;
 			if(inp==stock.size()+1) sell(pla, shop);
 			else IO.textOut(shop.buyPurchaseable(pla, indices.get(inp - 1)));
+			TeamSizeLimit.check(pla);
 		}
 	}
 }

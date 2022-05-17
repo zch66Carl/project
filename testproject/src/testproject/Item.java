@@ -78,6 +78,8 @@ public class Item implements Purchaseable{
 	}
 	
 	public String toString() {
-		return String.format("%s, price %d", name, price);
+		if(isRevive) return name;
+		if(healAmount > 0) return name + ", heal amount: " + healAmount;
+		return name + ", damage buff: " + buffAmount;
 	}
 }
