@@ -12,6 +12,7 @@ public class BattleCommandLine {
 		Player pla = env.getPlayer();
 		while(true) {
 			IO.textOut("Active Monster is: "+pla.getActiveMonster().toString());
+			IO.textOut("Enemy monster is: " + enemy.toString());
 			IO.textOut("Enter 0 to attack, 1 to use an item, 2 to swap the monster on the field or 3 to flee the battle.");
 			int move = IO.getInt(0, 3);
 			if(move==0) {
@@ -63,7 +64,7 @@ public class BattleCommandLine {
 		boolean outcome = false;
 		
 		if(isWildBattle) IO.textOut("Wild "+wildMonster.getName()+" appears!");
-		else IO.textOut("Enemy team "+enemyTeam.getName() + " appears, battle start!");
+		else IO.textOut("Enemy team led by "+enemyTeam.getName() + " appears, battle start!");
 				
 		while(true) {
 			if(!pla.checkIfActiveMonster()) {
@@ -89,6 +90,7 @@ public class BattleCommandLine {
 			IO.textOut(isWildBattle ? wildMonster.makeRandomMove(plaMonst) : enemyTeam.makeRandomMove(plaMonst));
 		}
 		
+		
 		if(outcome) {
 			IO.textOut("You won!");
 			if(isWildBattle) {
@@ -103,7 +105,8 @@ public class BattleCommandLine {
 			if(isWildBattle) IO.textOut(wildMonster.getName() + " eliminated your entire team! So Powerful");
 			else IO.textOut(enemyTeam.getName() + " won!");
 		}
-		//TODO: refresh enemy?
+		if(isWildBattle) wildMonster.rest();
+		else enemyTeam.refreshTeam();
 		return outcome;
 	}
 }

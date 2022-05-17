@@ -1,6 +1,7 @@
 package testproject;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import GUI.*;
 import testproject.monsters.Monster;
@@ -140,8 +141,27 @@ public class GameEnvironment {
 			String tmp = monst.levelUpCheck();
 			if(tmp!=null) ret.add(tmp);
 		}
-		//TODO: random events
-		//TODO: return Array of String messages about random events to display.
+		
+		Random rand = new Random();
+		if(player.getTeam().size()<=2 && rand.nextInt(10)==0) {//one tenth chance of gaining monster
+			Monster joining = Generation.generateMonster(curDay, difficulty, true, false);
+			player.addMonster(joining);
+			ret.add(joining.getName() + " joined the team!");
+		}
+		else if(player.getTeam().size()>2) {
+			for(Monster monst : player.getTeam()) {
+				int chance = 15;// 1/15 chance of monster leaving
+				if(!monst.isAwake()) chance = 10;// 1/10 chance if monster fainted during today and wasn't revived
+				if(rand.nextInt(chance) == 0) {
+					ret.add(monst.getName() + " got tired of fighting and retired.");
+					player.removeMonster(monst);
+					break;
+				}
+			}
+		}
+		
+		player.refreshTeam();
+		
 		return ret;
 	}
 	

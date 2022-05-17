@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import testproject.GameEnvironment;
 import testproject.Player;
+import testproject.monsters.Monster;
 
 public class Main {
 	private int day;
@@ -61,6 +62,10 @@ public class Main {
 	}
 	
 	private void chooseBattle() {
+		if(!env.getPlayer().checkIfActiveMonster()) {
+			IO.textOut("Can not fight any battle since your team are all fainted.");
+		}
+		
 		IO.textOut("Choose which battle to fight.");
 		int i=0;
 		for(Player enemy : env.getBattles()) IO.textOut((i++) + ": " + enemy.getName());
@@ -73,6 +78,10 @@ public class Main {
 		if(battle.run(env, wild, choice)) {
 			if(wild) env.setWildBattleMonster(null);
 			else env.getBattles().remove(choice);
+		}
+		IO.textOut("Team status:");
+		for(Monster monst : env.getPlayer().getTeam()) {
+			IO.textOut(monst.toString());
 		}
 	}
 }
