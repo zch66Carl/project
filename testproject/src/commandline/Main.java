@@ -19,6 +19,7 @@ public class Main {
 			env.preDayLogic(day);
 			IO.textOut("Day "+day+", " + (env.getNumDays() - day + 1) + " days remaining.");
 			IO.textOut(env.getPlayer().toString());
+			boolean gameOver = false;
 			while(true) {
 				//options: choose and fight a battle, shop, view and use items, view, rename and reorder monster
 				//			and end day
@@ -28,7 +29,8 @@ public class Main {
 				IO.textOut("2: view inventory.");
 				IO.textOut("3: view team.");
 				IO.textOut("4: end day.");
-				int option = IO.getInt(0, 4);
+				IO.textOut("5: end game.");
+				int option = IO.getInt(0, 5);
 				if(option==0) chooseBattle();
 				else if(option==1) {
 					ShopCommandLine shop = new ShopCommandLine();
@@ -42,8 +44,19 @@ public class Main {
 					TeamCommandLine tea = new TeamCommandLine();
 					tea.run(env);
 				}
-				else break;
+				else if(option==4) break;
+				else {
+					IO.textOut("Are you sure you want to end the game now? Enter 0 to cancel or 1 to end the game.");
+					int inp = IO.getInt(0, 1);
+					if(inp==0) continue;
+					else {
+						gameOver = true;
+						break;
+					}
+				}
 			}
+			
+			if(gameOver) break;
 			
 			IO.textOut("Day "+day+" over.");
 			ArrayList<String> overnightMessages = env.postDayLogic();
@@ -57,6 +70,7 @@ public class Main {
 				IO.textOut("It was a quiet night.");
 			}
 		}
+		
 		GameOverCommandLine gameOver = new GameOverCommandLine();
 		gameOver.run(env);
 	}

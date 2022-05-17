@@ -8,6 +8,11 @@ public class Shop {
 	/**
 	 * Shop for player to buy/sell items and monsters
 	 */
+	private int spentGold = 0;
+	public int getGoldSpent() {
+		return spentGold;
+	}
+	
 	private Purchaseable[] stock = new Purchaseable[9];
 	public Purchaseable[] getStock() {
 		return stock;
@@ -26,6 +31,7 @@ public class Shop {
 		int currentGold = player.getGold();
 		if(currentGold >= stock[itemIndex].getPrice()) {
 			player.setGold(currentGold - stock[itemIndex].getPrice()); 
+			spentGold += stock[itemIndex].getPrice();
 			if(itemIndex >= 3) player.addItem((Item)stock[itemIndex]);
 			else player.addMonster((Monster)stock[itemIndex]);
 			String ret = "Bought " + stock[itemIndex].getName();
