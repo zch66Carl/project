@@ -69,7 +69,7 @@ public class MonsterScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel monsterName = new JLabel("Eagle");
+		JLabel monsterName = new JLabel(env.getPlayer().getTeam().get(0).getName());
 		monsterName.setFont(new Font("SimSun", Font.PLAIN, 14));
 		monsterName.setHorizontalAlignment(SwingConstants.CENTER);
 		monsterName.setBounds(201, 10, 119, 33);

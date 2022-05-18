@@ -5,13 +5,19 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 import testproject.GameEnvironment;
+import testproject.Purchaseable;
 
 import java.awt.Font;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 public class ItemScreen {
 
@@ -63,66 +69,10 @@ public class ItemScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel itemScreenLabel = new JLabel("Player 1's items");
+		JLabel itemScreenLabel = new JLabel(env.getPlayer().getName()+"'s items");
 		itemScreenLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
-		itemScreenLabel.setBounds(45, 10, 140, 35);
+		itemScreenLabel.setBounds(55, 10, 140, 35);
 		frame.getContentPane().add(itemScreenLabel);
-		
-		JLabel smallHealingPotionLabel = new JLabel("Small Healing Potion");
-		smallHealingPotionLabel.setBounds(45, 55, 128, 35);
-		frame.getContentPane().add(smallHealingPotionLabel);
-		
-		JLabel mediumHealingPotionLabel = new JLabel("Medium Healing Potion");
-		mediumHealingPotionLabel.setBounds(45, 100, 128, 35);
-		frame.getContentPane().add(mediumHealingPotionLabel);
-		
-		JLabel largeHealingPotionLabel = new JLabel("Large Healing Potion");
-		largeHealingPotionLabel.setBounds(45, 145, 128, 35);
-		frame.getContentPane().add(largeHealingPotionLabel);
-		
-		JLabel smallAttackPotionLabel = new JLabel("Small Attack Potion");
-		smallAttackPotionLabel.setBounds(266, 55, 128, 35);
-		frame.getContentPane().add(smallAttackPotionLabel);
-		
-		JLabel mediumAttackPotionLabel = new JLabel("Medium Attack Potion");
-		mediumAttackPotionLabel.setBounds(266, 100, 128, 35);
-		frame.getContentPane().add(mediumAttackPotionLabel);
-		
-		JLabel largeAttackPotionLabel = new JLabel("Large Attack Potion");
-		largeAttackPotionLabel.setBounds(266, 145, 128, 35);
-		frame.getContentPane().add(largeAttackPotionLabel);
-		
-		JLabel smallHealingPotionAmount = new JLabel("1");
-		smallHealingPotionAmount.setBounds(202, 65, 54, 15);
-		frame.getContentPane().add(smallHealingPotionAmount);
-		
-		JLabel mediumHealingPotionAmount = new JLabel("3");
-		mediumHealingPotionAmount.setBounds(202, 110, 54, 15);
-		frame.getContentPane().add(mediumHealingPotionAmount);
-		
-		JLabel largeHealingPotionAmount = new JLabel("5");
-		largeHealingPotionAmount.setBounds(202, 155, 54, 15);
-		frame.getContentPane().add(largeHealingPotionAmount);
-		
-		JLabel smallAttackPotionAmount = new JLabel("12");
-		smallAttackPotionAmount.setBounds(404, 65, 54, 15);
-		frame.getContentPane().add(smallAttackPotionAmount);
-		
-		JLabel mediumAttackPotionAmount = new JLabel("2");
-		mediumAttackPotionAmount.setBounds(404, 110, 54, 15);
-		frame.getContentPane().add(mediumAttackPotionAmount);
-		
-		JLabel largeAttackPotionAmount = new JLabel("0");
-		largeAttackPotionAmount.setBounds(404, 155, 54, 15);
-		frame.getContentPane().add(largeAttackPotionAmount);
-		
-		JLabel specialItemLabel = new JLabel("Special Item");
-		specialItemLabel.setBounds(468, 65, 82, 15);
-		frame.getContentPane().add(specialItemLabel);
-		
-		JLabel specialItemAmount = new JLabel("2");
-		specialItemAmount.setBounds(600, 65, 54, 15);
-		frame.getContentPane().add(specialItemAmount);
 		
 		JButton shopButton = new JButton("Shop");
 		shopButton.addActionListener(new ActionListener() {
@@ -142,5 +92,16 @@ public class ItemScreen {
 		});
 		backButton.setBounds(417, 213, 133, 29);
 		frame.getContentPane().add(backButton);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(55, 55, 554, 117);
+		frame.getContentPane().add(scrollPane);
+		
+		DefaultListModel<Purchaseable> inventoryListModel = new DefaultListModel<>();
+		inventoryListModel.addAll(env.getPlayer().getInventory());
+		JList<Purchaseable> inventoryList = new JList<>(inventoryListModel);
+		inventoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.add(inventoryList);
+		scrollPane.setViewportView(inventoryList);
 	}
 }

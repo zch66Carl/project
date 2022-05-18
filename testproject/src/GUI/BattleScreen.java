@@ -71,7 +71,7 @@ public class BattleScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel battleType = new JLabel("Wild Battle");
+		JLabel battleType = new JLabel("Battle");
 		battleType.setHorizontalAlignment(SwingConstants.CENTER);
 		battleType.setFont(new Font("SimSun", Font.BOLD, 14));
 		battleType.setBounds(27, 10, 165, 41);
@@ -154,10 +154,13 @@ public class BattleScreen {
 		changeMonsterButton.setBounds(564, 276, 177, 41);
 		frame.getContentPane().add(changeMonsterButton);
 		
-		JList<Monster> list = new JList<Monster>();
-		DefaultListModel<Monster> monsterListModel = new DefaultListModel<Monster>();
 		
-		list.setBounds(564, 59, 177, 193);
-		frame.getContentPane().add(list);
+		DefaultListModel<Monster> monsterListModel = new DefaultListModel<>();
+		monsterListModel.addAll(env.getPlayer().getTeam());
+		JList<Monster> monsterList = new JList<>(monsterListModel);
+		monsterList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		monsterList.setBounds(564, 59, 177, 193);
+		frame.getContentPane().add(monsterList);
+		monsterList.getSelectedValue();
 	}
 }
