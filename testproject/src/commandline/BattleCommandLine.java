@@ -30,15 +30,8 @@ public class BattleCommandLine {
 				if(inv.run(env)) return false;
 			}
 			else if(move==2) {
-				ArrayList<Monster> options = new ArrayList<Monster>();
-				ArrayList<Integer> indices = new ArrayList<Integer>();
-				for(int i=0; i<pla.getTeam().size(); i++) {
-					Monster monst = pla.getTeam().get(i);
-					if(monst.isAwake() && monst != pla.getActiveMonster()) {
-						options.add(monst);
-						indices.add(i);
-					}
-				}
+				ArrayList<Monster> options = pla.getSwitchableMonsters();
+				
 				if(options.size() == 0) continue;
 				
 				IO.textOut("Options are:");
@@ -48,7 +41,7 @@ public class BattleCommandLine {
 				IO.textOut("Enter 0 to return to move selection or an index to choose a new active monster:");
 				int newActive = IO.getInt(0, options.size());
 				if(newActive == 0) continue;
-				pla.setActiveMonsterIndex(indices.get(newActive - 1));
+				pla.setActiveMonster(options.get(newActive - 1));
 				return false;
 			}
 			else if(move == 3) return true;

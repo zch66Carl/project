@@ -201,7 +201,7 @@ public class Monster implements Purchaseable{
 	 * @param enemy
 	 */
 	public String makeRandomMove(Monster enemy) {
-		return enemy.dealDamageToSelf(damage);
+		return enemy.dealDamageToSelf(getTotalDamage());
 	}
 	
 	/**

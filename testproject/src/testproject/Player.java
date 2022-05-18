@@ -58,6 +58,11 @@ public class Player {
 		return inventory;
 	}
 	
+	public void useItem(Item item, Monster monster) {
+		inventory.remove(item);
+		item.useItem(monster);
+	}
+	
 	public void setActiveMonsterIndex(int index) {
 		activeMonsterIndex = index;
 		team.get(index).setWasActiveDuringBattle(true);
@@ -65,6 +70,16 @@ public class Player {
 	
 	public int getActiveMonsterIndex() {
 		return activeMonsterIndex;
+	}
+	
+	public ArrayList<Monster> getSwitchableMonsters(){
+		ArrayList<Monster> options = new ArrayList<Monster>();
+		for(Monster monst : team) {
+			if(monst.isAwake() && monst != getActiveMonster()) {
+				options.add(monst);
+			}
+		}
+		return options;
 	}
 	
 	public boolean addMonster(Monster monster) {
@@ -97,6 +112,10 @@ public class Player {
 	
 	public Monster getActiveMonster() {
 		return team.get(activeMonsterIndex);
+	}
+	
+	public void setActiveMonster(Monster monst) {
+		setActiveMonsterIndex(team.indexOf(monst));
 	}
 	
 	/**
@@ -152,8 +171,29 @@ public class Player {
 	 */
 	public String makeRandomMove(Monster enemy) {
 		Random rand = new Random();
-		//TODO implement fully
-		return getActiveMonster().makeRandomMove(enemy);
+		
+		ArrayList<Item> items = new ArrayList<Item>();
+		ArrayList<Monster> monsters = new ArrayList<Monster>();
+		for(Item item : inventory) {
+			for(Monster monst : item.getMonstersUsableOn(team)) {
+				items.add(item);
+				monsters.add(monst);
+			}
+		}
+		if(rand.nextInt(5)==0 && items.size()>0) {// 1/5 chance to use item
+			int choice = rand.nextInt(items.size());
+			useItem(items.get(choice), monsters.get(choice));
+			return "Used item " + items.get(choice).getName();
+		}
+		
+		ArrayList<Monster> switches = getSwitchableMonsters();
+		if(rand.nextInt(15)==0 && switches.size()>0) {//1/15 chance
+			int choice = rand.nextInt(switches.size());
+			setActiveMonster(switches.get(choice));
+			return "Switched Monster to " + getActiveMonster().getName();
+		}
+		
+		return getActiveMonster().makeRandomMove(enemy);//7/10 chance of just attacking in some way
 	}
 	
 	/**

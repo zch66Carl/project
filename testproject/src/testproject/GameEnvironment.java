@@ -35,9 +35,8 @@ public class GameEnvironment {
 	public Player getPlayer() {
 		return player;
 	}
-	public void setNumDays(int index) {
-		int[] numDaysList = {5,6,7,8,9,10,11,12,13,14,15};
-		numDays = numDaysList[index];
+	public void setNumDays(int numDays) {
+		this.numDays = numDays;
 	}
 	public int getNumDays() {
 		return numDays;
