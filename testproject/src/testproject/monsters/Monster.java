@@ -34,7 +34,14 @@ public class Monster implements Purchaseable{
 	private ArrayList<Integer> damageBuffs;
 	private ArrayList<Integer> damageBuffDurations;
 	
-	ArrayList<String> attacks;
+	private ArrayList<Integer> persistentDamage;
+	private ArrayList<Integer> persistentDamageDuration;
+	
+	protected ArrayList<String> attacks;
+	
+	protected static String[] descriptives = {"Fiery","Glowing","Prismatic","Bold","Ebony","Emerald","Golden","Ivory","Scarlet",
+			"Violet","Icy","Azure"};
+	private static String[] types = {"Goat","Fox","Lion","Hippo", "Wolf","Rhino", "Giraffe", "Fish"};
 
 	public Monster(String name, int startLevel){
 		this.name=name;
@@ -55,6 +62,14 @@ public class Monster implements Purchaseable{
 		
 		damageBuffs = new ArrayList<Integer>();
 		damageBuffDurations = new ArrayList<Integer>();
+		
+		persistentDamage = new ArrayList<Integer>();
+		persistentDamageDuration = new ArrayList<Integer>();
+	}
+	
+	public static String getRandomName() {
+		Random rand = new Random();
+		return descriptives[rand.nextInt(descriptives.length)] + " " + types[rand.nextInt(types.length)];
 	}
 	
 	public void setWasActiveDuringBattle(boolean newBool) {
@@ -135,7 +150,9 @@ public class Monster implements Purchaseable{
 	}
 	
 	public int getTotalDamage() {
-		return damage + getDamageBuff();
+		int dam = damage + getDamageBuff();
+		if(dam < 0) dam=0;
+		return dam;
 	}
 	
 	/**
@@ -149,9 +166,16 @@ public class Monster implements Purchaseable{
 		if(health<=0) {
 			health=0;
 			isAwake=false;
+			resetStatusEffects();
 			ret += "\n" + name + " fainted!";
 		}
 		return ret;
+	}
+	
+	public String dealPersistentDamageToSelf(int damageDealtPerTurn, int duration) {
+		persistentDamage.add(damageDealtPerTurn);
+		persistentDamageDuration.add(duration);
+		return "Poisoned " + name + " with " + damageDealtPerTurn + " damage per turn.";
 	}
 	
 	/**
@@ -175,6 +199,7 @@ public class Monster implements Purchaseable{
 	 */
 	public ArrayList<String> preTurnLogic() {
 		ArrayList<String> ret = new ArrayList<String>();
+		
 		ArrayList<Integer> newDamageBuffs = new ArrayList<Integer>();
 		ArrayList<Integer> newBuffDurations = new ArrayList<Integer>();
 		for(int i=0; i<damageBuffs.size(); i++) {
@@ -185,6 +210,22 @@ public class Monster implements Purchaseable{
 		}
 		damageBuffs = newDamageBuffs;
 		damageBuffDurations = newBuffDurations;
+		
+		ArrayList<Integer> newPersist = new ArrayList<Integer>();
+		ArrayList<Integer> newPersistDur = new ArrayList<Integer>();
+		for(int i=0; i<persistentDamage.size(); i++) {
+			if(persistentDamageDuration.get(i) > 0) {
+				newPersist.add(persistentDamage.get(i));
+				newPersistDur.add(persistentDamageDuration.get(i) - 1);
+			}
+		}
+		persistentDamage = newPersist;
+		persistentDamageDuration = newPersistDur;
+				
+		for(int dam : persistentDamage) {
+			ret.add(dealDamageToSelf(dam));
+		}
+		
 		return ret;
 	}
 	
@@ -204,12 +245,20 @@ public class Monster implements Purchaseable{
 		return enemy.dealDamageToSelf(getTotalDamage());
 	}
 	
+	public void resetStatusEffects() {
+		damageBuffs.clear();
+		damageBuffDurations.clear();
+		persistentDamage.clear();
+		persistentDamageDuration.clear();
+	}
+	
 	/**
 	 * Sets health to full and removes any status effects.
 	 */
 	public void rest() {
 		health=maxHealth;
 		isAwake=true;
+		resetStatusEffects();
 	}
 	
 	/**

@@ -10,12 +10,19 @@ import java.util.Random;
  */
 public class FlyingMonster extends Monster {
 	private boolean isFlying;
+	private static String[] types = {"Eagle", "Owl", "Bat", "Falcon", "Hawk", "Pigeon"};
 	
 	public FlyingMonster(String name, int startLevel) {
 		super(name, startLevel);
 		isFlying=false;
-		super.getAttackStrings().add(1, "Fly");
+		attacks.add(1, "Fly");
 	}
+	
+	public static String getRandomName() {
+		Random rand = new Random();
+		return descriptives[rand.nextInt(descriptives.length)] + " " + types[rand.nextInt(types.length)];
+	}
+	
 	
 	/**
 	 * Doesn't deal damage if the Monster is currently flying.
@@ -51,13 +58,17 @@ public class FlyingMonster extends Monster {
 	public String makeRandomMove(Monster enemy) {
 		Random rand = new Random();
 		int move=rand.nextInt(2);
-		if(move==0) fly();
-		else super.makeRandomMove(enemy);
-		return "";
+		if(move==0) return fly();
+		else return super.makeRandomMove(enemy);
 	}
 	
+	public void resetStatusEffects() {
+		isFlying = false;
+		super.resetStatusEffects();
+	}
 	
 	public void rest() {
+		resetStatusEffects();
 		isFlying=false;
 		super.rest();
 	}

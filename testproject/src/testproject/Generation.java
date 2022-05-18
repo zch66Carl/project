@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import testproject.ItemBuilder.ItemSize;
-import testproject.monsters.Monster;
+import testproject.monsters.*;
 
 /**
  * Handles generation of Monsters, Players, and Items, given the day and difficulty (1-3).
@@ -20,15 +20,16 @@ public class Generation {
 		if(isWildMonster) {
 			level+=5;//wild monster should be quite high level
 		}
-		String[] descriptive = {"Fiery","Glowing","Prismatic","Bold","Ebony","Emerald","Golden","Ivory","Scarlet",
-								"Violet","Icy","Azure"};
-		String[] types = {"Goat","Eagle","Fox","Bat","Lion","Owl","Wolf","Rhino"};
+		
 		Random rand = new Random();
-		String name = descriptive[rand.nextInt(12)]+" "+types[rand.nextInt(7)];
+		if(!isWildMonster && rand.nextInt(5)<2) {// 2/5 chance of being normal monster
+			return new Monster(Monster.getRandomName(), level);
+		}
 		
-		//TODO: decide specific type of monster, store names in monster classes e.g. so OWL is always a flying monster
-		
-		return new Monster(name, level);
+		int type = rand.nextInt(3);
+		if(type==0) return new FlyingMonster(FlyingMonster.getRandomName(), level);
+		if(type==1) return new PoisonMonster(PoisonMonster.getRandomName(), level);
+		return new DebuffMonster(DebuffMonster.getRandomName(), level);
 	}
 	
 	public static Item generateItem(int day, int diff, boolean enemyItem) {

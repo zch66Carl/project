@@ -1,6 +1,7 @@
 package commandline;
 
 import testproject.GameEnvironment;
+import testproject.Generation;
 import testproject.monsters.Monster;
 
 public class Start {
@@ -33,14 +34,17 @@ public class Start {
 		env.getPlayer().setName(name);
 		
 		//select starting monster.
-		Monster one = new Monster("one", 1);
-		Monster two = new Monster("two", 1);
+		Monster one = Generation.generateMonster(1, diff, true, false);
+		Monster two = Generation.generateMonster(1, diff, true, false);
+		Monster three = Generation.generateMonster(1, diff, true, false);
 		IO.textOut("Choose a starting monster:");
 		IO.textOut("0 "+one.toString());
 		IO.textOut("1 "+two.toString());
-		int monst = IO.getInt(0, 1);
+		IO.textOut("2 "+three.toString());
+		int monst = IO.getInt(0, 2);
 		if(monst==0) env.getPlayer().addMonster(one);
-		else env.getPlayer().addMonster(two);
+		else if(monst==1) env.getPlayer().addMonster(two);
+		else env.getPlayer().addMonster(three);
 		
 		env.getPlayer().setGold(15*(3-diff));//start with 0 gold on hard, 30 on easy and 15 on medium.
 		

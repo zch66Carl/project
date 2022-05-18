@@ -155,6 +155,12 @@ public class Player {
 		}
 	}
 	
+	public void postBattle() {
+		for(Monster monst : team) {
+			monst.resetStatusEffects();
+		}
+	}
+	
 	public void rewardPostBattle(int day, int diff, boolean wasWildBattle) {
 		for(Monster monst : team) {
 			monst.reward();

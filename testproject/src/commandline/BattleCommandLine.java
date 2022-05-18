@@ -53,7 +53,9 @@ public class BattleCommandLine {
 		Player enemyTeam = new Player("", 0, null, null);
 		Monster wildMonster = env.getWildBattleMonster();
 		if(!isWildBattle) enemyTeam = env.getBattles().get(teamBattleInd);
+		
 		boolean outcome = false;
+		pla.preBattle();
 		
 		if(isWildBattle) IO.textOut("Wild "+wildMonster.getName()+" appears!");
 		else IO.textOut("Enemy team led by "+enemyTeam.getName() + " appears, battle start!");
@@ -88,6 +90,8 @@ public class BattleCommandLine {
 			Monster plaMonst = pla.getActiveMonster();
 			IO.textOut(isWildBattle ? wildMonster.makeRandomMove(plaMonst) : enemyTeam.makeRandomMove(plaMonst));
 		}
+		
+		pla.postBattle();
 		
 		
 		if(outcome) {
