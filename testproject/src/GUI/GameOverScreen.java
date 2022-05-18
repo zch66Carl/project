@@ -75,7 +75,7 @@ public class GameOverScreen {
 		playerNameLabel.setBounds(45, 100, 195, 42);
 		frame.getContentPane().add(playerNameLabel);
 		
-		JLabel playerName = new JLabel("Player 1");
+		JLabel playerName = new JLabel(env.getPlayer().getName());
 		playerName.setHorizontalAlignment(SwingConstants.CENTER);
 		playerName.setFont(new Font("SimSun", Font.BOLD, 18));
 		playerName.setBounds(421, 100, 195, 42);
@@ -87,7 +87,7 @@ public class GameOverScreen {
 		currentGoldLabel.setBounds(45, 156, 195, 42);
 		frame.getContentPane().add(currentGoldLabel);
 		
-		JLabel currentGold = new JLabel("100000");
+		JLabel currentGold = new JLabel(Integer.toString(env.getPlayer().getGold()));
 		currentGold.setHorizontalAlignment(SwingConstants.CENTER);
 		currentGold.setFont(new Font("SimSun", Font.BOLD, 18));
 		currentGold.setBounds(421, 152, 195, 42);
@@ -119,7 +119,7 @@ public class GameOverScreen {
 		daysCompletedLabel.setBounds(45, 208, 195, 42);
 		frame.getContentPane().add(daysCompletedLabel);
 		
-		JLabel daysCompleted = new JLabel("6");
+		JLabel daysCompleted = new JLabel(Integer.toString(env.getCurDay()));
 		daysCompleted.setHorizontalAlignment(SwingConstants.CENTER);
 		daysCompleted.setFont(new Font("SimSun", Font.BOLD, 18));
 		daysCompleted.setBounds(421, 204, 195, 42);
@@ -131,7 +131,7 @@ public class GameOverScreen {
 		scoreLabel.setBounds(45, 260, 195, 42);
 		frame.getContentPane().add(scoreLabel);
 		
-		JLabel currentScore = new JLabel("23156");
+		JLabel currentScore = new JLabel(Integer.toString(env.getPlayer().getScore()));
 		currentScore.setHorizontalAlignment(SwingConstants.CENTER);
 		currentScore.setFont(new Font("SimSun", Font.BOLD, 18));
 		currentScore.setBounds(421, 260, 195, 42);

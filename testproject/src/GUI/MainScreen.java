@@ -63,7 +63,7 @@ public class MainScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel playerName = new JLabel("Player 1");
+		JLabel playerName = new JLabel(env.getPlayer().getName());
 		playerName.setFont(new Font("SimSun", Font.PLAIN, 14));
 		playerName.setBounds(40, 10, 116, 33);
 		frame.getContentPane().add(playerName);
@@ -73,7 +73,7 @@ public class MainScreen {
 		goldLabel.setBounds(135, 19, 54, 15);
 		frame.getContentPane().add(goldLabel);
 		
-		JLabel currentGold = new JLabel("500");
+		JLabel currentGold = new JLabel(Integer.toString(env.getPlayer().getGold()));
 		currentGold.setFont(new Font("SimSun", Font.PLAIN, 14));
 		currentGold.setBounds(177, 19, 54, 15);
 		frame.getContentPane().add(currentGold);
@@ -83,7 +83,7 @@ public class MainScreen {
 		dayLabel.setBounds(444, 18, 54, 15);
 		frame.getContentPane().add(dayLabel);
 		
-		JLabel currentDay = new JLabel("5");
+		JLabel currentDay = new JLabel(Integer.toString(env.getCurDay()));
 		currentDay.setFont(new Font("SimSun", Font.PLAIN, 14));
 		currentDay.setBounds(483, 19, 54, 15);
 		frame.getContentPane().add(currentDay);
@@ -137,7 +137,7 @@ public class MainScreen {
 		scoreLabel.setBounds(255, 19, 54, 15);
 		frame.getContentPane().add(scoreLabel);
 		
-		JLabel currentScore = new JLabel("2350");
+		JLabel currentScore = new JLabel(Integer.toString(env.getPlayer().getScore()));
 		currentScore.setFont(new Font("SimSun", Font.PLAIN, 14));
 		currentScore.setBounds(305, 19, 54, 15);
 		frame.getContentPane().add(currentScore);
@@ -147,7 +147,7 @@ public class MainScreen {
 		lblNewLabel_3_1.setBounds(506, 19, 54, 15);
 		frame.getContentPane().add(lblNewLabel_3_1);
 		
-		JLabel totalDays = new JLabel("15");
+		JLabel totalDays = new JLabel(Integer.toString(env.getNumDays()));
 		totalDays.setFont(new Font("SimSun", Font.PLAIN, 14));
 		totalDays.setBounds(547, 19, 54, 15);
 		frame.getContentPane().add(totalDays);
