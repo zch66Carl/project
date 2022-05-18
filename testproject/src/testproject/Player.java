@@ -120,6 +120,16 @@ public class Player {
 	}
 	
 	
+	public ArrayList<String> preTurnLogic(){
+		ArrayList<String> ret = new ArrayList<String>();
+		for(Monster monst : team) {
+			for(String str : monst.preTurnLogic()) {
+				ret.add(str);
+			}
+		}
+		return ret;
+	}
+	
 	public void preBattle() {
 		for(Monster monst : team) {
 			monst.setWasActiveDuringBattle(false);

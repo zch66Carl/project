@@ -31,6 +31,9 @@ public class Monster implements Purchaseable{
 	private int level;
 	private int xp;
 	
+	private ArrayList<Integer> damageBuffs;
+	private ArrayList<Integer> damageBuffDurations;
+	
 	ArrayList<String> attacks;
 
 	public Monster(String name, int startLevel){
@@ -49,6 +52,9 @@ public class Monster implements Purchaseable{
 		
 		attacks = new ArrayList<String>();
 		attacks.add(0, "Basic Attack");
+		
+		damageBuffs = new ArrayList<Integer>();
+		damageBuffDurations = new ArrayList<Integer>();
 	}
 	
 	public void setWasActiveDuringBattle(boolean newBool) {
@@ -118,11 +124,25 @@ public class Monster implements Purchaseable{
 		return attacks;
 	}
 	
+	public int getDamageBuff() {
+		int dam = 0;
+		for(int buff : damageBuffs) dam += buff;
+		return dam;
+	}
+	public void addDamageBuff(int dam, int dur) {
+		damageBuffs.add(dam);
+		damageBuffDurations.add(dur);
+	}
+	
+	public int getTotalDamage() {
+		return damage + getDamageBuff();
+	}
+	
 	/**
 	 * Deals damage to the Monster, making them faint if health goes below zero.
 	 * @param damageDealt The damage to deal to this Monster.
 	 */
-	public String dealDamage(int damageDealt) {
+	public String dealDamageToSelf(int damageDealt) {
 		String ret = new String();
 		ret = "Dealt " + damageDealt + " damage to " + name;
 		health-=damageDealt;
@@ -153,8 +173,19 @@ public class Monster implements Purchaseable{
 	/**
 	 * Relevant for some subclasses.
 	 */
-	public void preTurnLogic() {
-		
+	public ArrayList<String> preTurnLogic() {
+		ArrayList<String> ret = new ArrayList<String>();
+		ArrayList<Integer> newDamageBuffs = new ArrayList<Integer>();
+		ArrayList<Integer> newBuffDurations = new ArrayList<Integer>();
+		for(int i=0; i<damageBuffs.size(); i++) {
+			if(damageBuffDurations.get(i)>0) {
+				newDamageBuffs.add(damageBuffs.get(i));
+				newBuffDurations.add(damageBuffDurations.get(i) - 1);
+			}
+		}
+		damageBuffs = newDamageBuffs;
+		damageBuffDurations = newBuffDurations;
+		return ret;
 	}
 	
 	/**
@@ -162,7 +193,7 @@ public class Monster implements Purchaseable{
 	 * @param enemy
 	 */
 	public String makeMove(int move, Monster enemy) {
-		if(move == 0) return enemy.dealDamage(damage);
+		if(move == 0) return enemy.dealDamageToSelf(getTotalDamage());
 		return "";
 	}
 	/**
@@ -170,7 +201,7 @@ public class Monster implements Purchaseable{
 	 * @param enemy
 	 */
 	public String makeRandomMove(Monster enemy) {
-		return enemy.dealDamage(damage);
+		return enemy.dealDamageToSelf(damage);
 	}
 	
 	/**
@@ -185,6 +216,6 @@ public class Monster implements Purchaseable{
 	 * String representation of the Monster.
 	 */
 	public String toString() {
-		return String.format("%s, health: %s/%s, damage: %s, level: %s, %s", name, health, maxHealth, damage, level, isAwake ? "awake." : "fainted.");
+		return String.format("%s, health: %s/%s, damage: %s/%s, level: %s, %s", name, health, maxHealth, getTotalDamage(), damage, level, isAwake ? "awake." : "fainted.");
 	}
 }

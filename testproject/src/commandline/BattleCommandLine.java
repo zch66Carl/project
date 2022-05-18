@@ -49,7 +49,6 @@ public class BattleCommandLine {
 				int newActive = IO.getInt(0, options.size());
 				if(newActive == 0) continue;
 				pla.setActiveMonsterIndex(indices.get(newActive - 1));
-				//TODO: make changing monster remove any status effects from the monster used before such as isFlying.
 				return false;
 			}
 			else if(move == 3) return true;
@@ -67,24 +66,31 @@ public class BattleCommandLine {
 		else IO.textOut("Enemy team led by "+enemyTeam.getName() + " appears, battle start!");
 				
 		while(true) {
+			ArrayList<String> preTurnMessages = pla.preTurnLogic();
+			for(String str : preTurnMessages) {
+				IO.textOut(str);
+			}
+			
 			if(!pla.checkIfActiveMonster()) {
 				break;
 			}
-			
-			pla.getActiveMonster().preTurnLogic();
 			IO.textOut("Player turn.");
 			if(makeMove(env, isWildBattle ? wildMonster : enemyTeam.getActiveMonster())) {
 				IO.textOut("Fleeing battle.");
 				return false;
 			}
 			
+			if(isWildBattle) preTurnMessages = wildMonster.preTurnLogic();
+			else preTurnMessages = enemyTeam.preTurnLogic();
+			for(String str : preTurnMessages) {
+				IO.textOut(str);
+			}
+			
 			if((isWildBattle && !wildMonster.isAwake()) || (!isWildBattle && !enemyTeam.checkIfActiveMonster())) {
 				outcome=true;
 				break;
 			}
-			
 			Monster enemy = isWildBattle ? wildMonster : enemyTeam.getActiveMonster();
-			enemy.preTurnLogic();
 			IO.textOut("Enemy turn: " + enemy.toString());
 			Monster plaMonst = pla.getActiveMonster();
 			IO.textOut(isWildBattle ? wildMonster.makeRandomMove(plaMonst) : enemyTeam.makeRandomMove(plaMonst));

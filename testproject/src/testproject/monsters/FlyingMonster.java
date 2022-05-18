@@ -1,5 +1,6 @@
 package testproject.monsters;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -19,18 +20,23 @@ public class FlyingMonster extends Monster {
 	/**
 	 * Doesn't deal damage if the Monster is currently flying.
 	 */
-	public String dealDamage(int damageDealt) {
+	public String dealDamageToSelf(int damageDealt) {
 		if(isFlying) {
 			return "Attack against " + super.getName() + " missed, as flying.";
 		}
-		return super.dealDamage(damageDealt);
+		return super.dealDamageToSelf(damageDealt);
 	}
 	
 	/**
 	 * Sets isFlying to false, i.e. the Monster can only fly for one turn.
 	 */
-	public void preTurnLogic() {
+	public ArrayList<String> preTurnLogic() {
+		ArrayList<String> ret = new ArrayList<String>();
+		for(String str : super.preTurnLogic()) {
+			ret.add(str);
+		}
 		isFlying=false;
+		return ret;
 	}
 	/**
 	 * Choose either base attack or fly based on user input.
