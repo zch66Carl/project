@@ -19,6 +19,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
@@ -119,16 +120,6 @@ public class ShopScreen {
 		shopList.setBounds(31, 71, 403, 205);
 		frame.getContentPane().add(shopList);
 		
-		JButton buyButton = new JButton("Buy");
-		buyButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				env.getShop().buyPurchaseable(env.getPlayer(), shopList.getSelectedIndex());
-			}
-		});
-		buyButton.setBounds(538, 152, 93, 23);
-		frame.getContentPane().add(buyButton);
-		
-		
 		DefaultListModel<Purchaseable> inventoryListModel = new DefaultListModel<>();
 		inventoryListModel.addAll(env.getPlayer().getInventory());
 		inventoryListModel.addAll(env.getPlayer().getTeam());
@@ -136,6 +127,19 @@ public class ShopScreen {
 		inventoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		inventoryList.setBounds(31, 319, 403, 181);
 		frame.getContentPane().add(inventoryList);
+		
+		JButton buyButton = new JButton("Buy");
+		buyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				env.getShop().buyPurchaseable(env.getPlayer(), shopList.getSelectedIndex());
+				shopList.setListData(env.getShop().getStock());
+			}
+		});
+		buyButton.setBounds(538, 152, 93, 23);
+		frame.getContentPane().add(buyButton);
+		
+		
+		
 		
 		JButton sellButton = new JButton("Sell");
 		sellButton.setBounds(538, 380, 93, 23);

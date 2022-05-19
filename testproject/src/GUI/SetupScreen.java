@@ -108,13 +108,11 @@ public class SetupScreen {
 		startingMonsterLabel.setBounds(37, 116, 175, 29);
 		frame.getContentPane().add(startingMonsterLabel);
 		
-		//Drop list of starting monsters
+		Monster monsterOne = Generation.generateMonster(0, 0, false, false);
+		Monster monsterTwo = Generation.generateMonster(0, 0, false, false);
+		Monster monsterThree = Generation.generateMonster(0, 0, false, false);
 		JComboBox startingMonsterSelection = new JComboBox();
-		ArrayList<Monster> startingMonsters = new ArrayList<Monster>();
-		startingMonsters.add(new Monster("Goat", 1));
-		startingMonsters.add(new Monster("Tiger", 1));
-		startingMonsters.add(new Monster("Monkey", 1));
-		startingMonsterSelection.setModel(new DefaultComboBoxModel(new String[] {"Goat", "Tiger", "Monkey"}));
+		startingMonsterSelection.setModel(new DefaultComboBoxModel(new Monster[] {monsterOne,monsterTwo,monsterThree}));
 		startingMonsterSelection.setSelectedIndex(0);
 		startingMonsterSelection.setBounds(243, 119, 121, 23);
 		frame.getContentPane().add(startingMonsterSelection);
@@ -149,15 +147,17 @@ public class SetupScreen {
 		abilityLabel.setBounds(10, 136, 84, 15);
 		panel.add(abilityLabel);
 		
-		JLabel maxHealth = new JLabel(Integer.toString(startingMonsters.get(startingMonsterSelection.getSelectedIndex()).getMaxHealth()));
+		Monster selected = new Monster("Default Monster", 1);
+		selected = (Monster) startingMonsterSelection.getSelectedItem();
+		JLabel maxHealth = new JLabel(Integer.toString(selected.getMaxHealth()));
 		maxHealth.setBounds(183, 34, 54, 15);
 		panel.add(maxHealth);
 		
-		JLabel damage = new JLabel(Integer.toString(startingMonsters.get(startingMonsterSelection.getSelectedIndex()).getDamage()));
+		JLabel damage = new JLabel(Integer.toString(selected.getDamage()));
 		damage.setBounds(183, 69, 54, 15);
 		panel.add(damage);
 		
-		JLabel currentHealth = new JLabel(Integer.toString(startingMonsters.get(startingMonsterSelection.getSelectedIndex()).getHealth()));
+		JLabel currentHealth = new JLabel(Integer.toString(selected.getHealth()));
 		currentHealth.setBounds(183, 102, 54, 15);
 		panel.add(currentHealth);
 		
@@ -255,9 +255,9 @@ public class SetupScreen {
 			public void actionPerformed(ActionEvent e) {
 				String playerName = playerNameTextBox.getText();
 				int diff = difficultySelection.getSelectedIndex();
-				env.setNumDays(daysSelection.getSelectedIndex());
+				env.setNumDays(Integer.valueOf((String) daysSelection.getSelectedItem()));
 				ArrayList<Monster> team = new ArrayList<Monster>();
-				team.add(startingMonsters.get(startingMonsterSelection.getSelectedIndex()));
+				team.add((Monster) startingMonsterSelection.getSelectedItem());
 				env.setPlayer(new Player(playerName,500,team,new ArrayList<Item>()));
 				env.setDifficulty(diff);
 				finishedWindow();
@@ -271,9 +271,11 @@ public class SetupScreen {
 		JButton btnNewButton = new JButton("Show Information");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				maxHealth.setText(Integer.toString(startingMonsters.get(startingMonsterSelection.getSelectedIndex()).getMaxHealth()));
-				damage.setText(Integer.toString(startingMonsters.get(startingMonsterSelection.getSelectedIndex()).getDamage()));
-				currentHealth.setText(Integer.toString(startingMonsters.get(startingMonsterSelection.getSelectedIndex()).getHealth()));
+				Monster selected = new Monster("Default Monster", 1);
+				selected = (Monster) startingMonsterSelection.getSelectedItem();
+				maxHealth.setText(Integer.toString(selected.getMaxHealth()));
+				damage.setText(Integer.toString(selected.getDamage()));
+				currentHealth.setText(Integer.toString(selected.getHealth()));
 			
 			}
 		});

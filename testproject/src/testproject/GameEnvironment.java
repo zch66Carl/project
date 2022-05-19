@@ -35,9 +35,8 @@ public class GameEnvironment {
 	public Player getPlayer() {
 		return player;
 	}
-	public void setNumDays(int index) {
-		int[] numDaysList = {5,6,7,8,9,10,11,12,13,14,15};
-		numDays = numDaysList[index];
+	public void setNumDays(int days) {
+		numDays = days;
 	}
 	public int getNumDays() {
 		return numDays;
@@ -74,10 +73,11 @@ public class GameEnvironment {
 	}
 	public void closeSetupScreen(SetupScreen setupWindow) {
 		setupWindow.closeWindow();
+		updateBattles();
 		launchMainScreen();
 	}
-	public void launchBattleScreen() {
-		BattleScreen battleWindow = new BattleScreen(this);
+	public void launchBattleScreen(Player battle) {
+		BattleScreen battleWindow = new BattleScreen(this,battle);
 	}
 	public void closeBattleScreen(BattleScreen battleWindow) {
 		battleWindow.closeWindow();

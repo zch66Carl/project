@@ -8,7 +8,9 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import testproject.GameEnvironment;
+import testproject.Item;
 import testproject.Purchaseable;
+import testproject.monsters.Monster;
 
 import java.awt.Font;
 
@@ -17,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 public class ItemScreen {
@@ -81,7 +84,7 @@ public class ItemScreen {
 				closeWindow();
 			}
 		});
-		shopButton.setBounds(123, 213, 133, 29);
+		shopButton.setBounds(253, 213, 133, 29);
 		frame.getContentPane().add(shopButton);
 		
 		JButton backButton = new JButton("Back");
@@ -90,18 +93,42 @@ public class ItemScreen {
 				finishedWindow();
 			}
 		});
-		backButton.setBounds(417, 213, 133, 29);
+		backButton.setBounds(476, 213, 133, 29);
 		frame.getContentPane().add(backButton);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(55, 55, 554, 117);
-		frame.getContentPane().add(scrollPane);
 		
-		DefaultListModel<Purchaseable> inventoryListModel = new DefaultListModel<>();
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(55, 55, 301, 117);
+		frame.getContentPane().add(scrollPane);
+		DefaultListModel<Item> inventoryListModel = new DefaultListModel<>();
 		inventoryListModel.addAll(env.getPlayer().getInventory());
-		JList<Purchaseable> inventoryList = new JList<>(inventoryListModel);
-		inventoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.add(inventoryList);
+		JList<Item> inventoryList = new JList<>(inventoryListModel);
 		scrollPane.setViewportView(inventoryList);
+		inventoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+				
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(366, 55, 277, 117);
+		frame.getContentPane().add(scrollPane_1);
+		
+		DefaultListModel<Monster> teamListModel = new DefaultListModel<>();
+		teamListModel.addAll(env.getPlayer().getTeam());
+		JList<Monster> teamList = new JList<>(teamListModel);
+		teamList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane_1.setViewportView(teamList);
+		
+		JButton useItemButton = new JButton("Use Item");
+		useItemButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+				inventoryList.getSelectedValue().useItem(teamList.getSelectedValue());
+				} 
+				catch(Exception excep) {
+					JOptionPane.showMessageDialog(frame, "No Item to use");
+				}
+			}
+		});
+		useItemButton.setBounds(55, 213, 133, 29);
+		frame.getContentPane().add(useItemButton);
 	}
 }

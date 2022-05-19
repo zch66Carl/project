@@ -4,12 +4,15 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import testproject.GameEnvironment;
+import testproject.Player;
 
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class MainScreen {
@@ -80,12 +83,12 @@ public class MainScreen {
 		
 		JLabel dayLabel = new JLabel("Day");
 		dayLabel.setFont(new Font("SimSun", Font.PLAIN, 16));
-		dayLabel.setBounds(444, 18, 54, 15);
+		dayLabel.setBounds(369, 18, 54, 15);
 		frame.getContentPane().add(dayLabel);
 		
 		JLabel currentDay = new JLabel(Integer.toString(env.getCurDay()));
 		currentDay.setFont(new Font("SimSun", Font.PLAIN, 14));
-		currentDay.setBounds(483, 19, 54, 15);
+		currentDay.setBounds(422, 19, 54, 15);
 		frame.getContentPane().add(currentDay);
 		
 		JButton itemButton = new JButton("Items");
@@ -124,7 +127,9 @@ public class MainScreen {
 		JButton battleButton = new JButton("Battle");
 		battleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.launchBattleScreen();
+				Player[] battles = (Player[]) env.getBattles().toArray();
+				Player selection = (Player) JOptionPane.showInputDialog(frame,"Choose a battle to fight:", "Battle Selection", JOptionPane.PLAIN_MESSAGE,null,battles,null);
+				env.launchBattleScreen(selection);
 				finishedWindow();
 			}
 		});
@@ -144,12 +149,12 @@ public class MainScreen {
 		
 		JLabel lblNewLabel_3_1 = new JLabel("of");
 		lblNewLabel_3_1.setFont(new Font("SimSun", Font.PLAIN, 16));
-		lblNewLabel_3_1.setBounds(506, 19, 54, 15);
+		lblNewLabel_3_1.setBounds(454, 18, 54, 15);
 		frame.getContentPane().add(lblNewLabel_3_1);
 		
 		JLabel totalDays = new JLabel(Integer.toString(env.getNumDays()));
 		totalDays.setFont(new Font("SimSun", Font.PLAIN, 14));
-		totalDays.setBounds(547, 19, 54, 15);
+		totalDays.setBounds(486, 19, 54, 15);
 		frame.getContentPane().add(totalDays);
 		
 		JButton sleepButton = new JButton("Sleep");
@@ -161,6 +166,10 @@ public class MainScreen {
 		sleepButton.setFont(new Font("SimSun", Font.PLAIN, 14));
 		sleepButton.setBounds(333, 187, 165, 66);
 		frame.getContentPane().add(sleepButton);
+		
+		String[] difficulty = {"Easy","Normal","Hard"};
+		JLabel lblNewLabel = new JLabel(difficulty[env.getDifficulty()]);
+		lblNewLabel.setBounds(550, 19, 54, 15);
+		frame.getContentPane().add(lblNewLabel);
 	}
-
 }

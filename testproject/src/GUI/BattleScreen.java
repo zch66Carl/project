@@ -8,6 +8,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import testproject.GameEnvironment;
+import testproject.Player;
 import testproject.monsters.Monster;
 
 import javax.swing.JPanel;
@@ -24,9 +25,11 @@ public class BattleScreen {
 
 	private JFrame frame;
 	private GameEnvironment env;
+	private Player battle;
 	
-	public BattleScreen(GameEnvironment incomingEnv) {
+	public BattleScreen(GameEnvironment incomingEnv,Player battle) {
 		env = incomingEnv;
+		this.battle = battle;
 		initialize();
 		frame.setVisible(true);
 	}
