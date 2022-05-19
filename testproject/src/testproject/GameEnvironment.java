@@ -75,6 +75,7 @@ public class GameEnvironment {
 	}
 	public void closeSetupScreen(SetupScreen setupWindow) {
 		setupWindow.closeWindow();
+		preDayLogic(1);
 		updateBattles();
 		launchMainScreen();
 	}

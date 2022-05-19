@@ -108,9 +108,9 @@ public class SetupScreen {
 		startingMonsterLabel.setBounds(37, 116, 175, 29);
 		frame.getContentPane().add(startingMonsterLabel);
 		
-		Monster monsterOne = Generation.generateMonster(0, 0, false, false);
-		Monster monsterTwo = Generation.generateMonster(0, 0, false, false);
-		Monster monsterThree = Generation.generateMonster(0, 0, false, false);
+		Monster monsterOne = Generation.generateMonster(1, 1, false, false);
+		Monster monsterTwo = Generation.generateMonster(1, 1, false, false);
+		Monster monsterThree = Generation.generateMonster(1, 1, false, false);
 		JComboBox startingMonsterSelection = new JComboBox();
 		startingMonsterSelection.setModel(new DefaultComboBoxModel(new Monster[] {monsterOne,monsterTwo,monsterThree}));
 		startingMonsterSelection.setSelectedIndex(0);
@@ -254,7 +254,7 @@ public class SetupScreen {
 		startGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String playerName = playerNameTextBox.getText();
-				int diff = difficultySelection.getSelectedIndex();
+				int diff = difficultySelection.getSelectedIndex()+1;
 				env.setNumDays(daysSelection.getSelectedIndex()+5);
 				ArrayList<Monster> team = new ArrayList<Monster>();
 				team.add((Monster) startingMonsterSelection.getSelectedItem());
