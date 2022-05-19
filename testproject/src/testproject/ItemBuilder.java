@@ -24,7 +24,7 @@ public class ItemBuilder {
 	public static Item createBuff(int price, ItemSize size) {
 		String sizeStr = (size == ItemSize.SMALL ? "Small" : (size == ItemSize.MEDIUM ? "Medium" : "Large"));
 		Item item = new Item(sizeStr + " Buff Potion", price);
-		int buffAmount = (size == ItemSize.SMALL ? 5 : (size == ItemSize.MEDIUM ? 10 : 20));
+		int buffAmount = (size == ItemSize.SMALL ? 10 : (size == ItemSize.MEDIUM ? 20 : 50));
 		item.setBuffAmount(buffAmount);
 		return item;
 	}

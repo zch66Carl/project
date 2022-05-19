@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import testproject.monsters.Monster;
 
-//TODO: consolidate all types of items into this class and deleste subclasses as only need heal, statbuff and revive
-//		-> three variables, healAmmount, buffAmount and isRevive
 
 public class Item implements Purchaseable{
 	private int price;
@@ -13,6 +11,7 @@ public class Item implements Purchaseable{
 	
 	private int healAmount;
 	private int buffAmount;
+	private int buffDuration = 3;
 	private boolean isRevive;
 	
 	
@@ -74,7 +73,9 @@ public class Item implements Purchaseable{
 	public void useItem(Monster monster) {
 		monster.heal(healAmount);
 		if(isRevive) monster.rest();
-		//TODO: buffing stats
+		if(buffAmount>0) {
+			monster.addDamageBuff(buffAmount, buffDuration);
+		}
 	}
 	
 	public String toString() {

@@ -8,8 +8,8 @@ import testproject.Player;
 import testproject.monsters.Monster;
 
 public class InventoryCommandLine {
-	private boolean useItem(Item item, ArrayList<Monster> team) {
-		ArrayList<Monster> usableOn = item.getMonstersUsableOn(team);
+	private boolean useItem(Item item, Player pla) {
+		ArrayList<Monster> usableOn = item.getMonstersUsableOn(pla.getTeam());
 		if(usableOn.size() == 0) {
 			IO.textOut("Item not usable:");
 			String message = new String();
@@ -23,7 +23,7 @@ public class InventoryCommandLine {
 			IO.textOut(i + ": " + usableOn.get(i).toString());
 		}
 		int inp = IO.getInt(0, usableOn.size() - 1);
-		item.useItem(usableOn.get(inp)); //TODO: make useItem return a string to display
+		pla.useItem(item, usableOn.get(inp)); //TODO: make useItem return a string to display
 		return true;
 	}
 	
@@ -37,6 +37,6 @@ public class InventoryCommandLine {
 		IO.textOut("Enter 0 to return or an item index to use that item.");
 		int inp = IO.getInt(0, inv.size());
 		if(inp==0) return false;
-		return useItem(inv.get(inp - 1), pla.getTeam());
+		return useItem(inv.get(inp - 1), pla);
 	}
 }

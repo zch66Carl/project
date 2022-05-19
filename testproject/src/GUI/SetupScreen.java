@@ -255,7 +255,7 @@ public class SetupScreen {
 			public void actionPerformed(ActionEvent e) {
 				String playerName = playerNameTextBox.getText();
 				int diff = difficultySelection.getSelectedIndex();
-				env.setNumDays(Integer.valueOf((String) daysSelection.getSelectedItem()));
+				env.setNumDays(daysSelection.getSelectedIndex()+5);
 				ArrayList<Monster> team = new ArrayList<Monster>();
 				team.add((Monster) startingMonsterSelection.getSelectedItem());
 				env.setPlayer(new Player(playerName,500,team,new ArrayList<Item>()));

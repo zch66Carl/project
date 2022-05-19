@@ -35,8 +35,10 @@ public class GameEnvironment {
 	public Player getPlayer() {
 		return player;
 	}
-	public void setNumDays(int days) {
-		numDays = days;
+
+	public void setNumDays(int numDays) {
+		this.numDays = numDays;
+
 	}
 	public int getNumDays() {
 		return numDays;
