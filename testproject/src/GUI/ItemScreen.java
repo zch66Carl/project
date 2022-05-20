@@ -25,9 +25,11 @@ import javax.swing.JScrollPane;
 public class ItemScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public ItemScreen(GameEnvironment incomingEnv) {
+	public ItemScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+		scrMan = incScrMan;
 		env = incomingEnv;
 		initialize();
 		frame.setVisible(true);
@@ -38,7 +40,7 @@ public class ItemScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeItemsScreen(this);
+		scrMan.closeItemsScreen(this, env);
 	}
 	/**
 	 * Launch the application.
@@ -80,7 +82,7 @@ public class ItemScreen {
 		JButton shopButton = new JButton("Shop");
 		shopButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.launchShopScreen();
+				scrMan.launchShopScreen(env);
 				closeWindow();
 			}
 		});

@@ -28,9 +28,11 @@ public class SetupScreen {
 
 	private JFrame frame;
 	private JTextField playerNameTextBox;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public SetupScreen(GameEnvironment incomingEnv) {
+	public SetupScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+		scrMan = incScrMan;
 		env = incomingEnv;
 		initialize();
 		frame.setVisible(true);
@@ -41,7 +43,7 @@ public class SetupScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeSetupScreen(this);
+		scrMan.closeSetupScreen(this, env);
 	}
 
 	/**

@@ -16,9 +16,11 @@ import java.awt.event.ActionEvent;
 public class GameOverScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public GameOverScreen(GameEnvironment incomingEnv) {
+	public GameOverScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+		scrMan = incScrMan;
 		env = incomingEnv;
 		initialize();
 		frame.setVisible(true);
@@ -29,7 +31,7 @@ public class GameOverScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeGameOverScreen(this);
+		scrMan.closeGameOverScreen(this);
 	}
 	/**
 	 * Launch the application.

@@ -27,9 +27,11 @@ import javax.swing.ListSelectionModel;
 public class ShopScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public ShopScreen(GameEnvironment incomingEnv) {
+	public ShopScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+		scrMan = incScrMan;
 		env = incomingEnv;
 		initialize();
 		frame.setVisible(true);
@@ -40,7 +42,7 @@ public class ShopScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeShopScreen(this);
+		scrMan.closeShopScreen(this, env);
 	}
 	/**
 	 * Launch the application.
@@ -91,7 +93,7 @@ public class ShopScreen {
 		JButton inventoryButton = new JButton("Inventory");
 		inventoryButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.launchItemsScreen();
+				scrMan.launchItemsScreen(env);
 				closeWindow();
 			}
 		});

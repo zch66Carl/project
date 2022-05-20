@@ -32,10 +32,12 @@ import javax.swing.JTextField;
 public class TeamScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	private JTextField renameMonsterTxt;
 	
-	public TeamScreen(GameEnvironment incomingEnv) {
+	public TeamScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+		scrMan = incScrMan;
 		env = incomingEnv;
 		initialize();
 		frame.setVisible(true);
@@ -46,7 +48,7 @@ public class TeamScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeTeamScreen(this);
+		scrMan.closeTeamScreen(this, env);
 	}
 	/**
 	 * Launch the application.
@@ -109,7 +111,7 @@ public class TeamScreen {
 				String newName = renameMonsterTxt.getText();
 				monsterList.getSelectedValue().setName(newName);
 				closeWindow();
-				env.launchTeamScreen();
+				scrMan.launchTeamScreen(env);
 			}
 		});
 		renameMonsterButton.setBounds(229, 346, 132, 43);

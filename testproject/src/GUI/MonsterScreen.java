@@ -21,9 +21,11 @@ public class MonsterScreen {
 
 	private JFrame frame;
 	private JTextField renameMonsterTextBox;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public MonsterScreen(GameEnvironment incomingEnv) {
+	public MonsterScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+		scrMan = incScrMan;
 		env = incomingEnv;
 		initialize();
 		frame.setVisible(true);
@@ -34,7 +36,7 @@ public class MonsterScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeMonsterScreen(this);
+		scrMan.closeMonsterScreen(this, env);
 	}
 
 	/**

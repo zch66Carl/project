@@ -24,10 +24,12 @@ import javax.swing.ListSelectionModel;
 public class BattleScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	private Player battle;
 	
-	public BattleScreen(GameEnvironment incomingEnv,Player battle) {
+	public BattleScreen(ScreenManager incScrMan, GameEnvironment incomingEnv,Player battle) {
+		scrMan = incScrMan;
 		env = incomingEnv;
 		this.battle = battle;
 		initialize();
@@ -39,7 +41,7 @@ public class BattleScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeBattleScreen(this);
+		scrMan.closeBattleScreen(this, env);
 	}
 
 	/**

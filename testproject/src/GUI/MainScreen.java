@@ -18,9 +18,11 @@ import java.awt.event.ActionEvent;
 public class MainScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public MainScreen(GameEnvironment incomingEnv) {
+	public MainScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+		scrMan = incScrMan;
 		env = incomingEnv;
 		initialize();
 		frame.setVisible(true);
@@ -31,7 +33,7 @@ public class MainScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeMainScreen(this);
+		scrMan.closeMainScreen(this, env);
 	}
 
 	/**
@@ -94,7 +96,7 @@ public class MainScreen {
 		JButton itemButton = new JButton("Items");
 		itemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.launchItemsScreen();
+				scrMan.launchItemsScreen(env);
 				finishedWindow();
 			}
 		});
@@ -105,7 +107,7 @@ public class MainScreen {
 		JButton teamButton = new JButton("Team");
 		teamButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.launchTeamScreen();
+				scrMan.launchTeamScreen(env);
 				finishedWindow();
 			}
 		});
@@ -116,7 +118,7 @@ public class MainScreen {
 		JButton btnShop = new JButton("Shop");
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.launchShopScreen();
+				scrMan.launchShopScreen(env);
 				finishedWindow();
 			}
 		});
@@ -129,7 +131,7 @@ public class MainScreen {
 			public void actionPerformed(ActionEvent e) {
 				Player[] battles = (Player[]) env.getBattles().toArray();
 				Player selection = (Player) JOptionPane.showInputDialog(frame,"Choose a battle to fight:", "Battle Selection", JOptionPane.PLAIN_MESSAGE,null,battles,null);
-				env.launchBattleScreen(selection);
+				scrMan.launchBattleScreen(env, selection);
 				finishedWindow();
 			}
 		});
