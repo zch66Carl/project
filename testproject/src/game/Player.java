@@ -53,6 +53,14 @@ public class Player {
 		this.inventory = inventory;
 		activeMonsterIndex=0;
 	}
+	/**
+	 * Constructor with empty team and inventory.
+	 * @param name The player's name
+	 * @param gold The player's starting gold.
+	 */
+	public Player(String name, int gold) {
+		this(name, gold, new ArrayList<Monster>(), new ArrayList<Item>());
+	}
 	
 	/**
 	 * A static method determining if the given string is a valid name (3-15 characters, no special characters).
@@ -246,10 +254,10 @@ public class Player {
 	 * are rewarded apporopriately post battle.
 	 */
 	public void preBattle() {
-		setActiveMonsterIndex(0);
 		for(Monster monst : team) {
 			monst.setWasActiveDuringBattle(false);
 		}
+		setActiveMonsterIndex(0);
 	}
 	
 	/**

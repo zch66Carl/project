@@ -2,8 +2,6 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
 
 import game.Shop;
@@ -29,7 +27,7 @@ class ShopTest {
 	void buyPurchaseableTest() {
 		Shop shop = new Shop();
 		shop.refreshStock(1, 1);
-		Player pla = new Player("name", 30, new ArrayList<Monster>(), new ArrayList<Item>());
+		Player pla = new Player("name", 30);
 		int i;
 		int cumulativePrice = 0;
 		for(i=0; i<9; i++) {
@@ -49,7 +47,7 @@ class ShopTest {
 	@Test
 	void sellPurchaseableTest() {
 		Shop shop = new Shop();
-		Player pla = new Player("name", 0, new ArrayList<Monster>(), new ArrayList<Item>());
+		Player pla = new Player("name", 0);
 		Monster one = new Monster("name", 1);
 		Item two = new Item("name", 5);
 		pla.addMonster(one);

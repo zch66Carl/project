@@ -70,7 +70,7 @@ public class BattleCommandLine {
 	 */
 	public boolean run(GameEnvironment env, boolean isWildBattle, int teamBattleInd) {
 		Player pla = env.getPlayer();
-		Player enemyTeam = new Player("", 0, null, null);
+		Player enemyTeam = new Player("", 0);
 		Monster wildMonster = env.getWildBattleMonster();
 		if(!isWildBattle) {
 			enemyTeam = env.getBattles().get(teamBattleInd);

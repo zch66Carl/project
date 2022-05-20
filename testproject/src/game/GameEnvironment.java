@@ -45,7 +45,7 @@ public class GameEnvironment {
 	 * to normal, initializes the shop and battle containers.
 	 */
 	public GameEnvironment() {
-		player = new Player("def_name", 0, new ArrayList<Monster>(), new ArrayList<Item>());
+		player = new Player("def_name", 0);
 		numDays = 0;
 		curDay = 0;
 		difficulty = 2;
