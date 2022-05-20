@@ -39,10 +39,12 @@ public class Generation {
 			return new Monster(Monster.getRandomName(), level);
 		}
 		
-		int type = rand.nextInt(3);
-		if(type==0) return new FlyingMonster(FlyingMonster.getRandomName(), level);
-		if(type==1) return new PoisonMonster(PoisonMonster.getRandomName(), level);
-		return new DebuffMonster(DebuffMonster.getRandomName(), level);
+		int type = rand.nextInt(7);// 1/10 chance of risky monster, 3/10 for others 
+								  //overall 3/50 for risky, 9/50 for the 3 others each.
+		if(type<3) return new FlyingMonster(FlyingMonster.getRandomName(), level);
+		if(type<6) return new PoisonMonster(PoisonMonster.getRandomName(), level);
+		if(type<9) return new DebuffMonster(DebuffMonster.getRandomName(), level);
+		return new RiskyMonster(RiskyMonster.getRandomName(), level);
 	}
 	
 	/**
