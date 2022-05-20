@@ -19,9 +19,9 @@ public class GameOverScreen {
 	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public GameOverScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+	public GameOverScreen(ScreenManager incScrMan) {
 		scrMan = incScrMan;
-		env = incomingEnv;
+		env = scrMan.getEnv();
 		initialize();
 		frame.setVisible(true);
 	}

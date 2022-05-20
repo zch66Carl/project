@@ -4,64 +4,69 @@ import game.GameEnvironment;
 import game.Player;
 
 public class ScreenManager {
-	public void launchMainScreen(GameEnvironment env) {
-		MainScreen mainWindow = new MainScreen(this, env);
+	private GameEnvironment env;
+	public GameEnvironment getEnv() {
+		return env;
 	}
-	public void closeMainScreen(MainScreen mainWindow, GameEnvironment env) {
+	
+	public void launchMainScreen() {
+		MainScreen mainWindow = new MainScreen(this);
+	}
+	public void closeMainScreen(MainScreen mainWindow) {
 		mainWindow.closeWindow();
 	}
 	public void launchSetupScreen() {
-		GameEnvironment env = new GameEnvironment();
-		SetupScreen setupWindow = new SetupScreen(this, env);
+		env = new GameEnvironment();
+		SetupScreen setupWindow = new SetupScreen(this);
 	}
-	public void closeSetupScreen(SetupScreen setupWindow, GameEnvironment env) {
+	public void closeSetupScreen(SetupScreen setupWindow) {
 		setupWindow.closeWindow();
 		env.preDayLogic(1);
 		env.updateBattles();
-		launchMainScreen(env);
+		launchMainScreen();
 	}
-	public void launchBattleScreen(GameEnvironment env, Player battle) {
-		BattleScreen battleWindow = new BattleScreen(this, env, battle);
+	public void launchBattleScreen(Player battle) {
+		BattleScreen battleWindow = new BattleScreen(this, battle);
 	}
-	public void closeBattleScreen(BattleScreen battleWindow, GameEnvironment env) {
+	public void closeBattleScreen(BattleScreen battleWindow) {
 		battleWindow.closeWindow();
-		launchMainScreen(env);
+		launchMainScreen();
 	}
-	public void launchItemsScreen(GameEnvironment env) {
-		ItemScreen itemsWindow = new ItemScreen(this, env);
+	public void launchItemsScreen() {
+		ItemScreen itemsWindow = new ItemScreen(this);
 	}
-	public void closeItemsScreen(ItemScreen itemsWindow, GameEnvironment env) {
+	public void closeItemsScreen(ItemScreen itemsWindow) {
 		itemsWindow.closeWindow();
-		launchMainScreen(env);
+		launchMainScreen();
 	}
-	public void launchShopScreen(GameEnvironment env) {
+	public void launchShopScreen() {
 		env.getShop().refreshStock(env.getCurDay(), env.getDifficulty());
-		ShopScreen shopWindow = new ShopScreen(this, env);		
+		ShopScreen shopWindow = new ShopScreen(this);		
 	}
-	public void closeShopScreen(ShopScreen shopWindow, GameEnvironment env) {
+	public void closeShopScreen(ShopScreen shopWindow) {
 		shopWindow.closeWindow();
-		launchMainScreen(env);
+		launchMainScreen();
 	}
-	public void launchGameOverScreen(GameEnvironment env) {
-		GameOverScreen gameOverWindow = new GameOverScreen(this, env);
+	public void launchGameOverScreen() {
+		GameOverScreen gameOverWindow = new GameOverScreen(this);
 	}
 	public void closeGameOverScreen(GameOverScreen gameOverWindow) {
 		gameOverWindow.closeWindow();
 		launchSetupScreen();
 	}
-	public void launchMonsterScreen(GameEnvironment env) {
-		MonsterScreen monsterWindow = new MonsterScreen(this, env);
+	public void launchMonsterScreen() {
+		MonsterScreen monsterWindow = new MonsterScreen(this);
 	}
-	public void closeMonsterScreen(MonsterScreen monsterWindow, GameEnvironment env) {
+	public void closeMonsterScreen(MonsterScreen monsterWindow) {
 		monsterWindow.closeWindow();
-		launchTeamScreen(env);
+		launchTeamScreen();
 	}
-	public void launchTeamScreen(GameEnvironment env) {
-		TeamScreen teamWindow = new TeamScreen(this, env);
+	public void launchTeamScreen() {
+		TeamScreen teamWindow = new TeamScreen(this);
 	}
-	public void closeTeamScreen(TeamScreen teamWindow, GameEnvironment env) {
+	public void closeTeamScreen(TeamScreen teamWindow) {
 		teamWindow.closeWindow();
-		launchMainScreen(env);
+		launchMainScreen();
 	}
 	
 	

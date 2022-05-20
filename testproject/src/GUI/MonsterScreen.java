@@ -24,9 +24,9 @@ public class MonsterScreen {
 	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public MonsterScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+	public MonsterScreen(ScreenManager incScrMan) {
 		scrMan = incScrMan;
-		env = incomingEnv;
+		env = scrMan.getEnv();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -36,7 +36,7 @@ public class MonsterScreen {
 	}
 	
 	public void finishedWindow() {
-		scrMan.closeMonsterScreen(this, env);
+		scrMan.closeMonsterScreen(this);
 	}
 
 	/**

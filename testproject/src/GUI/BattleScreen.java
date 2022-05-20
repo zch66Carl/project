@@ -28,9 +28,9 @@ public class BattleScreen {
 	private GameEnvironment env;
 	private Player battle;
 	
-	public BattleScreen(ScreenManager incScrMan, GameEnvironment incomingEnv,Player battle) {
+	public BattleScreen(ScreenManager incScrMan, Player battle) {
 		scrMan = incScrMan;
-		env = incomingEnv;
+		env = scrMan.getEnv();
 		this.battle = battle;
 		initialize();
 		frame.setVisible(true);
@@ -41,7 +41,7 @@ public class BattleScreen {
 	}
 	
 	public void finishedWindow() {
-		scrMan.closeBattleScreen(this, env);
+		scrMan.closeBattleScreen(this);
 	}
 
 	/**

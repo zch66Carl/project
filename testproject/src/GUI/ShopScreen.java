@@ -30,9 +30,9 @@ public class ShopScreen {
 	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public ShopScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+	public ShopScreen(ScreenManager incScrMan) {
 		scrMan = incScrMan;
-		env = incomingEnv;
+		env = scrMan.getEnv();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -42,7 +42,7 @@ public class ShopScreen {
 	}
 	
 	public void finishedWindow() {
-		scrMan.closeShopScreen(this, env);
+		scrMan.closeShopScreen(this);
 	}
 	/**
 	 * Launch the application.
@@ -93,7 +93,7 @@ public class ShopScreen {
 		JButton inventoryButton = new JButton("Inventory");
 		inventoryButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				scrMan.launchItemsScreen(env);
+				scrMan.launchItemsScreen();
 				closeWindow();
 			}
 		});

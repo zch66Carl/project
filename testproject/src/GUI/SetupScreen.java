@@ -32,9 +32,9 @@ public class SetupScreen {
 	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public SetupScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+	public SetupScreen(ScreenManager incScrMan) {
 		scrMan = incScrMan;
-		env = incomingEnv;
+		env = scrMan.getEnv();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -44,7 +44,7 @@ public class SetupScreen {
 	}
 	
 	public void finishedWindow() {
-		scrMan.closeSetupScreen(this, env);
+		scrMan.closeSetupScreen(this);
 	}
 
 	/**

@@ -36,9 +36,9 @@ public class TeamScreen {
 	private GameEnvironment env;
 	private JTextField renameMonsterTxt;
 	
-	public TeamScreen(ScreenManager incScrMan, GameEnvironment incomingEnv) {
+	public TeamScreen(ScreenManager incScrMan) {
 		scrMan = incScrMan;
-		env = incomingEnv;
+		env = scrMan.getEnv();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -48,7 +48,7 @@ public class TeamScreen {
 	}
 	
 	public void finishedWindow() {
-		scrMan.closeTeamScreen(this, env);
+		scrMan.closeTeamScreen(this);
 	}
 	/**
 	 * Launch the application.
@@ -111,7 +111,7 @@ public class TeamScreen {
 				String newName = renameMonsterTxt.getText();
 				monsterList.getSelectedValue().setName(newName);
 				closeWindow();
-				scrMan.launchTeamScreen(env);
+				scrMan.launchTeamScreen();
 			}
 		});
 		renameMonsterButton.setBounds(229, 346, 132, 43);
