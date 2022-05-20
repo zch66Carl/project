@@ -8,8 +8,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import testproject.GameEnvironment;
-import testproject.monsters.Monster;
+import game.GameEnvironment;
+import game.monsters.Monster;
 
 import javax.swing.JProgressBar;
 import javax.swing.ListSelectionModel;
@@ -33,11 +33,13 @@ import javax.swing.JTextField;
 public class TeamScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	private JTextField renameMonsterTxt;
 	
-	public TeamScreen(GameEnvironment incomingEnv) {
-		env = incomingEnv;
+	public TeamScreen(ScreenManager incScrMan) {
+		scrMan = incScrMan;
+		env = scrMan.getEnv();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -47,7 +49,7 @@ public class TeamScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeTeamScreen(this);
+		scrMan.closeTeamScreen(this);
 	}
 	/**
 	 * Launch the application.
@@ -113,6 +115,7 @@ public class TeamScreen {
 					throw new RuntimeException("Name can not be empty");
 				} else {
 				monsterList.getSelectedValue().setName(newName);
+<<<<<<< HEAD
 				Monster[] currentTeam = new Monster[env.getPlayer().getTeam().size()];
 				for(int i=0;i<currentTeam.length;i++) {
 					currentTeam[i] = env.getPlayer().getTeam().get(i);
@@ -125,6 +128,10 @@ public class TeamScreen {
 				catch (Exception excep) {
 					JOptionPane.showMessageDialog(frame, "Please Select Monster To Rename and can not be empty");
 				} 
+=======
+				closeWindow();
+				scrMan.launchTeamScreen();
+>>>>>>> branch 'main' of https://github.com/zch66Carl/project.git
 			}
 		});
 		renameMonsterButton.setBounds(229, 346, 132, 43);

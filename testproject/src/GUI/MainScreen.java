@@ -6,8 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import testproject.GameEnvironment;
-import testproject.Player;
+import game.GameEnvironment;
+import game.Player;
 
 import java.awt.Font;
 import javax.swing.JButton;
@@ -18,10 +18,12 @@ import java.awt.event.ActionEvent;
 public class MainScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public MainScreen(GameEnvironment incomingEnv) {
-		env = incomingEnv;
+	public MainScreen(ScreenManager incScrMan) {
+		scrMan = incScrMan;
+		env = scrMan.getEnv();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -31,7 +33,7 @@ public class MainScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeMainScreen(this);
+		scrMan.closeMainScreen(this);
 	}
 
 	/**
@@ -94,7 +96,7 @@ public class MainScreen {
 		JButton itemButton = new JButton("Items");
 		itemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.launchItemsScreen();
+				scrMan.launchItemsScreen();
 				finishedWindow();
 			}
 		});
@@ -105,7 +107,7 @@ public class MainScreen {
 		JButton teamButton = new JButton("Team");
 		teamButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.launchTeamScreen();
+				scrMan.launchTeamScreen();
 				finishedWindow();
 			}
 		});
@@ -116,7 +118,7 @@ public class MainScreen {
 		JButton btnShop = new JButton("Shop");
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.launchShopScreen();
+				scrMan.launchShopScreen();
 				finishedWindow();
 			}
 		});
@@ -133,6 +135,10 @@ public class MainScreen {
 					battles[i] = env.getBattles().get(i);
 				}
 				Player selection = (Player) JOptionPane.showInputDialog(frame,"Choose a battle to fight:", "Battle Selection", JOptionPane.PLAIN_MESSAGE,null,battles,null);
+<<<<<<< HEAD
+=======
+				scrMan.launchBattleScreen(selection);
+>>>>>>> branch 'main' of https://github.com/zch66Carl/project.git
 				finishedWindow();
 				env.launchBattleScreen(selection); 
 				} catch (Exception excep) {

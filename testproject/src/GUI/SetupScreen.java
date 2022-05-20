@@ -1,8 +1,5 @@
 package GUI;
 import java.awt.EventQueue;
-import testproject.Generation;
-import testproject.Item;
-import testproject.Player;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,25 +12,31 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EtchedBorder;
+
+import game.GameEnvironment;
+import game.Generation;
+import game.Item;
+import game.Player;
+import game.monsters.Monster;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
-import testproject.GameEnvironment;
-import testproject.monsters.Monster;
-
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 public class SetupScreen {
 
 	private JFrame frame;
 	private JTextField playerNameTextBox;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public SetupScreen(GameEnvironment incomingEnv) {
-		env = incomingEnv;
+	public SetupScreen(ScreenManager incScrMan) {
+		scrMan = incScrMan;
+		env = scrMan.getEnv();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -43,7 +46,7 @@ public class SetupScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeSetupScreen(this);
+		scrMan.closeSetupScreen(this);
 	}
 
 	/**
@@ -110,9 +113,9 @@ public class SetupScreen {
 		startingMonsterLabel.setBounds(37, 116, 175, 29);
 		frame.getContentPane().add(startingMonsterLabel);
 		
-		Monster monsterOne = Generation.generateMonster(1, 1, false, false);
-		Monster monsterTwo = Generation.generateMonster(1, 1, false, false);
-		Monster monsterThree = Generation.generateMonster(1, 1, false, false);
+		Monster monsterOne = Generation.generatePlayerMonster(1, 1);
+		Monster monsterTwo = Generation.generatePlayerMonster(1, 1);
+		Monster monsterThree = Generation.generatePlayerMonster(1, 1);
 		JComboBox startingMonsterSelection = new JComboBox();
 		startingMonsterSelection.setModel(new DefaultComboBoxModel(new Monster[] {monsterOne,monsterTwo,monsterThree}));
 		startingMonsterSelection.setSelectedIndex(0);

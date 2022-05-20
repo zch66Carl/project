@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import testproject.GameEnvironment;
+import game.GameEnvironment;
 
 import java.awt.Font;
 import javax.swing.JButton;
@@ -16,10 +16,12 @@ import java.awt.event.ActionEvent;
 public class GameOverScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public GameOverScreen(GameEnvironment incomingEnv) {
-		env = incomingEnv;
+	public GameOverScreen(ScreenManager incScrMan) {
+		scrMan = incScrMan;
+		env = scrMan.getEnv();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -29,7 +31,7 @@ public class GameOverScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeGameOverScreen(this);
+		scrMan.closeGameOverScreen(this);
 	}
 	/**
 	 * Launch the application.

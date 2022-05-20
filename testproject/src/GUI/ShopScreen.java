@@ -7,10 +7,10 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import testproject.GameEnvironment;
-import testproject.Item;
-import testproject.Purchaseable;
-import testproject.monsters.Monster;
+import game.GameEnvironment;
+import game.Item;
+import game.Purchaseable;
+import game.monsters.Monster;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -35,10 +35,12 @@ import javax.swing.JScrollPane;
 public class ShopScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public ShopScreen(GameEnvironment incomingEnv) {
-		env = incomingEnv;
+	public ShopScreen(ScreenManager incScrMan) {
+		scrMan = incScrMan;
+		env = scrMan.getEnv();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -48,7 +50,7 @@ public class ShopScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeShopScreen(this);
+		scrMan.closeShopScreen(this);
 	}
 	/**
 	 * Launch the application.
@@ -99,7 +101,7 @@ public class ShopScreen {
 		JButton inventoryButton = new JButton("Inventory");
 		inventoryButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.launchItemsScreen();
+				scrMan.launchItemsScreen();
 				closeWindow();
 			}
 		});

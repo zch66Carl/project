@@ -7,10 +7,16 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+<<<<<<< HEAD
 import testproject.GameEnvironment;
 import testproject.Item;
 import testproject.Player;
 import testproject.monsters.Monster;
+=======
+import game.GameEnvironment;
+import game.Player;
+import game.monsters.Monster;
+>>>>>>> branch 'main' of https://github.com/zch66Carl/project.git
 
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
@@ -28,11 +34,13 @@ import java.awt.event.ActionEvent;
 public class BattleScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	private Player battle;
 	
-	public BattleScreen(GameEnvironment incomingEnv,Player battle) {
-		env = incomingEnv;
+	public BattleScreen(ScreenManager incScrMan, Player battle) {
+		scrMan = incScrMan;
+		env = scrMan.getEnv();
 		this.battle = battle;
 		initialize();
 		frame.setVisible(true);
@@ -44,7 +52,7 @@ public class BattleScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeBattleScreen(this);
+		scrMan.closeBattleScreen(this);
 	}
 
 	/**

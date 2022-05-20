@@ -7,10 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-import testproject.GameEnvironment;
-import testproject.Item;
-import testproject.Purchaseable;
-import testproject.monsters.Monster;
+import game.GameEnvironment;
+import game.Item;
+import game.Purchaseable;
+import game.monsters.Monster;
 
 import java.awt.Font;
 
@@ -25,10 +25,12 @@ import javax.swing.JScrollPane;
 public class ItemScreen {
 
 	private JFrame frame;
+	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
-	public ItemScreen(GameEnvironment incomingEnv) {
-		env = incomingEnv;
+	public ItemScreen(ScreenManager incScrMan) {
+		scrMan = incScrMan;
+		env = scrMan.getEnv();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -38,7 +40,7 @@ public class ItemScreen {
 	}
 	
 	public void finishedWindow() {
-		env.closeItemsScreen(this);
+		scrMan.closeItemsScreen(this);
 	}
 	/**
 	 * Launch the application.
@@ -80,7 +82,7 @@ public class ItemScreen {
 		JButton shopButton = new JButton("Shop");
 		shopButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.launchShopScreen();
+				scrMan.launchShopScreen();
 				closeWindow();
 			}
 		});

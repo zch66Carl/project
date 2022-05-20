@@ -1,9 +1,9 @@
-package testproject.monsters;
+package game.monsters;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import testproject.Purchaseable;
+import game.Purchaseable;
 
 /**
  * Monster is the base class for any monster types, it is responsible for the monsters current status, including health, damage,
@@ -159,13 +159,6 @@ public class Monster implements Purchaseable{
 	public void setWasActiveDuringBattle(boolean newBool) {
 		wasActiveDuringBattle = newBool;
 	}
-	/**
-	 * Simple getter for wasActiveDuringBattle
-	 * @return returns wasActiveDuringBattle
-	 */
-	public boolean getWasAciveDuringBattle() {
-		return wasActiveDuringBattle;
-	}
 	
 	/**
 	 * Rewards the monster with xp based on the value of wasActiveDuringBattle, using rewardXP and passiveXP, should be called only
@@ -241,7 +234,7 @@ public class Monster implements Purchaseable{
 		return price;
 	}
 	/**
-	 * The monster's sell price.
+	 * The monster's sell price, which is half of it's regular price.
 	 */
 	public int getSellPrice() {
 		return price / 2;
@@ -320,6 +313,7 @@ public class Monster implements Purchaseable{
 	 * @param healAmount The amount to heal by.
 	 */
 	public void heal(int healAmount) {
+		if(!isAwake) return;
 		health+=healAmount;
 		if(health>maxHealth) health=maxHealth;
 	}

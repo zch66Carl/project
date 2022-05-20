@@ -2,14 +2,23 @@ package commandline;
 
 import java.util.ArrayList;
 
-import testproject.Shop;
-import testproject.monsters.Monster;
-import testproject.GameEnvironment;
-import testproject.Item;
-import testproject.Player;
-import testproject.Purchaseable;
+import game.GameEnvironment;
+import game.Item;
+import game.Player;
+import game.Purchaseable;
+import game.Shop;
+import game.monsters.Monster;
 
+/**
+ * Command line interface for the shop, allowing the player to view and buy stock, and sell their own items and monsters.
+ */
 public class ShopCommandLine {
+	/**
+	 * Command line interface for selling an item to the shop, the player's items are displayed and the player is prompted to return
+	 * to the prievious menu or choose an item to sell.
+	 * @param pla The Player entity.
+	 * @param shop The Shop entity.
+	 */
 	private void sellItem(Player pla, Shop shop) {
 		ArrayList<Item> inv = pla.getInventory();
 		if(inv.size()==0) {
@@ -24,7 +33,12 @@ public class ShopCommandLine {
 		if(inp == 0) return;
 		IO.textOut(shop.sellPurchaseable(pla, inv.get(inp - 1)));
 	}
-	
+	/**
+	 * Command line interface for selling a monster to the shop, the player's monster's are displayed and the player is prompted to
+	 * return to the prievious menu or choose a monster to sell.
+	 * @param pla The Player entity.
+	 * @param shop The Shop entity.
+	 */
 	private void sellMonster(Player pla, Shop shop) {
 		ArrayList<Monster> team = pla.getTeam();
 		if(team.size()==0) {
@@ -40,6 +54,11 @@ public class ShopCommandLine {
 		IO.textOut(shop.sellPurchaseable(pla, team.get(inp - 1)));
 	}
 	
+	/**
+	 * Command line interface to choose to sell an item, monster or return back to the shop.
+	 * @param pla The Player entity.
+	 * @param shop The Shop enity.
+	 */
 	private void sell(Player pla, Shop shop) {
 		IO.textOut("Enter 0 to return to shop, 1 to sell an item or 2 to sell a monster.");
 		int inp = IO.getInt(0, 2);
@@ -48,6 +67,11 @@ public class ShopCommandLine {
 		else sellMonster(pla, shop);
 	}
 	
+	/**
+	 * Command line interface for the shop, displaying the player's current gold and the shop's stock, and prompting the user to 
+	 * return to the prievious menu, choose an item to buy, or sell one of their own items or monsters.
+	 * @param env The GameEnvironment entity.
+	 */
 	void run(GameEnvironment env) {
 		Shop shop = env.getShop();
 		Player pla = env.getPlayer();
