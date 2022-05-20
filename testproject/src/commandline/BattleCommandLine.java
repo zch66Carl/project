@@ -97,6 +97,10 @@ public class BattleCommandLine {
 				IO.textOut("Fleeing battle.");
 				return false;
 			}
+			//check if player killed their active on their own turn with RiskyMonster
+			if(!pla.checkIfActiveMonster()) {
+				break;
+			}
 			
 			if(isWildBattle) preTurnMessages = wildMonster.preTurnLogic();
 			else preTurnMessages = enemyTeam.preTurnLogic();
@@ -112,6 +116,11 @@ public class BattleCommandLine {
 			IO.textOut("Enemy turn: " + enemy.toString());
 			Monster plaMonst = pla.getActiveMonster();
 			IO.textOut(isWildBattle ? wildMonster.makeRandomMove(plaMonst) : enemyTeam.makeRandomMove(plaMonst));
+			//check if a risky monster killed itself on its own turn
+			if((isWildBattle && !wildMonster.isAwake()) || (!isWildBattle && !enemyTeam.checkIfActiveMonster())) {
+				outcome=true;
+				break;
+			}
 		}
 		
 		pla.postBattle();

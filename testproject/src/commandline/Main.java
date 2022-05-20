@@ -3,8 +3,6 @@ package commandline;
 import java.util.ArrayList;
 
 import game.GameEnvironment;
-import game.Player;
-import game.monsters.Monster;
 
 /**
  * The main loop of the game, where the days are run.

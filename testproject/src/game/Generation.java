@@ -39,7 +39,7 @@ public class Generation {
 			return new Monster(Monster.getRandomName(), level);
 		}
 		
-		int type = rand.nextInt(7);// 1/10 chance of risky monster, 3/10 for others 
+		int type = rand.nextInt(10);// 1/10 chance of risky monster, 3/10 for others 
 								  //overall 3/50 for risky, 9/50 for the 3 others each.
 		if(type<3) return new FlyingMonster(FlyingMonster.getRandomName(), level);
 		if(type<6) return new PoisonMonster(PoisonMonster.getRandomName(), level);

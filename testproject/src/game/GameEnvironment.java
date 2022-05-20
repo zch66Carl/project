@@ -141,11 +141,11 @@ public class GameEnvironment {
 	}
 	
 	/**
-	 * Updates the days battles, based on the current day and difficulty, wild battles occur every 5 days, and the number of battles
+	 * Updates the days battles, based on the current day and difficulty, wild battles occur every 3 days, and the number of battles
 	 * is 3 in the early days, and up to 5 by the end of the game.
 	 */
 	public void updateBattles() {
-		if(curDay%5==1) wildMonster = Generation.generateMonster(curDay, difficulty, false, true);
+		if(curDay%3==1) wildMonster = Generation.generateMonster(curDay, difficulty, false, true);
 		else wildMonster=null;
 		
 		battles.clear();
