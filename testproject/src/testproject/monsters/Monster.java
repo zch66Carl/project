@@ -241,7 +241,7 @@ public class Monster implements Purchaseable{
 		return price;
 	}
 	/**
-	 * The monster's sell price.
+	 * The monster's sell price, which is half of it's regular price.
 	 */
 	public int getSellPrice() {
 		return price / 2;

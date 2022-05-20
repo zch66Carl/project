@@ -13,8 +13,8 @@ public class InventoryCommandLine {
 		if(usableOn.size() == 0) {
 			IO.textOut("Item not usable:");
 			String message = new String();
-			if(item.getIsRevive()) message = "No monsters are fainted.";
-			else if(item.getHealAmount() > 0) message = "Monsters allready at full health.";
+			if(item.isRevive()) message = "No monsters are fainted.";
+			else if(item.isHeal()) message = "Monsters allready at full health.";
 			IO.textOut(message);
 			return false;
 		}
