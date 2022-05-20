@@ -34,6 +34,7 @@ class ShopTest {
 		int cumulativePrice = 0;
 		for(i=0; i<9; i++) {
 			if(cumulativePrice + shop.getStock()[i].getPrice() > 30) break;
+			cumulativePrice += shop.getStock()[i].getPrice();
 			shop.buyPurchaseable(pla, i);
 			assertEquals(shop.getStock()[i], null);
 			assertEquals(pla.getInventory().size() + pla.getTeam().size(), i+1);
@@ -51,7 +52,7 @@ class ShopTest {
 		Player pla = new Player("name", 0, new ArrayList<Monster>(), new ArrayList<Item>());
 		Monster one = new Monster("name", 1);
 		Item two = new Item("name", 5);
-		pla.addMonster(new Monster("name", 1));
+		pla.addMonster(one);
 		pla.addItem(two);
 		shop.sellPurchaseable(pla, one);
 		assertEquals(pla.getTeam().size(), 0);
