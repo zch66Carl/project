@@ -8,6 +8,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import testproject.GameEnvironment;
+import testproject.Item;
 import testproject.Player;
 import testproject.monsters.Monster;
 
@@ -19,7 +20,10 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BattleScreen {
 
@@ -32,6 +36,7 @@ public class BattleScreen {
 		this.battle = battle;
 		initialize();
 		frame.setVisible(true);
+		JOptionPane.showMessageDialog(frame, battle.getName()+" joins battle!");
 	}
 	
 	public void closeWindow() {
@@ -95,22 +100,12 @@ public class BattleScreen {
 		enemyMonsterIcon.setBounds(185, 46, 60, 60);
 		panel.add(enemyMonsterIcon);
 		
-		JLabel enemyActionDisplay = new JLabel("miss");
-		enemyActionDisplay.setHorizontalAlignment(SwingConstants.CENTER);
-		enemyActionDisplay.setBounds(185, 152, 54, 15);
-		panel.add(enemyActionDisplay);
-		
-		JLabel playerActionDisplay = new JLabel("-35");
-		playerActionDisplay.setHorizontalAlignment(SwingConstants.CENTER);
-		playerActionDisplay.setBounds(185, 319, 54, 15);
-		panel.add(playerActionDisplay);
-		
-		JLabel enemyCurrentHealth = new JLabel("25");
+		JLabel enemyCurrentHealth = new JLabel(Integer.toString(battle.getTeam().get(battle.getActiveMonsterIndex()).getHealth()));
 		enemyCurrentHealth.setHorizontalAlignment(SwingConstants.RIGHT);
 		enemyCurrentHealth.setBounds(143, 21, 54, 15);
 		panel.add(enemyCurrentHealth);
 		
-		JLabel enemyMaxHealth = new JLabel("65");
+		JLabel enemyMaxHealth = new JLabel(Integer.toString(battle.getTeam().get(battle.getActiveMonsterIndex()).getMaxHealth()));
 		enemyMaxHealth.setBounds(223, 21, 54, 15);
 		panel.add(enemyMaxHealth);
 		
@@ -118,7 +113,7 @@ public class BattleScreen {
 		lblNewLabel_6.setBounds(207, 21, 14, 15);
 		panel.add(lblNewLabel_6);
 		
-		JLabel playerCurrentHealth = new JLabel("45");
+		JLabel playerCurrentHealth = new JLabel(Integer.toString(env.getPlayer().getTeam().get(env.getPlayer().getActiveMonsterIndex()).getHealth()));
 		playerCurrentHealth.setHorizontalAlignment(SwingConstants.RIGHT);
 		playerCurrentHealth.setBounds(143, 441, 54, 15);
 		panel.add(playerCurrentHealth);
@@ -127,35 +122,64 @@ public class BattleScreen {
 		lblNewLabel_6_1.setBounds(207, 441, 14, 15);
 		panel.add(lblNewLabel_6_1);
 		
-		JLabel playerMaxHealth = new JLabel("77");
+		JLabel playerMaxHealth = new JLabel(Integer.toString(env.getPlayer().getTeam().get(env.getPlayer().getActiveMonsterIndex()).getMaxHealth()));
 		playerMaxHealth.setBounds(223, 441, 54, 15);
 		panel.add(playerMaxHealth);
 		
 		JButton attackButton = new JButton("Attack");
+		attackButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JOptionPane.showMessageDialog(frame, env.getPlayer().getActiveMonster().makeMove(0, battle.getActiveMonster()));
+				enemyCurrentHealth.setText(Integer.toString(battle.getActiveMonster().getHealth()));
+				if(battle.checkIfActiveMonster()) {
+					battle.preTurnLogic();
+					JOptionPane.showMessageDialog(frame, battle.makeRandomMove(env.getPlayer().getActiveMonster()));
+					enemyCurrentHealth.setText(Integer.toString(battle.getActiveMonster().getHealth()));
+					playerCurrentHealth.setText(Integer.toString(env.getPlayer().getActiveMonster().getHealth()));
+					
+				} else {
+					env.getPlayer().rewardPostBattle(env.getCurDay(), env.getDifficulty(), false);
+					JOptionPane.showMessageDialog(frame, "You Won");
+					finishedWindow();
+					env.launchMainScreen();
+				}
+				if(!env.getPlayer().checkIfActiveMonster()) {
+					JOptionPane.showMessageDialog(frame, "You Lost");
+					finishedWindow();
+					env.launchMainScreen();
+				}
+				
+				
+				
+			}
+		});
 		attackButton.setBounds(564, 327, 177, 41);
 		frame.getContentPane().add(attackButton);
 		
+		Item[] itemList = new Item[env.getPlayer().getInventory().size()];
+		for(int i=0;i<itemList.length;i++) {
+			itemList[i] = env.getPlayer().getInventory().get(i);
+		}
 		JComboBox itemSelectionDropDownBox = new JComboBox();
 		itemSelectionDropDownBox.setBackground(Color.WHITE);
-		itemSelectionDropDownBox.setModel(new DefaultComboBoxModel(new String[] {"Small Healing Potion", "Medium Healing Potion", "Large Healing Potion", "Small Attack Potion", "Medium Attack Potion", "Large Attack Potion"}));
+		itemSelectionDropDownBox.setModel(new DefaultComboBoxModel(itemList));
 		itemSelectionDropDownBox.setBounds(564, 378, 177, 23);
 		frame.getContentPane().add(itemSelectionDropDownBox);
 		
-		JLabel itemQuantity = new JLabel("2");
-		itemQuantity.setBounds(751, 382, 54, 15);
-		frame.getContentPane().add(itemQuantity);
 		
-		JButton useItemButton = new JButton("Use Item");
-		useItemButton.setBounds(564, 411, 177, 41);
-		frame.getContentPane().add(useItemButton);
 		
 		JButton escapeBattleButton = new JButton("Escape Battle");
+		escapeBattleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				finishedWindow();
+				env.launchMainScreen();
+			}
+		});
 		escapeBattleButton.setBounds(564, 484, 177, 41);
 		frame.getContentPane().add(escapeBattleButton);
 		
-		JButton changeMonsterButton = new JButton("Change Monster");
-		changeMonsterButton.setBounds(564, 276, 177, 41);
-		frame.getContentPane().add(changeMonsterButton);
+		
 		
 		
 		DefaultListModel<Monster> monsterListModel = new DefaultListModel<>();
@@ -165,5 +189,43 @@ public class BattleScreen {
 		monsterList.setBounds(564, 59, 177, 193);
 		frame.getContentPane().add(monsterList);
 		monsterList.getSelectedValue();
+		
+		JButton changeMonsterButton = new JButton("Change Monster");
+		changeMonsterButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				env.getPlayer().setActiveMonster(monsterList.getSelectedValue());
+				playerCurrentHealth.setText(Integer.toString(env.getPlayer().getActiveMonster().getHealth()));
+				playerMaxHealth.setText(Integer.toString(env.getPlayer().getActiveMonster().getHealth()));
+				JOptionPane.showMessageDialog(frame, "Switched to "+env.getPlayer().getActiveMonster());
+			}
+		});
+		changeMonsterButton.setBounds(564, 276, 177, 41);
+		frame.getContentPane().add(changeMonsterButton);
+		
+		JButton useItemButton = new JButton("Use Item");
+		useItemButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					((Item) itemSelectionDropDownBox.getSelectedItem()).useItem(monsterList.getSelectedValue());
+					Item[] currentItems = new Item[env.getPlayer().getInventory().size()];
+					for(int i=0;i<currentItems.length;i++) {
+						currentItems[i] = env.getPlayer().getInventory().get(i);
+						
+					}
+					
+					itemSelectionDropDownBox.removeItem(itemSelectionDropDownBox.getSelectedItem());
+					
+					} 
+					catch(NullPointerException excep) {
+						JOptionPane.showMessageDialog(frame, "No Item To Use");
+					}
+					catch(Exception excep) {
+						JOptionPane.showMessageDialog(frame, "Select Item and Target Monster to use");
+					}
+				}
+			
+		});
+		useItemButton.setBounds(564, 411, 177, 41);
+		frame.getContentPane().add(useItemButton);
 	}
 }

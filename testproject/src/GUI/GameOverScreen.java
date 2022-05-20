@@ -106,7 +106,7 @@ public class GameOverScreen {
 		JButton exitGameButton = new JButton("Exit Game");
 		exitGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				closeWindow();
+				System.exit(0);
 			}
 		});
 		exitGameButton.setFont(new Font("SimSun", Font.PLAIN, 18));

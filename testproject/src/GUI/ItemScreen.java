@@ -122,9 +122,19 @@ public class ItemScreen {
 			public void actionPerformed(ActionEvent e) {
 				try {
 				inventoryList.getSelectedValue().useItem(teamList.getSelectedValue());
+				Item[] currentItems = new Item[env.getPlayer().getInventory().size()];
+				for(int i=0;i<currentItems.length;i++) {
+					currentItems[i] = env.getPlayer().getInventory().get(i);
+					
+				}
+				
+				inventoryList.setListData(currentItems);
 				} 
+				catch(NullPointerException excep) {
+					JOptionPane.showMessageDialog(frame, "No Item To Use");
+				}
 				catch(Exception excep) {
-					JOptionPane.showMessageDialog(frame, "No Item to use");
+					JOptionPane.showMessageDialog(frame, "Select Item and Target Monster to use");
 				}
 			}
 		});

@@ -108,13 +108,7 @@ public class GameEnvironment {
 		gameOverWindow.closeWindow();
 		launchSetupScreen();
 	}
-	public void launchMonsterScreen() {
-		MonsterScreen monsterWindow = new MonsterScreen(this);
-	}
-	public void closeMonsterScreen(MonsterScreen monsterWindow) {
-		monsterWindow.closeWindow();
-		launchTeamScreen();
-	}
+	
 	public void launchTeamScreen() {
 		TeamScreen teamWindow = new TeamScreen(this);
 	}

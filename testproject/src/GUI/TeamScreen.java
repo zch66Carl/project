@@ -27,6 +27,7 @@ import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class TeamScreen {
@@ -106,10 +107,24 @@ public class TeamScreen {
 		JButton renameMonsterButton = new JButton("Rename Monster");
 		renameMonsterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
 				String newName = renameMonsterTxt.getText();
+				if(newName.isEmpty()) {
+					throw new RuntimeException("Name can not be empty");
+				} else {
 				monsterList.getSelectedValue().setName(newName);
-				closeWindow();
-				env.launchTeamScreen();
+				Monster[] currentTeam = new Monster[env.getPlayer().getTeam().size()];
+				for(int i=0;i<currentTeam.length;i++) {
+					currentTeam[i] = env.getPlayer().getTeam().get(i);
+					
+				}
+				
+				monsterList.setListData(currentTeam);
+				}
+				} 
+				catch (Exception excep) {
+					JOptionPane.showMessageDialog(frame, "Please Select Monster To Rename and can not be empty");
+				} 
 			}
 		});
 		renameMonsterButton.setBounds(229, 346, 132, 43);

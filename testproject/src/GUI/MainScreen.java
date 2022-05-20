@@ -127,10 +127,18 @@ public class MainScreen {
 		JButton battleButton = new JButton("Battle");
 		battleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Player[] battles = (Player[]) env.getBattles().toArray();
+				try {
+				Player[] battles = new Player[env.getBattles().size()];
+				for(int i=0;i<battles.length;i++) {
+					battles[i] = env.getBattles().get(i);
+				}
 				Player selection = (Player) JOptionPane.showInputDialog(frame,"Choose a battle to fight:", "Battle Selection", JOptionPane.PLAIN_MESSAGE,null,battles,null);
-				env.launchBattleScreen(selection);
 				finishedWindow();
+				env.launchBattleScreen(selection); 
+				} catch (Exception excep) {
+					env.launchMainScreen();
+				}
+				
 			}
 		});
 		battleButton.setFont(new Font("SimSun", Font.PLAIN, 14));
@@ -157,15 +165,21 @@ public class MainScreen {
 		totalDays.setBounds(486, 19, 54, 15);
 		frame.getContentPane().add(totalDays);
 		
-		JButton sleepButton = new JButton("Sleep");
-		sleepButton.addActionListener(new ActionListener() {
+		JButton endDayButton = new JButton("End Day");
+		endDayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.getPlayer().refreshTeam();
+				env.postDayLogic();
+				env.preDayLogic(env.getCurDay()+1);
+				if(env.getCurDay()==env.getNumDays()) {
+					env.launchGameOverScreen();
+				}
+				currentDay.setText(Integer.toString(env.getCurDay()));
+				
 			}
 		});
-		sleepButton.setFont(new Font("SimSun", Font.PLAIN, 14));
-		sleepButton.setBounds(333, 187, 165, 66);
-		frame.getContentPane().add(sleepButton);
+		endDayButton.setFont(new Font("SimSun", Font.PLAIN, 14));
+		endDayButton.setBounds(333, 187, 165, 66);
+		frame.getContentPane().add(endDayButton);
 		
 		String[] difficulty = {"Easy","Normal","Hard"};
 		JLabel lblNewLabel = new JLabel(difficulty[env.getDifficulty()]);
