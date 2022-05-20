@@ -36,9 +36,9 @@ public class Start {
 		env.getPlayer().setName(name);
 		
 		//select starting monster.
-		Monster one = Generation.generateMonster(1, diff, true, false);
-		Monster two = Generation.generateMonster(1, diff, true, false);
-		Monster three = Generation.generateMonster(1, diff, true, false);
+		Monster one = Generation.generatePlayerMonster(1, diff);
+		Monster two = Generation.generatePlayerMonster(1, diff);
+		Monster three = Generation.generatePlayerMonster(1, diff);
 		IO.textOut("Choose a starting monster:");
 		IO.textOut("0 "+one.toString());
 		IO.textOut("1 "+two.toString());

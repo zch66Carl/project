@@ -21,7 +21,7 @@ public class Generation {
 	 * @param isWildMonster If the generated monster is for a wildBattle monster.
 	 * @return A randomly generated monster.
 	 */
-	public static Monster generateMonster(int day, int diff, boolean isPlayerMonster, boolean isWildMonster) {
+	private static Monster generateMonster(int day, int diff, boolean isPlayerMonster, boolean isWildMonster) {
 		if(day<1) day=1;
 		if(diff<1) diff=1;
 		if(diff>3) diff=3;
@@ -46,6 +46,26 @@ public class Generation {
 		if(type<9) return new DebuffMonster(DebuffMonster.getRandomName(), level);
 		return new RiskyMonster(RiskyMonster.getRandomName(), level);
 	}
+	
+	/**
+	 * Public interface for generating player monster (start or shop), using the private general monster generation function.
+	 * @param day The current day.
+	 * @param diff The current difficuly.
+	 * @return The desired monster.
+	 */
+	public static Monster generatePlayerMonster(int day, int diff) {
+		return generateMonster(day, diff, true, false);
+	}
+	/**
+	 * Public interface for generating wild monster (wild battle), using the private general monster generation function.
+	 * @param day The current day.
+	 * @param diff The current difficuly.
+	 * @return The desired monster.
+	 */
+	public static Monster generateWildMonster(int day, int diff) {
+		return generateMonster(day, diff, false, true);
+	}
+	
 	
 	/**
 	 * Generates a random item from the current day, using ItemBuilder to create the items. There is a small chance of the item
@@ -90,6 +110,7 @@ public class Generation {
 		ArrayList<Monster> mon = new ArrayList<Monster>();
 		int numMonsters = 2 + day / 6;//team size of 2 untill day 5, 3 from 6-11, 4 from 12 to 15
 		for(int i=0; i<numMonsters; i++) {
+			//generate an enemy monster (false, false).
 			mon.add(Generation.generateMonster(day, diff, false, false));
 		}
 		

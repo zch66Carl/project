@@ -19,7 +19,7 @@ public class ItemBuilder {
 	 * @return The desired item.
 	 */
 	public static Item createRevive(int price) {
-		Item item = new Item("Revive potion", price);
+		Item item = new Item("Revive Potion", price);
 		item.setIsRevive(true);
 		return item;
 	}

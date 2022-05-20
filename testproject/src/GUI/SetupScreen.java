@@ -111,9 +111,9 @@ public class SetupScreen {
 		startingMonsterLabel.setBounds(37, 116, 175, 29);
 		frame.getContentPane().add(startingMonsterLabel);
 		
-		Monster monsterOne = Generation.generateMonster(1, 1, false, false);
-		Monster monsterTwo = Generation.generateMonster(1, 1, false, false);
-		Monster monsterThree = Generation.generateMonster(1, 1, false, false);
+		Monster monsterOne = Generation.generatePlayerMonster(1, 1);
+		Monster monsterTwo = Generation.generatePlayerMonster(1, 1);
+		Monster monsterThree = Generation.generatePlayerMonster(1, 1);
 		JComboBox startingMonsterSelection = new JComboBox();
 		startingMonsterSelection.setModel(new DefaultComboBoxModel(new Monster[] {monsterOne,monsterTwo,monsterThree}));
 		startingMonsterSelection.setSelectedIndex(0);

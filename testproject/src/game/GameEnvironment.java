@@ -145,7 +145,7 @@ public class GameEnvironment {
 	 * is 3 in the early days, and up to 5 by the end of the game.
 	 */
 	public void updateBattles() {
-		if(curDay%3==1) wildMonster = Generation.generateMonster(curDay, difficulty, false, true);
+		if(curDay%3==1) wildMonster = Generation.generateWildMonster(curDay, difficulty);
 		else wildMonster=null;
 		
 		battles.clear();
@@ -180,7 +180,7 @@ public class GameEnvironment {
 		
 		Random rand = new Random();
 		if(player.getTeam().size()<=2 && rand.nextInt(10)==0) {//one tenth chance of gaining monster
-			Monster joining = Generation.generateMonster(curDay, difficulty, true, false);
+			Monster joining = Generation.generatePlayerMonster(curDay, difficulty);
 			player.addMonster(joining);
 			ret.add(joining.getName() + " joined the team!");
 		}

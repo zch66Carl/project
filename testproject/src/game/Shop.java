@@ -37,7 +37,7 @@ public class Shop {
 	 * @param diff The difficulty (between 1 and 3)
 	 */
 	public void refreshStock(int day, int diff) {
-		for(int i=0; i<3; i++) stock[i] = Generation.generateMonster(day, diff, true, false);
+		for(int i=0; i<3; i++) stock[i] = Generation.generatePlayerMonster(day, diff);
 		for(int i=3; i<9; i++) stock[i] = Generation.generateItem(day, diff, false);
 	}
 	
@@ -50,6 +50,9 @@ public class Shop {
 	 * @return A string detailing the success or failure of buying the object.
 	 */
 	public String buyPurchaseable(Player player, int itemIndex) {
+		if(itemIndex<0 || itemIndex>9 || stock[itemIndex]==null) {
+			return "Invalid item index (out of range or has already been bought).";
+		}
 		int currentGold = player.getGold();
 		if(currentGold >= stock[itemIndex].getPrice()) {
 			player.setGold(currentGold - stock[itemIndex].getPrice()); 
