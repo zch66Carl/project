@@ -47,7 +47,7 @@ public class GameEnvironment {
 	public GameEnvironment() {
 		player = new Player("def_name", 0, new ArrayList<Monster>(), new ArrayList<Item>());
 		numDays = 0;
-		curDay = 1;
+		curDay = 0;
 		difficulty = 2;
 		shop = new Shop();
 		wildMonster = null;
@@ -159,8 +159,8 @@ public class GameEnvironment {
 	 * Takes a new day value and updates the day, refreshes the player team, refreshes the stock of the shop, and updates the battles.
 	 * @param day The new day value.
 	 */
-	public void preDayLogic(int day) {
-		curDay = day;
+	public void preDayLogic() {
+		curDay++;
 		player.refreshTeam();
 		shop.refreshStock(curDay, difficulty);
 		updateBattles();

@@ -15,8 +15,10 @@ public class Main {
 	 * @param env The GameEnvironment entity.
 	 */
 	public void run(GameEnvironment env) {
-		for(int day = 1; day<=env.getNumDays(); day++) {
-			env.preDayLogic(day);
+		while(env.getCurDay() < env.getNumDays()) {
+			env.preDayLogic();
+			int day = env.getCurDay();
+			
 			IO.textOut("Day "+day+", " + (env.getNumDays() - day + 1) + " days remaining.");
 			IO.textOut(env.getPlayer().toString());
 			boolean gameOver = false;

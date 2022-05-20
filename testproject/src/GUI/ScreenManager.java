@@ -21,7 +21,7 @@ public class ScreenManager {
 	}
 	public void closeSetupScreen(SetupScreen setupWindow) {
 		setupWindow.closeWindow();
-		env.preDayLogic(1);
+		env.preDayLogic();
 		env.updateBattles();
 		launchMainScreen();
 	}

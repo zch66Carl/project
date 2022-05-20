@@ -17,6 +17,9 @@ class MonsterTest {
 		assertTrue(testMonster.isAwake());
 		testMonster = new Monster(name, -1);
 		testMonster = new Monster(name, 100);
+		
+		testMonster = new Monster(name, 15);
+		assertTrue(testMonster.getDamage() > 50);
 	}
 	
 	@Test
