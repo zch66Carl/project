@@ -3,7 +3,6 @@ package game;
 import java.util.ArrayList;
 import java.util.Random;
 
-import GUI.*;
 import game.monsters.Monster;
 
 /**

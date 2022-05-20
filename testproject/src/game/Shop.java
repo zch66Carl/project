@@ -2,7 +2,6 @@ package game;
 
 import game.monsters.Monster;
 
-
 /**
  * The Shop conatins some stock, that is refreshed each day, and a variable tracking the total gold spent by the player.
  * It also contains the behaviour to buy and sell items, as well as refresh the stock.

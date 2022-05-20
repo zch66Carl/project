@@ -159,13 +159,6 @@ public class Monster implements Purchaseable{
 	public void setWasActiveDuringBattle(boolean newBool) {
 		wasActiveDuringBattle = newBool;
 	}
-	/**
-	 * Simple getter for wasActiveDuringBattle
-	 * @return returns wasActiveDuringBattle
-	 */
-	public boolean getWasAciveDuringBattle() {
-		return wasActiveDuringBattle;
-	}
 	
 	/**
 	 * Rewards the monster with xp based on the value of wasActiveDuringBattle, using rewardXP and passiveXP, should be called only
@@ -320,6 +313,7 @@ public class Monster implements Purchaseable{
 	 * @param healAmount The amount to heal by.
 	 */
 	public void heal(int healAmount) {
+		if(!isAwake) return;
 		health+=healAmount;
 		if(health>maxHealth) health=maxHealth;
 	}
