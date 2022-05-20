@@ -2,35 +2,37 @@ package commandline;
 
 import testproject.GameEnvironment;
 import testproject.Generation;
+import testproject.Player;
 import testproject.monsters.Monster;
 
+/**
+ * The entry point for the command line application, it sets up the game environment and passes off the running of the game to Main.
+ */
 public class Start {
-	private static String getName() {
-		while(true) {
-			IO.textOut("Enter a player name (must be 3-15 characters and alphabetical only):");
-			String name = IO.getString();
-			if(name.length()>=3 && name.length()<=15) {
-				boolean isAlphabetic = true;
-				for(char c : name.toCharArray()) {
-					if(!Character.isAlphabetic(c)) isAlphabetic=false;
-				}
-				if(isAlphabetic) return name;
-			}
-			IO.textOut("Invalid name.");
-		}
-	}
-	
+	/**
+	 * The entry point to the command line application, takes input from the command line, setting up the GameEnvironment entity and
+	 * then passses off the GameEnvironment to Main.
+	 * @param args command line arguments (unused)
+	 */
 	public static void main(String[] args) {
 		GameEnvironment env = new GameEnvironment();
 		IO.textOut("Welcome to the command line application.");
-		String name = getName();
+		
+		IO.textOut("Enter a player name (must be 3-15 characters and alphabetical only):");
+		String name = IO.getString();
+		while(!Player.isValidName(name)) {
+			IO.textOut("Invalid name.");
+			name = IO.getString();
+		}
+		
 		IO.textOut("Enter the number of days the game should run, between 5 and 15");
 		int days = IO.getInt(5, 15);
+		
 		IO.textOut("Enter the difficult, between 1 and 3");
 		int diff = IO.getInt(1, 3);
+		
 		env.setNumDays(days);
 		env.setDifficulty(diff);
-		
 		env.getPlayer().setName(name);
 		
 		//select starting monster.
@@ -48,7 +50,7 @@ public class Start {
 		
 		env.getPlayer().setGold(15*(3-diff));//start with 0 gold on hard, 30 on easy and 15 on medium.
 		
-		Main mainRun = new Main(env);
-		mainRun.run();
+		Main mainRun = new Main();
+		mainRun.run(env);
 	}
 }

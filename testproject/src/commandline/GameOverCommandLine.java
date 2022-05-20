@@ -3,7 +3,14 @@ package commandline;
 import testproject.GameEnvironment;
 import testproject.Player;
 
+/**
+ * The end of the command line program.
+ */
 public class GameOverCommandLine {
+	/**
+	 * Displays the final game information (length, gold, score).
+	 * @param env The GameEnvironment entity.
+	 */
 	void run(GameEnvironment env) {
 		IO.textOut("GAME OVER!");
 		IO.textOut("Game lasted " + env.getNumDays() + " days.");

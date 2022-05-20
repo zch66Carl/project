@@ -7,7 +7,19 @@ import testproject.GameEnvironment;
 import testproject.Player;
 import testproject.monsters.Monster;
 
+/**
+ * Command line interface for choosing battles, running battles, and making player moves.
+ */
 public class BattleCommandLine {
+	/**
+	 * Command line interface to make a move, either attacking (attack strings are displayed and one is chosen), 
+	 * using an item (delegated to InventoryCommandLine), switching the currently active monster in your team,
+	 * or fleeing the battle. The user will be continually prompted for input until a definitive action is taken, as
+	 * the user may choose to cancel selections.
+	 * @param env The GameEnvironment entity.
+	 * @param enemy The enemy Monster, either the enemy team's active monster or a wild monster.
+	 * @return A boolean, true if the player chose to flee the battle.
+	 */
 	private boolean makeMove(GameEnvironment env, Monster enemy) {
 		Player pla = env.getPlayer();
 		while(true) {
@@ -48,11 +60,22 @@ public class BattleCommandLine {
 		}
 	}
 	
+	/**
+	 * Comman line interface to run a battle, runs pre battle logic, each turn with makeMove() and Player.makeRandomMove() and handles
+	 * the rewards if the player wins the battle. If a wild battle is won the player gains the wild monster.
+	 * @param env The GameEnvironment entity.
+	 * @param isWildBattle Whether or not it is a wild battle being run.
+	 * @param teamBattleInd The index of the enemy Player in the game environment's battle list.
+	 * @return A boolean, whether or not the battle was won.
+	 */
 	public boolean run(GameEnvironment env, boolean isWildBattle, int teamBattleInd) {
 		Player pla = env.getPlayer();
 		Player enemyTeam = new Player("", 0, null, null);
 		Monster wildMonster = env.getWildBattleMonster();
-		if(!isWildBattle) enemyTeam = env.getBattles().get(teamBattleInd);
+		if(!isWildBattle) {
+			enemyTeam = env.getBattles().get(teamBattleInd);
+			enemyTeam.preBattle();
+		}
 		
 		boolean outcome = false;
 		pla.preBattle();
@@ -111,5 +134,34 @@ public class BattleCommandLine {
 		if(isWildBattle) wildMonster.rest();
 		else enemyTeam.refreshTeam();
 		return outcome;
+	}
+
+	
+	/**
+	 * Command line interface for choosing a battle, the possible battles are displayed, and the player can choose to fight one,
+	 * or exit to the prievious menu, if a battle is fought and one it is removed from the current battles for this day.
+	 * @param env The GameEnvironment entity.
+	 */
+	public void chooseBattle(GameEnvironment env) {
+		if(!env.getPlayer().checkIfActiveMonster()) {
+			IO.textOut("Can not fight any battle since your team are all fainted.");
+		}
+		
+		IO.textOut("Choose which battle to fight.");
+		int i=0;
+		for(Player enemy : env.getBattles()) IO.textOut((i++) + ": " + enemy.getName());
+		if(env.getWildBattleMonster() != null) IO.textOut((i++) + ": Wild Battle!");
+		IO.textOut(i + ": Cancel selection.");
+		int choice = IO.getInt(0, i);
+		if(choice == i) return;
+		boolean wild = (choice >= env.getBattles().size());
+		if(run(env, wild, choice)) {
+			if(wild) env.setWildBattleMonster(null);
+			else env.getBattles().remove(choice);
+		}
+		IO.textOut("Team status:");
+		for(Monster monst : env.getPlayer().getTeam()) {
+			IO.textOut(monst.toString());
+		}
 	}
 }

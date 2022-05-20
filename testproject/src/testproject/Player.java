@@ -55,6 +55,22 @@ public class Player {
 	}
 	
 	/**
+	 * A static method determining if the given string is a valid name (3-15 characters, no special characters).
+	 * @param potentialName The name to test.
+	 * @return A boolean, true if the name is valid, false if not.
+	 */
+	public static boolean isValidName(String potentialName) {
+		if(potentialName.length()>=3 && potentialName.length()<=15) {
+			boolean isAlphabetic = true;
+			for(char c : potentialName.toCharArray()) {
+				if(!Character.isAlphabetic(c)) isAlphabetic=false;
+			}
+			if(isAlphabetic) return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Simple setter for the player's name.
 	 * @param newName The new name.
 	 */
@@ -230,6 +246,7 @@ public class Player {
 	 * are rewarded apporopriately post battle.
 	 */
 	public void preBattle() {
+		setActiveMonsterIndex(0);
 		for(Monster monst : team) {
 			monst.setWasActiveDuringBattle(false);
 		}

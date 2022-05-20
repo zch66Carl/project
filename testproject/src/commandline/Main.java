@@ -6,16 +6,18 @@ import testproject.GameEnvironment;
 import testproject.Player;
 import testproject.monsters.Monster;
 
+/**
+ * The main loop of the game, where the days are run.
+ */
 public class Main {
-	private int day;
-	private GameEnvironment env;
-	
-	public Main(GameEnvironment enviro) {
-		env = enviro;
-	}
-	
-	public void run() {
-		for(day = 1; day<=env.getNumDays(); day++) {
+	/**
+	 * Runs each day, displaying information to the player, performing pre day logic, post day logic and within each day 
+	 * taking input to decide which action to take and delegating each action to other classes e.g. ShopCommandLine.
+	 * Once all days have been run, the GameOverCommandLine is run.
+	 * @param env The GameEnvironment entity.
+	 */
+	public void run(GameEnvironment env) {
+		for(int day = 1; day<=env.getNumDays(); day++) {
 			env.preDayLogic(day);
 			IO.textOut("Day "+day+", " + (env.getNumDays() - day + 1) + " days remaining.");
 			IO.textOut(env.getPlayer().toString());
@@ -31,7 +33,10 @@ public class Main {
 				IO.textOut("4: end day.");
 				IO.textOut("5: end game.");
 				int option = IO.getInt(0, 5);
-				if(option==0) chooseBattle();
+				if(option==0) {
+					BattleCommandLine battle = new BattleCommandLine();
+					battle.chooseBattle(env);
+				}
 				else if(option==1) {
 					ShopCommandLine shop = new ShopCommandLine();
 					shop.run(env);
@@ -73,29 +78,5 @@ public class Main {
 		
 		GameOverCommandLine gameOver = new GameOverCommandLine();
 		gameOver.run(env);
-	}
-	
-	private void chooseBattle() {
-		if(!env.getPlayer().checkIfActiveMonster()) {
-			IO.textOut("Can not fight any battle since your team are all fainted.");
-		}
-		
-		IO.textOut("Choose which battle to fight.");
-		int i=0;
-		for(Player enemy : env.getBattles()) IO.textOut((i++) + ": " + enemy.getName());
-		if(env.getWildBattleMonster() != null) IO.textOut((i++) + ": Wild Battle!");
-		IO.textOut(i + ": Cancel selection.");
-		int choice = IO.getInt(0, i);
-		if(choice == i) return;
-		BattleCommandLine battle = new BattleCommandLine();
-		boolean wild = (choice >= env.getBattles().size());
-		if(battle.run(env, wild, choice)) {
-			if(wild) env.setWildBattleMonster(null);
-			else env.getBattles().remove(choice);
-		}
-		IO.textOut("Team status:");
-		for(Monster monst : env.getPlayer().getTeam()) {
-			IO.textOut(monst.toString());
-		}
 	}
 }
