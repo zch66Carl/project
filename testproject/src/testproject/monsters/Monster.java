@@ -6,47 +6,123 @@ import java.util.Random;
 import testproject.Purchaseable;
 
 /**
- * The Monster class, containing all required information for use in shops, leveling up and battle.
- * Also is responsible for move making when chossing specific attacks, and handles all currently
- * effective status effects. Special moves and such are implemented via subclasses.
- *
+ * Monster is the base class for any monster types, it is responsible for the monsters current status, including health, damage,
+ * level, xp, whether the monster is fainted or awake, and temporary status effects. The class also contains the behaviour for
+ * the monsters attacks against other monsters and making random attacks, as well as other needed behaviours such as levelling up
+ * and resting. Monster also implements Purchaseable, as Monsters can be bought in the shop.
  */
 public class Monster implements Purchaseable{
+	/**
+	 * The name of the monster.
+	 */
 	private String name;
+	/**
+	 * The price at which the monster is bought, which is about three times the monsters current level, with some random variation.
+	 */
 	private int price;
 	
+	/**
+	 * The current base damage for the monster's attacks.
+	 */
 	private int damage;
+	/**
+	 * The current max health of the monster.
+	 */
 	private int maxHealth;
+	/**
+	 * The current health of the monster.
+	 */
 	private int health;
+	/**
+	 * Whether or not the monster is awake.
+	 */
 	private boolean isAwake;
 	
+	/**
+	 * A boolean recording whether or not the monster was active during a battle, (whether the monster was up front),
+	 * this is used to determine how much xp the monster should be rewarded with after battle.
+	 */
 	private boolean wasActiveDuringBattle;
 	
-	private int maxLevel = 35;//max level is maxDays(25)+2(hard diff)+5(wild monster) + 3 for safety.
+	/**
+	 * The maximum level a monster can reach, after which they will no longer level up.
+	 */
+	private int maxLevel = 25;//max level is maxDays(15)+2(hard diff)+5(wild monster) + 3 for safety.
+	/**
+	 * The xp rewarded to the monster post battle if the monster was active during the battle.
+	 */
 	private int rewardXP = 6;
-	private int passiveXP = 3;//was part of battle but wasn't active
+	/**
+	 * The xp rewarded to the monster post battle if the monster was inactive during the battle.
+	 */
+	private int passiveXP = 3;
+	/**
+	 * The xp required at each level to level up.
+	 */
 	private int[] xpRequired = {5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10, 10, 10, 15, 15, 15, 15, 15, 15, 15, 15, 15, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20};
+	/**
+	 * The base damage for the monster's attacks at each level, (some random variation is applied).
+	 */
 	private int[] levelDamage    = {5,  8,  11, 15, 20, 25, 30,  36,  42,  48,  54,  60,  66,  72,  78,  84,  90,  98,  106, 112, 120, 130, 140, 150, 160, 170, 180, 190, 200, 215, 230,  245,  260,  280,  300};
+	/**
+	 * The max health for the monster at each level (some random variation is applied).
+	 */
 	private int[] levelMaxHealth = {20, 30, 45, 60, 75, 90, 110, 130, 150, 170, 190, 220, 250, 290, 320, 350, 380, 410, 430, 470, 510, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1200, 1250};
+	/**
+	 * The monster's current level.
+	 */
 	private int level;
+	/**
+	 * The monster's current xp, should reset to zero after each level up.
+	 */
 	private int xp;
 	
+	/**
+	 * A ArrayList of the current damageBuffs applied to the monster, which stack on top of the base damage.
+	 */
 	private ArrayList<Integer> damageBuffs;
+	/**
+	 * The duration of each damage buff.
+	 */
 	private ArrayList<Integer> damageBuffDurations;
 	
+	/**
+	 * An ArrayList of persistent damage values (damage that is applied continually each turn).
+	 */
 	private ArrayList<Integer> persistentDamage;
+	/**
+	 * The number of turns untill each persistent damage stops being applied.
+	 */
 	private ArrayList<Integer> persistentDamageDuration;
 	
+	/**
+	 * A list of attack names, to be passed out of the class and displayed to the player so they can select a suitable attack.
+	 */
 	protected ArrayList<String> attacks;
 	
+	/**
+	 * Descriptors that go befor a monsters type in their name, protected as also used for subclass monster names.
+	 */
 	protected static String[] descriptives = {"Fiery","Glowing","Prismatic","Bold","Ebony","Emerald","Golden","Ivory","Scarlet",
 			"Violet","Icy","Azure"};
+	/**
+	 * Part of the monsters random name.
+	 */
 	private static String[] types = {"Goat","Fox","Lion","Hippo", "Wolf","Rhino", "Giraffe", "Fish"};
 
+	/**
+	 * Constructs the Monster, setting the name, level, and then the initial damage, maxHealth and price based on that level.
+	 * Also initializes ArrayList's like persitenDamage and initializes the xp to 0.
+	 * @param name The monster's name.
+	 * @param startLevel The level this monster starts at (should be between 0 and 24 but is set as such if out of range).
+	 */
 	public Monster(String name, int startLevel){
 		this.name=name;
 		
 		level=startLevel;
+		if(level < 0) level = 0;//set to 0 or maxLevel - 1 to avoid out of range index errors.
+		if(level >= maxLevel) level = maxLevel-1;
+		
 		xp=0;
 		Random rand = new Random();
 		damage = levelDamage[level] + rand.nextInt(6)-2;
@@ -67,35 +143,48 @@ public class Monster implements Purchaseable{
 		persistentDamageDuration = new ArrayList<Integer>();
 	}
 	
+	/**
+	 * A static method generating a random name using the descriptives and types arrays.
+	 * @return A random name for this type of monster.
+	 */
 	public static String getRandomName() {
 		Random rand = new Random();
 		return descriptives[rand.nextInt(descriptives.length)] + " " + types[rand.nextInt(types.length)];
 	}
 	
+	/**
+	 * Simple setter for wasActiveDuringBattle
+	 * @param newBool the new value of wasActiveDuringBattle
+	 */
 	public void setWasActiveDuringBattle(boolean newBool) {
 		wasActiveDuringBattle = newBool;
 	}
+	/**
+	 * Simple getter for wasActiveDuringBattle
+	 * @return returns wasActiveDuringBattle
+	 */
 	public boolean getWasAciveDuringBattle() {
 		return wasActiveDuringBattle;
 	}
 	
-	public void setLevel(int level) {
-		this.level = level;
-	}
-	
-	public int getLevel() {
-		return level;
-	}
-	
+	/**
+	 * Rewards the monster with xp based on the value of wasActiveDuringBattle, using rewardXP and passiveXP, should be called only
+	 * after battles.
+	 */
 	public void reward() {
 		if(wasActiveDuringBattle) xp += rewardXP;
 		else xp += passiveXP;
 	}
 	
+	/**
+	 * Checks if there is sufficient xp to reach the next level, and if so sets xp back to zero, increases the level (if not at maxLevel),
+	 * and increases damage, maxHealth, and price accordingly.
+	 * @return null if no level up occurs, else a string describing the level up and new damage and maxHealth values.
+	 */
 	public String levelUpCheck() {
 			if(xp < xpRequired[level]) return null;
 			xp = 0;
-			if(level==maxLevel-1) return null;
+			if(level>=maxLevel-1) return null;
 			level++;
 			Random rand = new Random();
 			damage = levelDamage[level] + rand.nextInt(6)-2;
@@ -107,48 +196,89 @@ public class Monster implements Purchaseable{
 			return name + " levelled up! " + "level: " + level + ", damage: " + damage + ", health: " + maxHealth;
 	}
 	
+	/**
+	 * Simple getter for the monster's name.
+	 */
 	public String getName() {
 		return name;
 	}
+	/**
+	 * Simple setter for the monster's name.
+	 * @param newName the new name of the monster.
+	 */
 	public void setName(String newName) {
 		name=newName;
 	}
+	
+	/**
+	 * Get's the monster's base damage, this should only be used for display purpases as for attacks the getTotalDamage() function should be used.
+	 * @return the base damage of the monster.
+	 */
 	public int getDamage() {
 		return damage;
 	}
-	public void setDamage(int newDamage) {
-		damage=newDamage;
-	}
+	
+	/**
+	 * Simple getter for maxHeatlh.
+	 * @return the maxHealth of the monster.
+	 */
 	public int getMaxHealth() {
 		return maxHealth;
 	}
-	public void setMaxHealth(int newMaxHealth) {
-		maxHealth=newMaxHealth;
-	}
+	
+	/**
+	 * Simple getter for the monster's current health.
+	 * @return the monster's current health
+	 */
 	public int getHealth() {
 		return health;
 	}
+	
+	/**
+	 * The monster's buy price.
+	 */
 	public int getPrice() {
 		return price;
 	}
+	/**
+	 * The monster's sell price.
+	 */
 	public int getSellPrice() {
 		return price / 2;
 	}
 	
+	/**
+	 * Returns the names of the monster's attacks in an ArrayList, for display and player input purpases.
+	 * @return the ArrayList of attack name strings.
+	 */
 	public ArrayList<String> getAttackStrings(){
 		return attacks;
 	}
 	
-	public int getDamageBuff() {
+	/**
+	 * Sums up all the currently active damage buff's or debuffs.
+	 * @return the total damage buff to this monster.
+	 */
+	private int getDamageBuff() {
 		int dam = 0;
 		for(int buff : damageBuffs) dam += buff;
 		return dam;
 	}
+	/**
+	 * Adds a damage buff to this monster, taking a damage amount and duration.
+	 * @param dam The increase or decrease in damage for this buff.
+	 * @param dur The duration in turns of this buff.
+	 */
 	public void addDamageBuff(int dam, int dur) {
 		damageBuffs.add(dam);
 		damageBuffDurations.add(dur);
 	}
 	
+	/**
+	 * Gets the total damage of this monster, accounting for the base damage and any buffs. This is the function that should be used
+	 * for all attacks.
+	 * @return The total damage of this monster.
+	 */
 	public int getTotalDamage() {
 		int dam = damage + getDamageBuff();
 		if(dam < 0) dam=0;
@@ -156,8 +286,9 @@ public class Monster implements Purchaseable{
 	}
 	
 	/**
-	 * Deals damage to the Monster, making them faint if health goes below zero.
-	 * @param damageDealt The damage to deal to this Monster.
+	 * Deals damage to this monster, rendering them fainted if health goes to 0 or below, returns a message summarising the effects.
+	 * @param damageDealt The damage to deal to this monster.
+	 * @return A string describing the effects of the damage (damage increase and if fainted it describes the faint).
 	 */
 	public String dealDamageToSelf(int damageDealt) {
 		String ret = new String();
@@ -172,6 +303,12 @@ public class Monster implements Purchaseable{
 		return ret;
 	}
 	
+	/**
+	 * Adds a persistent damage attack to this monster, to be dealt at the start of each turn for a certain duration.
+	 * @param damageDealtPerTurn The damage to deal per turn.
+	 * @param duration The duration for which this attack lasts.
+	 * @return A string describing the attack.
+	 */
 	public String dealPersistentDamageToSelf(int damageDealtPerTurn, int duration) {
 		persistentDamage.add(damageDealtPerTurn);
 		persistentDamageDuration.add(duration);
@@ -186,16 +323,20 @@ public class Monster implements Purchaseable{
 		health+=healAmount;
 		if(health>maxHealth) health=maxHealth;
 	}
+	/**
+	 * Returns if the monster is awake or not.
+	 * @return Whether or not the monster is awake.
+	 */
 	public boolean isAwake() {
 		if(health<=0) isAwake = false;
 		return isAwake;
 	}
-	public void setIsAwake(boolean isAwake) {
-		this.isAwake=isAwake;
-	}
+	
 	
 	/**
-	 * Relevant for some subclasses.
+	 * Carries out necersary logic to perform before a turn, such as dealing persistent damage, and removing damage buffs and persitent
+	 * damage attacks that have run out of duration. More actions may be performed by subclass monsters.
+	 * @return An ArrayList of String messages summarising the actions performed.
 	 */
 	public ArrayList<String> preTurnLogic() {
 		ArrayList<String> ret = new ArrayList<String>();
@@ -230,21 +371,28 @@ public class Monster implements Purchaseable{
 	}
 	
 	/**
-	 * For the base Monster there is only one attack possible, dealing damage to the enemy.
-	 * @param enemy
+	 * Makes a move based on an int move, for the base Monster class there is only one move, 0, which is a basic attack.
+	 * @param move The move to perform (should be an index of attack strings)
+	 * @param enemy The enemy Monster to perform the move against.
+	 * @return A message string summarising the move for display purpases.
 	 */
 	public String makeMove(int move, Monster enemy) {
 		if(move == 0) return enemy.dealDamageToSelf(getTotalDamage());
 		return "";
 	}
+	
 	/**
-	 * Same as makeMove, but makes a random move instead of taking user input.
-	 * @param enemy
+	 * Same as makeMove, but makes a random move instead of taking a move integer to determine the move. Used for the non player monsters.
+	 * @param enemy The enemy Monster
 	 */
 	public String makeRandomMove(Monster enemy) {
 		return enemy.dealDamageToSelf(getTotalDamage());
 	}
 	
+	
+	/**
+	 * Resets all status effects by clearing the damage buffs and persitent damage attacks. Some subclass monsters may overide this method.
+	 */
 	public void resetStatusEffects() {
 		damageBuffs.clear();
 		damageBuffDurations.clear();
@@ -252,8 +400,9 @@ public class Monster implements Purchaseable{
 		persistentDamageDuration.clear();
 	}
 	
+	
 	/**
-	 * Sets health to full and removes any status effects.
+	 * Sets health to max, sets the monster to awake and removes any status effects.
 	 */
 	public void rest() {
 		health=maxHealth;
@@ -261,8 +410,9 @@ public class Monster implements Purchaseable{
 		resetStatusEffects();
 	}
 	
+	
 	/**
-	 * String representation of the Monster.
+	 * String representation of the monster, including name, health/maxHealth, totalDamage/baseDamage, level and whether the monster is awake.
 	 */
 	public String toString() {
 		return String.format("%s, health: %s/%s, damage: %s/%s, level: %s, %s", name, health, maxHealth, getTotalDamage(), damage, level, isAwake ? "awake." : "fainted.");
