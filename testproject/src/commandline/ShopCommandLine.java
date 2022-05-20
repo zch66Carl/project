@@ -2,12 +2,12 @@ package commandline;
 
 import java.util.ArrayList;
 
-import testproject.Shop;
-import testproject.monsters.Monster;
-import testproject.GameEnvironment;
-import testproject.Item;
-import testproject.Player;
-import testproject.Purchaseable;
+import game.GameEnvironment;
+import game.Item;
+import game.Player;
+import game.Purchaseable;
+import game.Shop;
+import game.monsters.Monster;
 
 /**
  * Command line interface for the shop, allowing the player to view and buy stock, and sell their own items and monsters.

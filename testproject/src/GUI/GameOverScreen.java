@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import testproject.GameEnvironment;
+import game.GameEnvironment;
 
 import java.awt.Font;
 import javax.swing.JButton;

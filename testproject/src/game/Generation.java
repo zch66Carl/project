@@ -1,10 +1,10 @@
-package testproject;
+package game;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import testproject.ItemBuilder.ItemSize;
-import testproject.monsters.*;
+import game.ItemBuilder.ItemSize;
+import game.monsters.*;
 
 /**
  * Handles random generation of Monsters, Players, and Items, given the day and difficulty (1-3).

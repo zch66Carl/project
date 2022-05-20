@@ -6,8 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import testproject.GameEnvironment;
-import testproject.Player;
+import game.GameEnvironment;
+import game.Player;
 
 import java.awt.Font;
 import javax.swing.JButton;

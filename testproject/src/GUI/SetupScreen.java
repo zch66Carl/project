@@ -1,8 +1,5 @@
 package GUI;
 import java.awt.EventQueue;
-import testproject.Generation;
-import testproject.Item;
-import testproject.Player;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,14 +12,18 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EtchedBorder;
+
+import game.GameEnvironment;
+import game.Generation;
+import game.Item;
+import game.Player;
+import game.monsters.Monster;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
-import testproject.GameEnvironment;
-import testproject.monsters.Monster;
-
 import javax.swing.JList;
 public class SetupScreen {
 

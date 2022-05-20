@@ -7,10 +7,10 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import testproject.GameEnvironment;
-import testproject.Item;
-import testproject.Purchaseable;
-import testproject.monsters.Monster;
+import game.GameEnvironment;
+import game.Item;
+import game.Purchaseable;
+import game.monsters.Monster;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;

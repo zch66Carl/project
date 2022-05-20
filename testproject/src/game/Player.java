@@ -1,9 +1,9 @@
-package testproject;
+package game;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import testproject.monsters.Monster;
+import game.monsters.Monster;
 
 /**
  * The Player entity is used both for the player as well as enemy teams you fight against.

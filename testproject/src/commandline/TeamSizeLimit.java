@@ -1,6 +1,6 @@
 package commandline;
 
-import testproject.Player;
+import game.Player;
 
 /**
  * A command line interface for checking the size of the player's team and promting them to remove a monster if the team is to large,

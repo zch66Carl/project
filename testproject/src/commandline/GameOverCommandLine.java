@@ -1,7 +1,7 @@
 package commandline;
 
-import testproject.GameEnvironment;
-import testproject.Player;
+import game.GameEnvironment;
+import game.Player;
 
 /**
  * The end of the command line program.

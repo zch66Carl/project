@@ -3,9 +3,9 @@ package commandline;
 
 import java.util.ArrayList;
 
-import testproject.GameEnvironment;
-import testproject.Player;
-import testproject.monsters.Monster;
+import game.GameEnvironment;
+import game.Player;
+import game.monsters.Monster;
 
 /**
  * Command line interface for choosing battles, running battles, and making player moves.

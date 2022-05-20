@@ -1,10 +1,10 @@
-package testproject;
+package game;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import GUI.*;
-import testproject.monsters.Monster;
+import game.monsters.Monster;
 
 /**
  * The GameEnvironment contains everything else in the game and keeps track of game status, specifically it contains the Player entity,

@@ -2,9 +2,9 @@ package commandline;
 
 import java.util.ArrayList;
 
-import testproject.GameEnvironment;
-import testproject.Player;
-import testproject.monsters.Monster;
+import game.GameEnvironment;
+import game.Player;
+import game.monsters.Monster;
 
 /**
  * The main loop of the game, where the days are run.

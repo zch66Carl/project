@@ -1,9 +1,9 @@
-package testproject.monsters;
+package game.monsters;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import testproject.Purchaseable;
+import game.Purchaseable;
 
 /**
  * Monster is the base class for any monster types, it is responsible for the monsters current status, including health, damage,

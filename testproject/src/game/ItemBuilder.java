@@ -1,4 +1,4 @@
-package testproject;
+package game;
 
 /**
  * A class which constructs each type of item, taking in a price and if applicable a size.

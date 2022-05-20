@@ -1,8 +1,8 @@
-package testproject;
+package game;
 
 import java.util.ArrayList;
 
-import testproject.monsters.Monster;
+import game.monsters.Monster;
 
 /**
  *A single Item class, which contains the behviour for heal items, damage buff items, and full revives. Implements purchaseable so

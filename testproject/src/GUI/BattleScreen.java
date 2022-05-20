@@ -7,9 +7,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import testproject.GameEnvironment;
-import testproject.Player;
-import testproject.monsters.Monster;
+import game.GameEnvironment;
+import game.Player;
+import game.monsters.Monster;
 
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;

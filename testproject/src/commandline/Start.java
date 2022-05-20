@@ -1,9 +1,9 @@
 package commandline;
 
-import testproject.GameEnvironment;
-import testproject.Generation;
-import testproject.Player;
-import testproject.monsters.Monster;
+import game.GameEnvironment;
+import game.Generation;
+import game.Player;
+import game.monsters.Monster;
 
 /**
  * The entry point for the command line application, it sets up the game environment and passes off the running of the game to Main.

@@ -1,6 +1,6 @@
-package testproject;
+package game;
 
-import testproject.monsters.Monster;
+import game.monsters.Monster;
 
 
 /**

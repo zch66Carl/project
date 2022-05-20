@@ -1,4 +1,4 @@
-package testproject;
+package game;
 
 /**
  * The purchaseable interface shared by Monster and Item. This determines how purchaseable objects should behave.

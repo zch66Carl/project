@@ -1,7 +1,7 @@
 package GUI;
 
-import testproject.GameEnvironment;
-import testproject.Player;
+import game.GameEnvironment;
+import game.Player;
 
 public class ScreenManager {
 	public void launchMainScreen(GameEnvironment env) {

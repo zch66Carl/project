@@ -1,4 +1,4 @@
-package testproject.monsters;
+package game.monsters;
 
 import java.util.ArrayList;
 import java.util.Random;

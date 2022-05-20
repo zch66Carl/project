@@ -9,7 +9,7 @@ import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
-import testproject.GameEnvironment;
+import game.GameEnvironment;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;

@@ -2,8 +2,8 @@ package commandline;
 
 import java.util.ArrayList;
 
-import testproject.GameEnvironment;
-import testproject.monsters.Monster;
+import game.GameEnvironment;
+import game.monsters.Monster;
 
 /**
  * Command line interface to display the Player's team, reorder the team, and rename individual monsters.

@@ -2,10 +2,10 @@ package commandline;
 
 import java.util.ArrayList;
 
-import testproject.GameEnvironment;
-import testproject.Item;
-import testproject.Player;
-import testproject.monsters.Monster;
+import game.GameEnvironment;
+import game.Item;
+import game.Player;
+import game.monsters.Monster;
 
 /**
  * The command line interface for displaying the inventory, and choosing and using an item from it.
