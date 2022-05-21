@@ -32,6 +32,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ListModel;
 import javax.swing.JScrollPane;
 
+/**
+ * Shop screen allows player to buy and sell items/monsters.
+ * @author chenz
+ *
+ */
 public class ShopScreen {
 
 	private JFrame frame;

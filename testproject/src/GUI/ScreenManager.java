@@ -3,6 +3,11 @@ package GUI;
 import game.GameEnvironment;
 import game.Player;
 
+/**
+ * Contains all methods that manages screen transitions.
+ * @author chenz
+ *
+ */
 public class ScreenManager {
 	private GameEnvironment env;
 	public GameEnvironment getEnv() {
@@ -54,13 +59,7 @@ public class ScreenManager {
 		gameOverWindow.closeWindow();
 		launchSetupScreen();
 	}
-	public void launchMonsterScreen() {
-		MonsterScreen monsterWindow = new MonsterScreen(this);
-	}
-	public void closeMonsterScreen(MonsterScreen monsterWindow) {
-		monsterWindow.closeWindow();
-		launchTeamScreen();
-	}
+	
 	public void launchTeamScreen() {
 		TeamScreen teamWindow = new TeamScreen(this);
 	}

@@ -27,6 +27,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+
+/**
+ * Initial screen to setup the game, ask player to enter name, choose starting monster, set number of days for the game.
+ * @author chenz
+ *
+ */
 public class SetupScreen {
 
 	private JFrame frame;
