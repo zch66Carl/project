@@ -22,6 +22,11 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
+/**
+ * Item screen shows players inventory and team that allows items to be used out of battle.
+ * @author chenz
+ *
+ */
 public class ItemScreen {
 
 	private JFrame frame;
@@ -74,9 +79,9 @@ public class ItemScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel itemScreenLabel = new JLabel(env.getPlayer().getName()+"'s items");
+		JLabel itemScreenLabel = new JLabel("<dynamic>'s inventory");
 		itemScreenLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
-		itemScreenLabel.setBounds(55, 10, 140, 35);
+		itemScreenLabel.setBounds(277, 0, 171, 35);
 		frame.getContentPane().add(itemScreenLabel);
 		
 		JButton shopButton = new JButton("Shop");
@@ -86,7 +91,7 @@ public class ItemScreen {
 				closeWindow();
 			}
 		});
-		shopButton.setBounds(253, 213, 133, 29);
+		shopButton.setBounds(292, 213, 133, 29);
 		frame.getContentPane().add(shopButton);
 		
 		JButton backButton = new JButton("Back");
@@ -95,7 +100,7 @@ public class ItemScreen {
 				finishedWindow();
 			}
 		});
-		backButton.setBounds(476, 213, 133, 29);
+		backButton.setBounds(510, 213, 133, 29);
 		frame.getContentPane().add(backButton);
 		
 		
@@ -142,5 +147,13 @@ public class ItemScreen {
 		});
 		useItemButton.setBounds(55, 213, 133, 29);
 		frame.getContentPane().add(useItemButton);
+		
+		JLabel lblNewLabel = new JLabel("Team");
+		lblNewLabel.setBounds(485, 36, 48, 14);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Items");
+		lblNewLabel_1.setBounds(173, 36, 48, 14);
+		frame.getContentPane().add(lblNewLabel_1);
 	}
 }

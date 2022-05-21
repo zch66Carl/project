@@ -134,8 +134,6 @@ public class TeamScreen {
 					JOptionPane.showMessageDialog(frame, "Please Select Monster To Rename and can not be empty");
 				} 
 
-				
-
 			}
 		});
 		renameMonsterButton.setBounds(229, 346, 132, 43);

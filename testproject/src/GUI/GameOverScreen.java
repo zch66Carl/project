@@ -13,6 +13,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Game over screen shows player score, days passed, and options to restart or end game.
+ * @author chenz
+ *
+ */
 public class GameOverScreen {
 
 	private JFrame frame;

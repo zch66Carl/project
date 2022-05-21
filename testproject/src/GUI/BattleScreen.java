@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-
 import game.GameEnvironment;
 import game.Item;
 import game.Player;
