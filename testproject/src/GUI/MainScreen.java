@@ -15,6 +15,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
+/**
+ * The main screen of game, shows name, gold, current day of game. Navigate to other screen.
+ * @author chenz
+ *
+ */
 public class MainScreen {
 
 	private JFrame frame;
@@ -135,14 +140,13 @@ public class MainScreen {
 					battles[i] = env.getBattles().get(i);
 				}
 				Player selection = (Player) JOptionPane.showInputDialog(frame,"Choose a battle to fight:", "Battle Selection", JOptionPane.PLAIN_MESSAGE,null,battles,null);
-<<<<<<< HEAD
-=======
+
 				scrMan.launchBattleScreen(selection);
->>>>>>> branch 'main' of https://github.com/zch66Carl/project.git
+
 				finishedWindow();
-				env.launchBattleScreen(selection); 
+				
 				} catch (Exception excep) {
-					env.launchMainScreen();
+					scrMan.launchMainScreen();
 				}
 				
 			}
@@ -175,9 +179,9 @@ public class MainScreen {
 		endDayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				env.postDayLogic();
-				env.preDayLogic(env.getCurDay()+1);
+				env.preDayLogic();
 				if(env.getCurDay()==env.getNumDays()) {
-					env.launchGameOverScreen();
+					scrMan.launchGameOverScreen();
 				}
 				currentDay.setText(Integer.toString(env.getCurDay()));
 				

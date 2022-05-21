@@ -30,6 +30,11 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+/**
+ * Screen that shows all monsters in the team and allows player to rename monster.
+ * @author chenz
+ *
+ */
 public class TeamScreen {
 
 	private JFrame frame;
@@ -115,7 +120,7 @@ public class TeamScreen {
 					throw new RuntimeException("Name can not be empty");
 				} else {
 				monsterList.getSelectedValue().setName(newName);
-<<<<<<< HEAD
+
 				Monster[] currentTeam = new Monster[env.getPlayer().getTeam().size()];
 				for(int i=0;i<currentTeam.length;i++) {
 					currentTeam[i] = env.getPlayer().getTeam().get(i);
@@ -128,10 +133,9 @@ public class TeamScreen {
 				catch (Exception excep) {
 					JOptionPane.showMessageDialog(frame, "Please Select Monster To Rename and can not be empty");
 				} 
-=======
-				closeWindow();
-				scrMan.launchTeamScreen();
->>>>>>> branch 'main' of https://github.com/zch66Carl/project.git
+
+				
+
 			}
 		});
 		renameMonsterButton.setBounds(229, 346, 132, 43);
