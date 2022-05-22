@@ -61,4 +61,16 @@ class ItemTest {
 		assertEquals(monst.getHealth(), monst.getMaxHealth());
 	}
 
+	@Test
+	void toStringTest() {
+		Item item = new Item("name", 5);
+		item.setHealAmount(5);
+		assertEquals("name, heal amount: 5.", item.toString());
+		item = new Item("name", 5);
+		item.setBuffAmount(5);
+		assertEquals("name, damage buff: 5.", item.toString());
+		item = new Item("revive", 5);
+		item.setIsRevive(true);
+		assertEquals("revive.", item.toString());
+	}
 }
