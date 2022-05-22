@@ -9,7 +9,7 @@ import game.Player;
 public class TeamSizeLimit {
 	/**
 	 * Takes the player and checks the team size (max is 4), promting the user to select one to remove one if there are to many.
-	 * @param pla The Player entity.
+	 * @param pla Player. The player to check the team size of.
 	 */
 	public static void check(Player pla) {
 		if(pla.getTeam().size()>4) {

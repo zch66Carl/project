@@ -16,9 +16,9 @@ public class BattleCommandLine {
 	 * using an item (delegated to InventoryCommandLine), switching the currently active monster in your team,
 	 * or fleeing the battle. The user will be continually prompted for input until a definitive action is taken, as
 	 * the user may choose to cancel selections.
-	 * @param env The GameEnvironment entity.
-	 * @param enemy The enemy Monster, either the enemy team's active monster or a wild monster.
-	 * @return A boolean, true if the player chose to flee the battle.
+	 * @param env GameEnvironment. The game environment.
+	 * @param enemy Monster. The enemy monster, either the enemy team's active monster or a wild monster.
+	 * @return boolean. True if the player chose to flee the battle.
 	 */
 	private boolean makeMove(GameEnvironment env, Monster enemy) {
 		Player pla = env.getPlayer();
@@ -63,10 +63,10 @@ public class BattleCommandLine {
 	/**
 	 * Comman line interface to run a battle, runs pre battle logic, each turn with makeMove() and Player.makeRandomMove() and handles
 	 * the rewards if the player wins the battle. If a wild battle is won the player gains the wild monster.
-	 * @param env The GameEnvironment entity.
-	 * @param isWildBattle Whether or not it is a wild battle being run.
-	 * @param teamBattleInd The index of the enemy Player in the game environment's battle list.
-	 * @return A boolean, whether or not the battle was won.
+	 * @param env GameEnvionment. The game environment entity.
+	 * @param isWildBattle boolean. Whether or not it is a wild battle being run.
+	 * @param teamBattleInd int. The index of the enemy Player in the game environment's battle list.
+	 * @return boolean. Whether or not the battle was won.
 	 */
 	public boolean run(GameEnvironment env, boolean isWildBattle, int teamBattleInd) {
 		Player pla = env.getPlayer();
@@ -149,7 +149,7 @@ public class BattleCommandLine {
 	/**
 	 * Command line interface for choosing a battle, the possible battles are displayed, and the player can choose to fight one,
 	 * or exit to the prievious menu, if a battle is fought and one it is removed from the current battles for this day.
-	 * @param env The GameEnvironment entity.
+	 * @param env GameEnvironment. The game environment.
 	 */
 	public void chooseBattle(GameEnvironment env) {
 		if(!env.getPlayer().checkIfActiveMonster()) {

@@ -15,11 +15,11 @@ public class Generation {
 	 * The level will start at the current day, and if the desired Monster is wild, 5 is added to the level, if the monster is not
 	 * a player monster (is an enemy monster) the level is changed based on the difficulty (-1 if on easy (diff==1), +1 if on hard
 	 * (diff==3). A wild monster will never be a base class monster, it will always be a special type.
-	 * @param day The current day (should be >0)
-	 * @param diff The difficulty (1-3)
-	 * @param isPlayerMonster If the generated monster is for the player (at start or in shop).
-	 * @param isWildMonster If the generated monster is for a wildBattle monster.
-	 * @return A randomly generated monster.
+	 * @param day int. The current day (should be >0)
+	 * @param diff int. The difficulty (1-3)
+	 * @param isPlayerMonster boolean. If the generated monster is for the player (at start or in shop).
+	 * @param isWildMonster boolean. If the generated monster is for a wild battle monster.
+	 * @return Monster. A randomly generated monster.
 	 */
 	private static Monster generateMonster(int day, int diff, boolean isPlayerMonster, boolean isWildMonster) {
 		if(day<1) day=1;
@@ -49,18 +49,18 @@ public class Generation {
 	
 	/**
 	 * Public interface for generating player monster (start or shop), using the private general monster generation function.
-	 * @param day The current day.
-	 * @param diff The current difficuly.
-	 * @return The desired monster.
+	 * @param day inte. The current day.
+	 * @param diff int. The current difficuly.
+	 * @return Monster. The desired monster.
 	 */
 	public static Monster generatePlayerMonster(int day, int diff) {
 		return generateMonster(day, diff, true, false);
 	}
 	/**
 	 * Public interface for generating wild monster (wild battle), using the private general monster generation function.
-	 * @param day The current day.
-	 * @param diff The current difficuly.
-	 * @return The desired monster.
+	 * @param day int. The current day.
+	 * @param diff int. The current difficuly.
+	 * @return Monster. The desired monster.
 	 */
 	public static Monster generateWildMonster(int day, int diff) {
 		return generateMonster(day, diff, false, true);
@@ -71,10 +71,10 @@ public class Generation {
 	 * Generates a random item from the current day, using ItemBuilder to create the items. There is a small chance of the item
 	 * being a full revive, and equal chance of the item being a heal or a damage buff. The chance of a larger size item increases
 	 * in later days, as well as being more common if the item is for an enemy.
-	 * @param day The current day.
-	 * @param diff The difficulty (unused in this function).
-	 * @param enemyItem If this item is for an enemy player, or for the shop.
-	 * @return A randomly generated item.
+	 * @param day int. The current day.
+	 * @param diff int. The difficulty (unused in this function).
+	 * @param enemyItem boolean. If this item is for an enemy player, or for the shop.
+	 * @return Item. A randomly generated item.
 	 */
 	public static Item generateItem(int day, int diff, boolean enemyItem) {
 		if(day<1) day=1;
@@ -98,9 +98,9 @@ public class Generation {
 	/**
 	 * Randomly generates an enemy Player, using the above generate functions for Monster and Item. Enemy players will have team sizes
 	 * of 2 in the early days and up to 4 by the end of the game, and 1 item in the early days and up to 4 by the end.
-	 * @param day The current day. 
-	 * @param diff The difficulty.
-	 * @return A randomly generated enemy Player entity.
+	 * @param day int. The current day. 
+	 * @param diff int. The difficulty.
+	 * @return Player. A randomly generated enemy Player entity.
 	 */
 	public static Player generateEnemyTeam(int day, int diff) {
 		if(day<1) day=1;

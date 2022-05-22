@@ -14,9 +14,9 @@ public class InventoryCommandLine {
 	/**
 	 * Displays the monsters in the player's team that an item may be used on and prompts the user to either return to the prievious
 	 * menu or use the item on one of those monsters.
-	 * @param item The item to use.
-	 * @param pla The Player entity to use the item.
-	 * @return A boolean, true if the item was used or false if not.
+	 * @param item Item. The item to use.
+	 * @param pla Player. The player to use the item.
+	 * @return boolean. True if the item was used or false if not.
 	 */
 	private boolean useItem(Item item, Player pla) {
 		ArrayList<Monster> usableOn = item.getMonstersUsableOn(pla.getTeam());
@@ -40,8 +40,8 @@ public class InventoryCommandLine {
 	
 	/**
 	 * Displays the player's inventory and promts the user to return to the prievious menu or use one of the items.
-	 * @param env The GameEnvironment entity.
-	 * @return A boolean, whether or not an item was used.
+	 * @param env GameEnvironment. The game environment.
+	 * @return boolean. Whether or not an item was used.
 	 */
 	public boolean run(GameEnvironment env) {
 		Player pla = env.getPlayer();

@@ -12,7 +12,7 @@ public class TeamCommandLine {
 	/**
 	 * Displays each monster in the Player's team, and prompts the user to return to the prievious menu, choose a new monster to be
 	 * first in the order, or rename one of the monsters.
-	 * @param env The GameEnvironment entity.
+	 * @param env GameEnvironment. The game environment.
 	 */
 	void run(GameEnvironment env) {
 		while(true) {

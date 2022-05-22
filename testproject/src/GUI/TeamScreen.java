@@ -1,9 +1,6 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -12,19 +9,10 @@ import game.GameEnvironment;
 import game.Player;
 import game.monsters.Monster;
 
-import javax.swing.JProgressBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
@@ -38,7 +26,7 @@ import javax.swing.JTextField;
  */
 public class TeamScreen {
 
-	private JFrame frmMonsterBattler;
+	private JFrame frame;
 	private JList<Monster> monsterList;
 	
 	private ScreenManager scrMan;
@@ -46,15 +34,22 @@ public class TeamScreen {
 	private Player pla;
 	private JTextField renameMonsterTxt;
 	
+	/**
+	 * Initializes the gui and gets the game environment from the screen manager.
+	 * @param incScrMan ScreenManager. The screen manager.
+	 */
 	public TeamScreen(ScreenManager incScrMan) {
 		scrMan = incScrMan;
 		env = scrMan.getEnv();
 		pla = env.getPlayer();
 		initialize();
-		frmMonsterBattler.setVisible(true);
+		frame.setVisible(true);
 	}
 	
-	public void updateMonsterList() {
+	/**
+	 * Updates the gui monster list to contain the current team after renames, removals and reorders.
+	 */
+	private void updateMonsterList() {
 		Monster[] currentTeam = new Monster[pla.getTeam().size()];
 		for(int i=0;i<currentTeam.length;i++) {
 			currentTeam[i] = pla.getTeam().get(i);
@@ -63,57 +58,41 @@ public class TeamScreen {
 		monsterList.setListData(currentTeam);
 	}
 	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
-		frmMonsterBattler.dispose();
+		frame.dispose();
 	}
 	
-	public void finishedWindow() {
+	/**
+	 * Calls the screen transistion.
+	 */
+	private void finishedWindow() {
 		scrMan.closeTeamScreen(this);
 	}
+	
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TeamScreen window = new TeamScreen();
-					window.frmMonsterBattler.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public TeamScreen() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the frame and contains the methods for gui inputs.
 	 */
 	private void initialize() {
-		frmMonsterBattler = new JFrame();
-		frmMonsterBattler.setTitle("Monster Battler");
-		frmMonsterBattler.setBounds(100, 100, 880, 568);
-		frmMonsterBattler.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmMonsterBattler.getContentPane().setLayout(null);
+		frame = new JFrame();
+		frame.setTitle("Monster Battler");
+		frame.setBounds(100, 100, 880, 568);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
 		JLabel teamScreenLabel = new JLabel("Team");
 		teamScreenLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		teamScreenLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
 		teamScreenLabel.setBounds(52, 10, 125, 31);
-		frmMonsterBattler.getContentPane().add(teamScreenLabel);
+		frame.getContentPane().add(teamScreenLabel);
 		
 		JButton backButton = new JButton("Main Menu");
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(pla.getTeam().size() > 4) {
-					JOptionPane.showMessageDialog(frmMonsterBattler, "Must remove monsters to continue, as 4 is the max team size.");
+					JOptionPane.showMessageDialog(frame, "Must remove monsters to continue, as 4 is the max team size.");
 				}
 				else {
 					finishedWindow();
@@ -121,14 +100,14 @@ public class TeamScreen {
 			}
 		});
 		backButton.setBounds(77, 390, 111, 43);
-		frmMonsterBattler.getContentPane().add(backButton);
+		frame.getContentPane().add(backButton);
 		
 		DefaultListModel<Monster> monsterListModel = new DefaultListModel<>();
 		monsterListModel.addAll(pla.getTeam());
 		monsterList = new JList<>(monsterListModel);
 		monsterList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		monsterList.setBounds(77, 51, 701, 254);
-		frmMonsterBattler.getContentPane().add(monsterList);
+		frame.getContentPane().add(monsterList);
 		monsterList.getSelectedValue();
 		
 		JButton renameMonsterButton = new JButton("Rename Monster");
@@ -145,17 +124,17 @@ public class TeamScreen {
 					}
 				} 
 				catch (Exception excep) {
-					JOptionPane.showMessageDialog(frmMonsterBattler, "Please Select Monster To Rename and can not be empty");
+					JOptionPane.showMessageDialog(frame, "Please Select Monster To Rename and can not be empty");
 				} 
 
 			}
 		});
 		renameMonsterButton.setBounds(200, 390, 154, 43);
-		frmMonsterBattler.getContentPane().add(renameMonsterButton);
+		frame.getContentPane().add(renameMonsterButton);
 		
 		renameMonsterTxt = new JTextField();
 		renameMonsterTxt.setBounds(200, 357, 154, 21);
-		frmMonsterBattler.getContentPane().add(renameMonsterTxt);
+		frame.getContentPane().add(renameMonsterTxt);
 		renameMonsterTxt.setColumns(10);
 		
 		JButton reorderMonsterButton = new JButton("Reorder");
@@ -171,12 +150,12 @@ public class TeamScreen {
 					updateMonsterList();
 				} 
 				catch (Exception excep) {
-					JOptionPane.showMessageDialog(frmMonsterBattler, "Please Select Monster To Reorder.");
+					JOptionPane.showMessageDialog(frame, "Please Select Monster To Reorder.");
 				} 
 			}
 		});
 		reorderMonsterButton.setBounds(366, 390, 125, 43);
-		frmMonsterBattler.getContentPane().add(reorderMonsterButton);
+		frame.getContentPane().add(reorderMonsterButton);
 		
 		JButton removeMonsterButton = new JButton("Remove Monster (Permanent)");
 		removeMonsterButton.addActionListener(new ActionListener() {
@@ -190,12 +169,12 @@ public class TeamScreen {
 					updateMonsterList();
 				} 
 				catch (Exception excep) {
-					JOptionPane.showMessageDialog(frmMonsterBattler, "You  Must Select Monster To Remove.");
+					JOptionPane.showMessageDialog(frame, "You  Must Select Monster To Remove.");
 				} 
 			}
 		});
 		removeMonsterButton.setBounds(509, 390, 269, 43);
-		frmMonsterBattler.getContentPane().add(removeMonsterButton);
+		frame.getContentPane().add(removeMonsterButton);
 		monsterList.getSelectedValue();
 		
 	}
