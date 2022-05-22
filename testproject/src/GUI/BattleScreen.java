@@ -218,7 +218,7 @@ public class BattleScreen {
 		battleType.setText(isWildBattle ? "Wild Battle." : ("Team Battle: " + enemyTeam.getName()));
 		playerMonsterName.setText(plaMonst.getName());
 		enemyMonsterName.setText(enemy.getName());
-		enemyTeamSizeLabel.setText("");
+		enemyTeamSizeLabel.setText("2/2 monsters remaining");
 		if(!isWildBattle) {
 			int enemyCount = 0;
 			for(Monster monst : enemyTeam.getTeam()) {
@@ -337,20 +337,20 @@ public class BattleScreen {
 		frame.getContentPane().add(battleType);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(27, 59, 417, 344);
+		panel.setBounds(27, 59, 294, 344);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 				
 		playerMonsterName = new JLabel();
 		playerMonsterName.setText("player name");
 		playerMonsterName.setIcon(null);
-		playerMonsterName.setBounds(48, 245, 428, 60);
+		playerMonsterName.setBounds(48, 245, 246, 60);
 		panel.add(playerMonsterName);
 		
 		enemyMonsterName = new JLabel();
 		enemyMonsterName.setText("enemy name");
 		enemyMonsterName.setIcon(null);
-		enemyMonsterName.setBounds(48, 54, 428, 60);
+		enemyMonsterName.setBounds(48, 54, 246, 60);
 		panel.add(enemyMonsterName);
 		
 		enemyHealthLabel = new JLabel();
@@ -365,16 +365,16 @@ public class BattleScreen {
 		playerHealthLabel.setBounds(48, 317, 428, 15);
 		panel.add(playerHealthLabel);
 		
-		JLabel enemyTitleLabel = new JLabel("Enemy");
+		JLabel enemyTitleLabel = new JLabel("Enemy:");
 		enemyTitleLabel.setBounds(48, 36, 70, 15);
 		panel.add(enemyTitleLabel);
 		
-		JLabel playerTitleLabel = new JLabel("Player");
+		JLabel playerTitleLabel = new JLabel("Player:");
 		playerTitleLabel.setBounds(48, 223, 70, 15);
 		panel.add(playerTitleLabel);
 		
 		enemyTeamSizeLabel = new JLabel("");
-		enemyTeamSizeLabel.setBounds(199, 36, 212, 15);
+		enemyTeamSizeLabel.setBounds(105, 36, 212, 15);
 		panel.add(enemyTeamSizeLabel);
 		
 		
@@ -387,22 +387,22 @@ public class BattleScreen {
 			}
 		});
 		itemSelectionDropDownBox.setBackground(Color.WHITE);
-		itemSelectionDropDownBox.setBounds(553, 148, 312, 23);
+		itemSelectionDropDownBox.setBounds(434, 148, 431, 23);
 		frame.getContentPane().add(itemSelectionDropDownBox);
 		
 		attackOptions = new JComboBox<String>();
 		attackOptions.setBackground(Color.WHITE);
-		attackOptions.setBounds(553, 272, 312, 24);
+		attackOptions.setBounds(434, 272, 431, 24);
 		frame.getContentPane().add(attackOptions);
 		
 		monsterSwitch = new JComboBox<Monster>();
 		monsterSwitch.setBackground(Color.WHITE);
-		monsterSwitch.setBounds(553, 59, 312, 24);
+		monsterSwitch.setBounds(434, 59, 431, 24);
 		frame.getContentPane().add(monsterSwitch);
 		
 		itemUsableMonsters = new JComboBox<Monster>();
 		itemUsableMonsters.setBackground(Color.WHITE);
-		itemUsableMonsters.setBounds(553, 183, 312, 24);
+		itemUsableMonsters.setBounds(434, 183, 431, 24);
 		frame.getContentPane().add(itemUsableMonsters);
 		
 		
@@ -414,7 +414,7 @@ public class BattleScreen {
 				attack();
 			}
 		});
-		attackButton.setBounds(553, 308, 312, 41);
+		attackButton.setBounds(434, 308, 431, 41);
 		frame.getContentPane().add(attackButton);
 		
 		JButton escapeBattleButton = new JButton("Escape Battle");
@@ -423,7 +423,7 @@ public class BattleScreen {
 				fleeBattle();
 			}
 		});
-		escapeBattleButton.setBounds(553, 362, 312, 41);
+		escapeBattleButton.setBounds(434, 362, 431, 41);
 		frame.getContentPane().add(escapeBattleButton);
 		
 		
@@ -433,7 +433,7 @@ public class BattleScreen {
 				changeMonster();
 			}
 		});
-		changeMonsterButton.setBounds(553, 95, 312, 41);
+		changeMonsterButton.setBounds(434, 95, 431, 41);
 		frame.getContentPane().add(changeMonsterButton);
 		
 		JButton useItemButton = new JButton("Use Item");
@@ -443,35 +443,35 @@ public class BattleScreen {
 			}
 			
 		});
-		useItemButton.setBounds(553, 219, 312, 41);
+		useItemButton.setBounds(434, 219, 431, 41);
 		frame.getContentPane().add(useItemButton);
 		
 		JLabel moveLabel = new JLabel("Make A Move:");
-		moveLabel.setBounds(553, 36, 177, 15);
+		moveLabel.setBounds(434, 40, 177, 15);
 		frame.getContentPane().add(moveLabel);
 		
 		JTextPane changeMonsterText = new JTextPane();
 		changeMonsterText.setEditable(false);
 		changeMonsterText.setText("Change your monster on the field.");
-		changeMonsterText.setBounds(456, 63, 85, 73);
+		changeMonsterText.setBounds(337, 63, 85, 73);
 		frame.getContentPane().add(changeMonsterText);
 		
 		JTextPane useItemText = new JTextPane();
 		useItemText.setText("Use an item on one of your monsters, make sure it is the monster you want.");
 		useItemText.setEditable(false);
-		useItemText.setBounds(452, 148, 89, 126);
+		useItemText.setBounds(333, 148, 89, 126);
 		frame.getContentPane().add(useItemText);
 		
 		JTextPane attackText = new JTextPane();
 		attackText.setText("Attack the enemy monster.");
 		attackText.setEditable(false);
-		attackText.setBounds(456, 287, 85, 62);
+		attackText.setBounds(337, 287, 85, 62);
 		frame.getContentPane().add(attackText);
 		
 		JTextPane fleeBattleText = new JTextPane();
 		fleeBattleText.setText("Flee battle.");
 		fleeBattleText.setEditable(false);
-		fleeBattleText.setBounds(456, 364, 85, 39);
+		fleeBattleText.setBounds(337, 364, 85, 39);
 		frame.getContentPane().add(fleeBattleText);
 	}
 }
