@@ -45,6 +45,7 @@ public class BattleScreen {
 	private JLabel enemyMonsterName;
 	private JLabel enemyHealthLabel;
 	private JLabel playerHealthLabel;
+	private JLabel enemyTeamSizeLabel;
 	
 	private JComboBox itemSelectionDropDownBox;
 	private JComboBox attackOptions;
@@ -55,15 +56,17 @@ public class BattleScreen {
 	private ScreenManager scrMan;
 	private GameEnvironment env;
 	private Player pla;
+	private int enemyTeamIndex;
 	private Player enemyTeam;
 	private Monster wildMonster;
 	private boolean isWildBattle;
 	private Monster enemy;
 	
-	public BattleScreen(ScreenManager incScrMan, boolean isWildBattle, Player enemyTeam) {
+	public BattleScreen(ScreenManager incScrMan, boolean isWildBattle, int enemyTeamIndex) {
 		scrMan = incScrMan;
 		env = scrMan.getEnv();
-		this.enemyTeam = enemyTeam;
+		enemyTeam = env.getBattles().get(enemyTeamIndex);
+		this.enemyTeamIndex = enemyTeamIndex;
 		this.isWildBattle = isWildBattle;
 		this.wildMonster = env.getWildBattleMonster();
 		this.pla = env.getPlayer();
@@ -84,6 +87,7 @@ public class BattleScreen {
 		//check if player killed their active on their own turn with RiskyMonster
 		if(!pla.checkIfActiveMonster()) {
 			endBattle(false);
+			return;
 		}
 		
 		ArrayList<String> preTurnMessages;
@@ -112,6 +116,11 @@ public class BattleScreen {
 		}
 		enemy = isWildBattle ? wildMonster : enemyTeam.getActiveMonster();
 		
+		if(!pla.checkIfActiveMonster()) {
+			endBattle(false);
+			return;
+		}
+		
 		//pre player turn
 		preTurnMessages = pla.preTurnLogic();
 		full = "";
@@ -126,6 +135,7 @@ public class BattleScreen {
 		
 		if(!pla.checkIfActiveMonster()) {
 			endBattle(false);
+			return;
 		}
 	}
 	
@@ -141,7 +151,7 @@ public class BattleScreen {
 			}
 			else {
 				JOptionPane.showMessageDialog(frame, "Have some gold.");
-				//TODO: REMOVE THE BATTLE FROM THE BATTLE ARRAY
+				env.getBattles().remove(enemyTeamIndex);
 			}
 			pla.rewardPostBattle(env.getCurDay(), env.getDifficulty(), isWildBattle);
 			
@@ -193,12 +203,20 @@ public class BattleScreen {
 		
 		Monster plaMonst = pla.getActiveMonster();
 		
-		battleType.setText(isWildBattle ? "Wild Battle." : "Team Battle.");
+		battleType.setText(isWildBattle ? "Wild Battle." : ("Team Battle: " + enemyTeam.getName()));
 		playerMonsterName.setText(plaMonst.getName());
 		enemyMonsterName.setText(enemy.getName());
-		String info = "Health: " + enemy.getHealth() + "/" + enemy.getMaxHealth() + ". Damage: " + enemy.getDamage() + "/" + enemy.getTotalDamage() + ".";
+		enemyTeamSizeLabel.setText("");
+		if(!isWildBattle) {
+			int enemyCount = 0;
+			for(Monster monst : enemyTeam.getTeam()) {
+				if(monst.isAwake()) enemyCount++;
+			}
+			enemyTeamSizeLabel.setText(enemyCount + "/" + enemyTeam.getTeam().size() + " monsters remaining.");
+		}
+		String info = "Health: " + enemy.getHealth() + "/" + enemy.getMaxHealth() + ". Damage: " + enemy.getTotalDamage() + "/" + enemy.getDamage() + ".";
 		enemyHealthLabel.setText(info);
-		info = "Health: " + plaMonst.getHealth() + "/" + plaMonst.getMaxHealth() + ". Damage: " + plaMonst.getDamage() + "/" + plaMonst.getTotalDamage() + ".";
+		info = "Health: " + plaMonst.getHealth() + "/" + plaMonst.getMaxHealth() + ". Damage: " + plaMonst.getTotalDamage() + "/" + plaMonst.getDamage() + ".";
 		playerHealthLabel.setText(info);
 		
 		Item[] items = new Item[pla.getInventory().size()];
@@ -267,9 +285,10 @@ public class BattleScreen {
 		//batle info:
 		
 		battleType = new JLabel();
+		battleType.setText("battle type");
 		battleType.setHorizontalAlignment(SwingConstants.CENTER);
 		battleType.setFont(new Font("SimSun", Font.BOLD, 14));
-		battleType.setBounds(27, 10, 165, 41);
+		battleType.setBounds(27, 10, 488, 41);
 		frame.getContentPane().add(battleType);
 		
 		JPanel panel = new JPanel();
@@ -278,24 +297,40 @@ public class BattleScreen {
 		panel.setLayout(null);
 				
 		playerMonsterName = new JLabel();
+		playerMonsterName.setText("player name");
 		playerMonsterName.setIcon(null);
-		playerMonsterName.setBounds(185, 210, 218, 60);
+		playerMonsterName.setBounds(48, 245, 428, 60);
 		panel.add(playerMonsterName);
 		
 		enemyMonsterName = new JLabel();
+		enemyMonsterName.setText("enemy name");
 		enemyMonsterName.setIcon(null);
-		enemyMonsterName.setBounds(185, 46, 218, 60);
+		enemyMonsterName.setBounds(48, 54, 428, 60);
 		panel.add(enemyMonsterName);
 		
 		enemyHealthLabel = new JLabel();
-		enemyHealthLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		enemyHealthLabel.setBounds(143, 21, 196, 15);
+		enemyHealthLabel.setText("enemy info");
+		enemyHealthLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		enemyHealthLabel.setBounds(48, 126, 428, 15);
 		panel.add(enemyHealthLabel);
 				
 		playerHealthLabel = new JLabel();
-		playerHealthLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		playerHealthLabel.setBounds(143, 282, 196, 15);
+		playerHealthLabel.setText("player info");
+		playerHealthLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		playerHealthLabel.setBounds(48, 317, 428, 15);
 		panel.add(playerHealthLabel);
+		
+		JLabel enemyTitleLabel = new JLabel("Enemy");
+		enemyTitleLabel.setBounds(48, 36, 70, 15);
+		panel.add(enemyTitleLabel);
+		
+		JLabel playerTitleLabel = new JLabel("Player");
+		playerTitleLabel.setBounds(48, 223, 70, 15);
+		panel.add(playerTitleLabel);
+		
+		enemyTeamSizeLabel = new JLabel("");
+		enemyTeamSizeLabel.setBounds(271, 36, 217, 15);
+		panel.add(enemyTeamSizeLabel);
 		
 		
 		//moves info:

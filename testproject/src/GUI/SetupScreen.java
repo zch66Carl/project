@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
 
 /**
  * Initial screen to setup the game, ask player to enter name, choose starting monster, set number of days for the game.
@@ -100,7 +101,7 @@ public class SetupScreen {
 		
 		playerNameTextBox = new JTextField();
 		playerNameTextBox.setToolTipText("3 to 15 characters without numbers or special character");
-		playerNameTextBox.setBounds(243, 74, 121, 21);
+		playerNameTextBox.setBounds(243, 74, 175, 21);
 		frame.getContentPane().add(playerNameTextBox);
 		playerNameTextBox.setColumns(10);
 		
@@ -125,7 +126,7 @@ public class SetupScreen {
 		JComboBox startingMonsterSelection = new JComboBox();
 		startingMonsterSelection.setModel(new DefaultComboBoxModel(new Monster[] {monsterOne,monsterTwo,monsterThree}));
 		startingMonsterSelection.setSelectedIndex(0);
-		startingMonsterSelection.setBounds(243, 119, 445, 23);
+		startingMonsterSelection.setBounds(243, 119, 546, 23);
 		frame.getContentPane().add(startingMonsterSelection);
 		
 		Monster selected = new Monster("Default Monster", 1);
@@ -146,105 +147,23 @@ public class SetupScreen {
 		difficultySelection.setBounds(243, 186, 121, 23);
 		frame.getContentPane().add(difficultySelection);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel_2.setBounds(371, 183, 418, 185);
-		frame.getContentPane().add(panel_2);
-		panel_2.setLayout(null);
-		
-		JLabel difficulty = new JLabel("Easy");
-		difficulty.setFont(new Font("SimSun", Font.BOLD, 14));
-		difficulty.setBounds(190, 10, 55, 24);
-		panel_2.add(difficulty);
-		
-		JLabel startingGoldLabel = new JLabel("Starting Gold:");
-		startingGoldLabel.setBounds(10, 49, 84, 15);
-		panel_2.add(startingGoldLabel);
-		
-		JLabel goldWinLabel = new JLabel("Gold Win(Based on Level):");
-		goldWinLabel.setBounds(10, 85, 171, 15);
-		panel_2.add(goldWinLabel);
-		
-		JLabel enemyStrengthLabel = new JLabel("Enemy Strength:");
-		enemyStrengthLabel.setBounds(10, 126, 171, 15);
-		panel_2.add(enemyStrengthLabel);
-		
-		JLabel startingGold = new JLabel("500");
-		startingGold.setBounds(191, 49, 54, 15);
-		panel_2.add(startingGold);
-		
-		JLabel goldWinPercentage = new JLabel("150%");
-		goldWinPercentage.setBounds(191, 85, 54, 15);
-		panel_2.add(goldWinPercentage);
-		
-		JLabel enemyStrengthIncreasePercentage = new JLabel("75%");
-		enemyStrengthIncreasePercentage.setBounds(191, 126, 54, 15);
-		panel_2.add(enemyStrengthIncreasePercentage);
-		
-		JLabel lblNormal = new JLabel("Normal");
-		lblNormal.setFont(new Font("SimSun", Font.BOLD, 14));
-		lblNormal.setBounds(255, 10, 55, 24);
-		panel_2.add(lblNormal);
-		
-		JLabel lblHard = new JLabel("Hard");
-		lblHard.setFont(new Font("SimSun", Font.BOLD, 14));
-		lblHard.setBounds(336, 10, 55, 24);
-		panel_2.add(lblHard);
-		
-		JLabel startingGold_1 = new JLabel("500");
-		startingGold_1.setBounds(256, 49, 54, 15);
-		panel_2.add(startingGold_1);
-		
-		JLabel startingGold_2 = new JLabel("500");
-		startingGold_2.setBounds(337, 49, 54, 15);
-		panel_2.add(startingGold_2);
-		
-		JLabel startingGold_3 = new JLabel("100%");
-		startingGold_3.setBounds(256, 85, 54, 15);
-		panel_2.add(startingGold_3);
-		
-		JLabel startingGold_4 = new JLabel("75%");
-		startingGold_4.setBounds(337, 85, 54, 15);
-		panel_2.add(startingGold_4);
-		
-		JLabel startingGold_5 = new JLabel("100%");
-		startingGold_5.setBounds(256, 126, 54, 15);
-		panel_2.add(startingGold_5);
-		
-		JLabel startingGold_6 = new JLabel("120%");
-		startingGold_6.setBounds(336, 126, 54, 15);
-		panel_2.add(startingGold_6);
-		
 		JButton startGameButton = new JButton("Start Game");
 		startGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String playerName = playerNameTextBox.getText();
-				while(true) {
-					if(playerName.length()>=3 && playerName.length()<=15) {
-						boolean isAlpha = true;
-						for(char c:playerName.toCharArray()) {
-							if(!Character.isAlphabetic(c)) {
-								isAlpha = false;
-							}
-						} 
-						if(isAlpha) {
-							int diff = difficultySelection.getSelectedIndex()+1;
-							env.setNumDays(daysSelection.getSelectedIndex()+5);
-							ArrayList<Monster> team = new ArrayList<Monster>();
-							team.add((Monster) startingMonsterSelection.getSelectedItem());
-							env.setPlayer(new Player(playerName,500,team,new ArrayList<Item>()));
-							env.setDifficulty(diff);
-							finishedWindow();
-							break;
-						} else {
-							JOptionPane.showMessageDialog(frame, "Invalid Name");
-							break;
-						}
-					}
-					 else {
-						JOptionPane.showMessageDialog(frame, "Invalid Name");
-						break;
-					}
+				if(Player.isValidName(playerName)) {
+					env.setNumDays(daysSelection.getSelectedIndex()+5);
+					ArrayList<Monster> team = new ArrayList<Monster>();
+					team.add((Monster) startingMonsterSelection.getSelectedItem());
+					
+					int diff = difficultySelection.getSelectedIndex()+1;
+					int gold = (3 - diff) * 15; //15 on normal, 30 on easy, 0 on hard.
+					env.setPlayer(new Player(playerName,gold,team,new ArrayList<Item>()));
+					env.setDifficulty(diff);
+					finishedWindow();
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Invalid Name, should be 3-15 characters and fully alphabetic.");
 				}
 			}
 		}
@@ -256,5 +175,10 @@ public class SetupScreen {
 		startGameButton.setFont(new Font("SimSun", Font.PLAIN, 18));
 		startGameButton.setBounds(37, 283, 278, 85);
 		frame.getContentPane().add(startGameButton);
+		
+		JTextPane txtpnOnHigherDifficulties = new JTextPane();
+		txtpnOnHigherDifficulties.setText("On higher difficulties, you will earn less gold, and face harder opponents.");
+		txtpnOnHigherDifficulties.setBounds(394, 183, 390, 43);
+		frame.getContentPane().add(txtpnOnHigherDifficulties);
 	}
 }

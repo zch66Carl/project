@@ -80,12 +80,12 @@ public class MainScreen {
 		
 		JLabel goldLabel = new JLabel("Gold");
 		goldLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
-		goldLabel.setBounds(135, 19, 54, 15);
+		goldLabel.setBounds(170, 19, 54, 15);
 		frame.getContentPane().add(goldLabel);
 		
 		JLabel currentGold = new JLabel(Integer.toString(env.getPlayer().getGold()));
 		currentGold.setFont(new Font("SimSun", Font.PLAIN, 14));
-		currentGold.setBounds(177, 19, 54, 15);
+		currentGold.setBounds(216, 19, 54, 15);
 		frame.getContentPane().add(currentGold);
 		
 		JLabel dayLabel = new JLabel("Day");
@@ -135,16 +135,31 @@ public class MainScreen {
 		battleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-				Player[] battles = new Player[env.getBattles().size()];
-				for(int i=0;i<battles.length;i++) {
-					battles[i] = env.getBattles().get(i);
-				}
-				Player selection = (Player) JOptionPane.showInputDialog(frame,"Choose a battle to fight:", "Battle Selection", JOptionPane.PLAIN_MESSAGE,null,battles,null);
-
-				scrMan.launchBattleScreen(selection);
-
-				finishedWindow();
-				
+					if(env.getBattles().size() == 0 && env.getWildBattleMonster() == null) {
+						JOptionPane.showMessageDialog(frame, "No battles left to fight.");
+						throw new RuntimeException("No battles.");
+					}
+					if(!env.getPlayer().checkIfActiveMonster()) {
+						JOptionPane.showMessageDialog(frame, "Can't battle as team are all fainted.");
+						throw new RuntimeException("All fainted");
+					}
+					
+					String[] battles = new String[env.getBattles().size() + (env.getWildBattleMonster()!=null ? 1 : 0)];
+					for(int i=0;i<battles.length;i++) {
+						if(i==env.getBattles().size()) battles[i] = "Wild Battle.";
+						else battles[i] = env.getBattles().get(i).getName();
+					}
+					
+					String selection = (String) JOptionPane.showInputDialog(frame,"Choose a battle to fight:", "Battle Selection", JOptionPane.PLAIN_MESSAGE,null,battles,null);
+	
+					int choice = 0;
+					for(int i=0; i<battles.length; i++) {
+						if(battles[i] == selection) choice = i;
+					}
+					
+					scrMan.launchBattleScreen(choice);
+	
+					finishedWindow();
 				} catch (Exception excep) {
 					scrMan.launchMainScreen();
 				}
@@ -152,17 +167,17 @@ public class MainScreen {
 			}
 		});
 		battleButton.setFont(new Font("SimSun", Font.PLAIN, 14));
-		battleButton.setBounds(144, 187, 165, 66);
+		battleButton.setBounds(40, 187, 165, 66);
 		frame.getContentPane().add(battleButton);
 		
 		JLabel scoreLabel = new JLabel("Score");
 		scoreLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
-		scoreLabel.setBounds(255, 19, 54, 15);
+		scoreLabel.setBounds(269, 19, 54, 15);
 		frame.getContentPane().add(scoreLabel);
 		
 		JLabel currentScore = new JLabel(Integer.toString(env.getPlayer().getScore()));
 		currentScore.setFont(new Font("SimSun", Font.PLAIN, 14));
-		currentScore.setBounds(305, 19, 54, 15);
+		currentScore.setBounds(321, 19, 54, 15);
 		frame.getContentPane().add(currentScore);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("of");
@@ -178,22 +193,36 @@ public class MainScreen {
 		JButton endDayButton = new JButton("End Day");
 		endDayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				env.postDayLogic();
+				ArrayList<String> messages = env.postDayLogic();
+				String full = "Overnight:";
+				for(String str : messages) full += "\n" + str;
+				full += "\nYour monsters rested up.";
+				JOptionPane.showMessageDialog(frame, full);
+				
 				env.preDayLogic();
-				if(env.getCurDay()==env.getNumDays()) {
+				if(env.getCurDay()>env.getNumDays()) {
 					scrMan.launchGameOverScreen();
 				}
 				currentDay.setText(Integer.toString(env.getCurDay()));
-				
 			}
 		});
 		endDayButton.setFont(new Font("SimSun", Font.PLAIN, 14));
-		endDayButton.setBounds(333, 187, 165, 66);
+		endDayButton.setBounds(230, 187, 165, 66);
 		frame.getContentPane().add(endDayButton);
 		
 		String[] difficulty = {"Easy","Normal","Hard"};
-		JLabel lblNewLabel = new JLabel(difficulty[env.getDifficulty()]);
+		JLabel lblNewLabel = new JLabel(difficulty[env.getDifficulty() - 1]);
 		lblNewLabel.setBounds(550, 19, 54, 15);
 		frame.getContentPane().add(lblNewLabel);
+		
+		JButton endGameButton = new JButton("End Game");
+		endGameButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				scrMan.launchGameOverScreen();
+			}
+		});
+		endGameButton.setFont(new Font("Dialog", Font.PLAIN, 14));
+		endGameButton.setBounds(423, 187, 164, 66);
+		frame.getContentPane().add(endGameButton);
 	}
 }

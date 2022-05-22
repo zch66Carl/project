@@ -30,8 +30,13 @@ public class ScreenManager {
 		env.updateBattles();
 		launchMainScreen();
 	}
-	public void launchBattleScreen(Player battle) {
-		BattleScreen battleWindow = new BattleScreen(this, false, battle);
+	public void launchBattleScreen(int battleChoice) {
+		if(battleChoice >= env.getBattles().size()) {
+			BattleScreen battleWindow = new BattleScreen(this, true, 0);
+		}
+		else{
+			BattleScreen battleWindow = new BattleScreen(this, false, battleChoice);
+		}
 	}
 	public void closeBattleScreen(BattleScreen battleWindow) {
 		battleWindow.closeWindow();
