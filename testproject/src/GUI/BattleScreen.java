@@ -104,6 +104,7 @@ public class BattleScreen {
 		
 		if((isWildBattle && !wildMonster.isAwake()) || (!isWildBattle && !enemyTeam.checkIfActiveMonster())) {
 			endBattle(true);
+			return;
 		}
 		enemy = isWildBattle ? wildMonster : enemyTeam.getActiveMonster();
 		Monster plaMonst = pla.getActiveMonster();
@@ -113,6 +114,7 @@ public class BattleScreen {
 		//check if a risky monster killed itself on its own turn
 		if((isWildBattle && !wildMonster.isAwake()) || (!isWildBattle && !enemyTeam.checkIfActiveMonster())) {
 			endBattle(true);
+			return;
 		}
 		enemy = isWildBattle ? wildMonster : enemyTeam.getActiveMonster();
 		

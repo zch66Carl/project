@@ -50,7 +50,6 @@ public class ScreenManager {
 		launchMainScreen();
 	}
 	public void launchShopScreen() {
-		env.getShop().refreshStock(env.getCurDay(), env.getDifficulty());
 		ShopScreen shopWindow = new ShopScreen(this);		
 	}
 	public void closeShopScreen(ShopScreen shopWindow) {
