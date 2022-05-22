@@ -21,12 +21,11 @@ public class IO {
 	 * @return int. An integer in the range [lowerBound, upperBound] from command line input.
 	 */
 	public static int getInt(int lowerBound, int upperBound) {
-		try (Scanner sc = new Scanner(System.in)) {
-			while(true) {
-				int inp = sc.nextInt();
-				if(lowerBound<=inp && inp<=upperBound) return inp;
-				IO.textOut("Out of range, try again (range is " + lowerBound + " to " + upperBound +").");
-			}
+		Scanner sc = new Scanner(System.in);
+		while(true) {
+			int inp = sc.nextInt();
+			if(lowerBound<=inp && inp<=upperBound) return inp;
+			IO.textOut("Out of range, try again (range is " + lowerBound + " to " + upperBound +").");
 		}
 	}
 	
@@ -35,8 +34,7 @@ public class IO {
 	 * @return String. The line of inpu.
 	 */
 	public static String getString() {
-		try (Scanner sc = new Scanner(System.in)) {
-			return sc.nextLine();
-		}
+		Scanner sc = new Scanner(System.in);
+		return sc.nextLine();
 	}
 }
