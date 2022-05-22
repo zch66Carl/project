@@ -242,7 +242,7 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Returns the names of the monster's attacks in an ArrayList, for display and player input purpases.
-	 * @return ArrayList<String>. A list of attack names.
+	 * @return ArrayList&lt;String>. A list of attack names.
 	 */
 	public ArrayList<String> getAttackStrings(){
 		return attacks;
@@ -330,7 +330,7 @@ public class Monster implements Purchaseable{
 	/**
 	 * Carries out necersary logic to perform before a turn, such as dealing persistent damage, and removing damage buffs and persitent
 	 * damage attacks that have run out of duration. More actions may be performed by subclass monsters.
-	 * @return ArrayList<String>. A list messages summarising the actions performed.
+	 * @return ArrayList&lt;String>. A list messages summarising the actions performed.
 	 */
 	public ArrayList<String> preTurnLogic() {
 		ArrayList<String> ret = new ArrayList<String>();

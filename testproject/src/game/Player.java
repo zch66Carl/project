@@ -42,8 +42,8 @@ public class Player {
 	 * active monster index to zero.
 	 * @param name String. The player's name.
 	 * @param gold int. The player's initial gold.
-	 * @param team ArrayList<Monster> The player's initial team.
-	 * @param inventory ArrayList<Item> The player's initial inventory.
+	 * @param team ArrayList&lt;Monster> The player's initial team.
+	 * @param inventory ArrayList&lt;Item> The player's initial inventory.
 	 */
 	public Player(String name, int gold, ArrayList<Monster> team, ArrayList<Item> inventory) {
 		this.name=name;
@@ -118,7 +118,7 @@ public class Player {
 	
 	/**
 	 * Simple getter for the player's team.
-	 * @return ArrayList<Monster>. A list of the monsters in the player's team.
+	 * @return ArrayList&lt;Monster>. A list of the monsters in the player's team.
 	 */
 	public ArrayList<Monster> getTeam() {
 		return team;
@@ -126,7 +126,7 @@ public class Player {
 	
 	/**
 	 * Simple getter for the player's inventory.
-	 * @return ArrayList<Item>. A list of the items in the player's inventory.
+	 * @return ArrayList&lt;Item>. A list of the items in the player's inventory.
 	 */
 	public ArrayList<Item> getInventory() {
 		return inventory;
@@ -157,7 +157,7 @@ public class Player {
 	
 	/**
 	 * Filters the monsters in the team to return the ones which are awake and aren't the currently active monster.
-	 * @return ArrayList<Monster>. The monsters in the team which may be switched to.
+	 * @return ArrayList&lt;Monster>. The monsters in the team which may be switched to.
 	 */
 	public ArrayList<Monster> getSwitchableMonsters(){
 		ArrayList<Monster> options = new ArrayList<Monster>();
@@ -237,7 +237,7 @@ public class Player {
 	
 	/**
 	 * Runs preTurnLogic() for each monster in the team, and returns all the messages from the calls. (for status effects and stuff).
-	 * @return ArrayList<String>. A list of messages describing any actions taken pre turn, for displaying to the player.
+	 * @return ArrayList&lt;String>. A list of messages describing any actions taken pre turn, for displaying to the player.
 	 */
 	public ArrayList<String> preTurnLogic(){
 		ArrayList<String> ret = new ArrayList<String>();

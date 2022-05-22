@@ -109,8 +109,8 @@ public class Item implements Purchaseable{
 	
 	/**
 	 * Filters a list of monsters, returning a list of those which this item may be used on (e.g. heal item not useable on monster at full health).
-	 * @param team ArrayList<Monster>. The initial list of monsters.
-	 * @return ArrayList<Monster>. Those of the original list which this item may be used on.
+	 * @param team ArrayList&lt;Monster>. The initial list of monsters.
+	 * @return ArrayList&lt;Monster>. Those of the original list which this item may be used on.
 	 */
 	public ArrayList<Monster> getMonstersUsableOn(ArrayList<Monster> team){
 		if(buffAmount > 0) return team;

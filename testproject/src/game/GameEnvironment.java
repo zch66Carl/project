@@ -134,7 +134,7 @@ public class GameEnvironment {
 	}
 	/**
 	 * Simple getter for the battles on the current day.
-	 * @return ArrayList<Player>. The enemy players on the current day.
+	 * @return ArrayList&lt;Player>. The enemy players on the current day.
 	 */
 	public ArrayList<Player> getBattles(){
 		return battles;
@@ -168,7 +168,7 @@ public class GameEnvironment {
 	/**
 	 * Carries out all events after each day ends, checking for level ups for each monster in the player's team, and checking for
 	 * the random events of monsters leaving or joining the player's team. Returns messages describing the events that took place.
-	 * @return ArrayList<String>. An array of messages detailing the random events that took place.
+	 * @return ArrayList&lt;String>. An array of messages detailing the random events that took place.
 	 */
 	public ArrayList<String> postDayLogic() {
 		ArrayList<String> ret = new ArrayList<String>();
