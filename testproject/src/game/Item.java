@@ -38,8 +38,8 @@ public class Item implements Purchaseable{
 	/**
 	 * Constructs an Item with a name and price, and sets healAmount and buffAmount to zero and isRevive to false, so the Item
 	 * is initially not any type of item.
-	 * @param name The name of this item.
-	 * @param price The price of this item.
+	 * @param name String. The name of this item.
+	 * @param price int. The price of this item.
 	 */
 	public Item(String name, int price) {
 		this.name = name;
@@ -72,21 +72,21 @@ public class Item implements Purchaseable{
 	
 	/**
 	 * Simple setter for healAmount.
-	 * @param newHealAmount The new value of healAmount.
+	 * @param newHealAmount int. The new heal amount of this item..
 	 */
 	public void setHealAmount(int newHealAmount) {
 		healAmount = newHealAmount;
 	}
 	/**
 	 * Simple setter for buffAmount.
-	 * @param newBuffAmount The new value of BuffAmount.
+	 * @param newBuffAmount int. The new damage buff value of this item.
 	 */
 	public void setBuffAmount(int newBuffAmount) {
 		buffAmount = newBuffAmount;
 	}
 	/**
 	 * SImple setter for isRevive.
-	 * @param newIsRevive The new value of isRevive.
+	 * @param newIsRevive boolean. Whether this item is a revive item or not.
 	 */
 	public void setIsRevive(boolean newIsRevive) {
 		isRevive = newIsRevive;
@@ -94,14 +94,14 @@ public class Item implements Purchaseable{
 	
 	/**
 	 * Whether or not the item is a full revive item.
-	 * @return A boolean, whether the item is a full revive or not.
+	 * @return boolean. Whether the item is a full revive or not.
 	 */
 	public boolean isRevive() {
 		return isRevive;
 	}
 	/**
-	 * Whetehr or not the item is a healing item.
-	 * @return A boolean, whether the item is a healing item or not.
+	 * Whether or not the item is a healing item.
+	 * @return boolean. Whether the item is a healing item or not.
 	 */
 	public boolean isHeal() {
 		return healAmount > 0;
@@ -109,8 +109,8 @@ public class Item implements Purchaseable{
 	
 	/**
 	 * Filters a list of monsters, returning a list of those which this item may be used on (e.g. heal item not useable on monster at full health).
-	 * @param team The initial ArrayList of Monster.
-	 * @return An ArrayList of Monster, those of team which this item may be used on.
+	 * @param team ArrayList<Monster>. The initial list of monsters.
+	 * @return ArrayList<Monster>. Those of the original list which this item may be used on.
 	 */
 	public ArrayList<Monster> getMonstersUsableOn(ArrayList<Monster> team){
 		if(buffAmount > 0) return team;
@@ -126,7 +126,7 @@ public class Item implements Purchaseable{
 	
 	/**
 	 * Uses this item on the given monster, either healing the monster, calling Monster.rest(), or adding a damage buff to the monster.
-	 * @param monster The Monster on which to use this item.
+	 * @param monster Monster. The monster on which to use this item.
 	 */
 	public void useItem(Monster monster) {
 		if(isHeal()) monster.heal(healAmount);

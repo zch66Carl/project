@@ -13,8 +13,8 @@ public class PoisonMonster extends Monster {
 	
 	/**
 	 * Calls base Monster constructor and adds attack string for poison attack.
-	 * @param name The mosnter's name.
-	 * @param startLevel The monster's start level.
+	 * @param name String. The mosnter's name.
+	 * @param startLevel int. The monster's start level.
 	 */
 	public PoisonMonster(String name, int startLevel) {
 		super(name, startLevel);
@@ -50,8 +50,8 @@ public class PoisonMonster extends Monster {
 	/**
 	 * The poison attack, dealing half this monster's attack damage to the enemy, and then adding a persistent damage attack of 
 	 * one fifth of this monster's total damage, which lasts for five turns.
-	 * @param enemy The enemy Monster.
-	 * @return A String describing the attack.
+	 * @param enemy Monster. The enemy monster.
+	 * @return String. A description of the attack.
 	 */
 	private String poison(Monster enemy) {
 		String ret = "";

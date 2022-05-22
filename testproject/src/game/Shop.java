@@ -13,7 +13,7 @@ public class Shop {
 	private int spentGold = 0;
 	/**
 	 * Simple getter for goldSpent.
-	 * @return The total amount of gold spent in the shop.
+	 * @return int. The total amount of gold spent in the shop over the course of the game.
 	 */
 	public int getGoldSpent() {
 		return spentGold;
@@ -33,8 +33,8 @@ public class Shop {
 	
 	/**
 	 * Uses Generation to generate 3 random Monster objects for the shop and 6 Item objects, using the current day and difficulty.
-	 * @param day The current day.
-	 * @param diff The difficulty (between 1 and 3)
+	 * @param day int. The current day.
+	 * @param diff int. The difficulty (between 1 and 3)
 	 */
 	public void refreshStock(int day, int diff) {
 		for(int i=0; i<3; i++) stock[i] = Generation.generatePlayerMonster(day, diff);
@@ -45,9 +45,9 @@ public class Shop {
 	/**
 	 * Takes an Player object and the itemIndex that the player wishes to buy and if the player has enough gold, buys the object and
 	 * adds it to the player's inventory. A string is returned describing the whether or not the item could be bought.
-	 * @param player The Player wishing to buy the item.
-	 * @param itemIndex The index (into the stock array) of the Purchaseable object desired.
-	 * @return A string detailing the success or failure of buying the object.
+	 * @param player Player. The player wishing to buy the item.
+	 * @param itemIndex int. The index (into the stock array) of the Purchaseable object desired.
+	 * @return String. A description of the success or failure of buying the object.
 	 */
 	public String buyPurchaseable(Player player, int itemIndex) {
 		if(itemIndex<0 || itemIndex>9 || stock[itemIndex]==null) {
@@ -70,9 +70,9 @@ public class Shop {
 	
 	/**
 	 * Sells an object to the shop giving the player the sell price of the object in gold.
-	 * @param player The Player selling the object.
-	 * @param purchase The object being sold to the shop.
-	 * @return A String describing the sell.
+	 * @param player Player. The player selling the object.
+	 * @param purchase Purchaseable. The object being sold to the shop.
+	 * @return String. A description of the sell.
 	 */
 	public String sellPurchaseable(Player player, Purchaseable purchase) {
 		player.setGold(player.getGold() + purchase.getSellPrice());

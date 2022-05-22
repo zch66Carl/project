@@ -12,7 +12,7 @@ public class Start {
 	/**
 	 * The entry point to the command line application, takes input from the command line, setting up the GameEnvironment entity and
 	 * then passses off the GameEnvironment to Main.
-	 * @param args command line arguments (unused)
+	 * @param args String[]. Command line arguments (unused).
 	 */
 	public static void main(String[] args) {
 		GameEnvironment env = new GameEnvironment();

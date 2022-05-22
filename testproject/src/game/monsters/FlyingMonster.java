@@ -19,8 +19,8 @@ public class FlyingMonster extends Monster {
 	
 	/**
 	 * Calls the constructor of the base Monster class, and then initializes isFlying and adds the fly attack string.
-	 * @param name The monster's name.
-	 * @param startLevel The monster's starting level.
+	 * @param name String. The monster's name.
+	 * @param startLevel int. The monster's starting level.
 	 */
 	public FlyingMonster(String name, int startLevel) {
 		super(name, startLevel);
@@ -30,7 +30,7 @@ public class FlyingMonster extends Monster {
 	
 	/**
 	 * Generates a random name for FlyingMonster type monsters.
-	 * @return A random name for FlyingMonster
+	 * @return String. A random name for a FlyingMonster.
 	 */
 	public static String getRandomName() {
 		Random rand = new Random();
@@ -95,7 +95,7 @@ public class FlyingMonster extends Monster {
 	
 	/**
 	 * Set's isFlying to true and returns a string description of the move.
-	 * @return A string describing the monster flying.
+	 * @return String. A description of the monster flying.
 	 */
 	private String fly() {
 		isFlying=true;

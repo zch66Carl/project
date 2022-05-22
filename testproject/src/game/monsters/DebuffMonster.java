@@ -13,8 +13,8 @@ public class DebuffMonster extends Monster {
 	
 	/**
 	 * Calls the Monster constructor, and then adds the attack string of the debuff attack.
-	 * @param name The monsters name.
-	 * @param startLevel The monster's starting level.
+	 * @param name String. The monsters name.
+	 * @param startLevel int. The monster's starting level.
 	 */
 	public DebuffMonster(String name, int startLevel) {
 		super(name, startLevel);
@@ -23,7 +23,7 @@ public class DebuffMonster extends Monster {
 	
 	/**
 	 * Generates a random name for this type of monster, using the base Monster descriptives and the DebuffMonster types strings.
-	 * @return A random name for a DebufMonster
+	 * @return String. A random name for a DebuffMonster
 	 */
 	public static String getRandomName() {
 		Random rand = new Random();
@@ -50,8 +50,8 @@ public class DebuffMonster extends Monster {
 	
 	/**
 	 * Applies a debuff to the enemy for 3 turns of a third of this monster's attack damage.
-	 * @param enemy The enemy Monster to apply the debuff to.
-	 * @return A string describing the debuff.
+	 * @param enemy Monster. The enemy Monster to apply the debuff to.
+	 * @return String. A description of the debuff attack.
 	 */
 	private String debuff(Monster enemy) {
 		enemy.addDamageBuff(-getTotalDamage()/3, 3);

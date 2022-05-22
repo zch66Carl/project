@@ -12,7 +12,7 @@ public class Main {
 	 * Runs each day, displaying information to the player, performing pre day logic, post day logic and within each day 
 	 * taking input to decide which action to take and delegating each action to other classes e.g. ShopCommandLine.
 	 * Once all days have been run, the GameOverCommandLine is run.
-	 * @param env The GameEnvironment entity.
+	 * @param env GameEnvironment. The game environment.
 	 */
 	public void run(GameEnvironment env) {
 		while(env.getCurDay() < env.getNumDays()) {

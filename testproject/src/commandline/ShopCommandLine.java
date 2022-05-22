@@ -16,8 +16,8 @@ public class ShopCommandLine {
 	/**
 	 * Command line interface for selling an item to the shop, the player's items are displayed and the player is prompted to return
 	 * to the prievious menu or choose an item to sell.
-	 * @param pla The Player entity.
-	 * @param shop The Shop entity.
+	 * @param pla Player. The player selling an item.
+	 * @param shop Shop. The shop object.
 	 */
 	private void sellItem(Player pla, Shop shop) {
 		ArrayList<Item> inv = pla.getInventory();
@@ -36,8 +36,8 @@ public class ShopCommandLine {
 	/**
 	 * Command line interface for selling a monster to the shop, the player's monster's are displayed and the player is prompted to
 	 * return to the prievious menu or choose a monster to sell.
-	 * @param pla The Player entity.
-	 * @param shop The Shop entity.
+	 * @param pla Player. The player selling an monster.
+	 * @param shop Shop. The shop object.
 	 */
 	private void sellMonster(Player pla, Shop shop) {
 		ArrayList<Monster> team = pla.getTeam();
@@ -56,8 +56,8 @@ public class ShopCommandLine {
 	
 	/**
 	 * Command line interface to choose to sell an item, monster or return back to the shop.
-	 * @param pla The Player entity.
-	 * @param shop The Shop enity.
+	 * @param pla Player. The player selling an item.
+	 * @param shop The shop object.
 	 */
 	private void sell(Player pla, Shop shop) {
 		IO.textOut("Enter 0 to return to shop, 1 to sell an item or 2 to sell a monster.");
@@ -70,7 +70,7 @@ public class ShopCommandLine {
 	/**
 	 * Command line interface for the shop, displaying the player's current gold and the shop's stock, and prompting the user to 
 	 * return to the prievious menu, choose an item to buy, or sell one of their own items or monsters.
-	 * @param env The GameEnvironment entity.
+	 * @param env GameEnvironment. The game environment.
 	 */
 	void run(GameEnvironment env) {
 		Shop shop = env.getShop();

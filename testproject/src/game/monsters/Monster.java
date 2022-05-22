@@ -113,8 +113,8 @@ public class Monster implements Purchaseable{
 	/**
 	 * Constructs the Monster, setting the name, level, and then the initial damage, maxHealth and price based on that level.
 	 * Also initializes ArrayList's like persitenDamage and initializes the xp to 0.
-	 * @param name The monster's name.
-	 * @param startLevel The level this monster starts at (should be between 0 and 24 but is set as such if out of range).
+	 * @param name String. The monster's name.
+	 * @param startLevel int. The level this monster starts at (should be between 0 and 24 but is set as such if out of range).
 	 */
 	public Monster(String name, int startLevel){
 		this.name=name;
@@ -145,7 +145,7 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * A static method generating a random name using the descriptives and types arrays.
-	 * @return A random name for this type of monster.
+	 * @return String. A random name for a base class monster.
 	 */
 	public static String getRandomName() {
 		Random rand = new Random();
@@ -154,7 +154,7 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Simple setter for wasActiveDuringBattle
-	 * @param newBool the new value of wasActiveDuringBattle
+	 * @param newBool boolean. The new value of wasActiveDuringBattle.
 	 */
 	public void setWasActiveDuringBattle(boolean newBool) {
 		wasActiveDuringBattle = newBool;
@@ -172,7 +172,7 @@ public class Monster implements Purchaseable{
 	/**
 	 * Checks if there is sufficient xp to reach the next level, and if so sets xp back to zero, increases the level (if not at maxLevel),
 	 * and increases damage, maxHealth, and price accordingly.
-	 * @return null if no level up occurs, else a string describing the level up and new damage and maxHealth values.
+	 * @return String. Null if no level up occurs, else a description of the level up and new damage and maxHealth values.
 	 */
 	public String levelUpCheck() {
 			if(xp < xpRequired[level]) return null;
@@ -197,7 +197,7 @@ public class Monster implements Purchaseable{
 	}
 	/**
 	 * Simple setter for the monster's name.
-	 * @param newName the new name of the monster.
+	 * @param newName String. The new name of the monster.
 	 */
 	public void setName(String newName) {
 		name=newName;
@@ -205,7 +205,7 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Get's the monster's base damage, this should only be used for display purpases as for attacks the getTotalDamage() function should be used.
-	 * @return the base damage of the monster.
+	 * @return int. The base damage of the monster.
 	 */
 	public int getDamage() {
 		return damage;
@@ -213,7 +213,7 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Simple getter for maxHeatlh.
-	 * @return the maxHealth of the monster.
+	 * @return int. The maxHealth of the monster.
 	 */
 	public int getMaxHealth() {
 		return maxHealth;
@@ -221,7 +221,7 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Simple getter for the monster's current health.
-	 * @return the monster's current health
+	 * @return int. The monster's current health
 	 */
 	public int getHealth() {
 		return health;
@@ -242,7 +242,7 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Returns the names of the monster's attacks in an ArrayList, for display and player input purpases.
-	 * @return the ArrayList of attack name strings.
+	 * @return ArrayList<String>. A list of attack names.
 	 */
 	public ArrayList<String> getAttackStrings(){
 		return attacks;
@@ -250,7 +250,7 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Sums up all the currently active damage buff's or debuffs.
-	 * @return the total damage buff to this monster.
+	 * @return int. The total damage buff to this monster.
 	 */
 	private int getDamageBuff() {
 		int dam = 0;
@@ -259,8 +259,8 @@ public class Monster implements Purchaseable{
 	}
 	/**
 	 * Adds a damage buff to this monster, taking a damage amount and duration.
-	 * @param dam The increase or decrease in damage for this buff.
-	 * @param dur The duration in turns of this buff.
+	 * @param dam int. The increase or decrease in damage for this buff.
+	 * @param dur int. The duration in turns of this buff.
 	 */
 	public void addDamageBuff(int dam, int dur) {
 		damageBuffs.add(dam);
@@ -270,7 +270,7 @@ public class Monster implements Purchaseable{
 	/**
 	 * Gets the total damage of this monster, accounting for the base damage and any buffs. This is the function that should be used
 	 * for all attacks.
-	 * @return The total damage of this monster.
+	 * @return int. The total damage of this monster.
 	 */
 	public int getTotalDamage() {
 		int dam = damage + getDamageBuff();
@@ -280,8 +280,8 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Deals damage to this monster, rendering them fainted if health goes to 0 or below, returns a message summarising the effects.
-	 * @param damageDealt The damage to deal to this monster.
-	 * @return A string describing the effects of the damage (damage increase and if fainted it describes the faint).
+	 * @param damageDealt int. The damage to deal to this monster.
+	 * @return String. A description of the effects of the damage (damage increase and if fainted it describes the faint).
 	 */
 	public String dealDamageToSelf(int damageDealt) {
 		String ret = new String();
@@ -298,9 +298,9 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Adds a persistent damage attack to this monster, to be dealt at the start of each turn for a certain duration.
-	 * @param damageDealtPerTurn The damage to deal per turn.
-	 * @param duration The duration for which this attack lasts.
-	 * @return A string describing the attack.
+	 * @param damageDealtPerTurn int. The damage to deal per turn.
+	 * @param duration int. The duration for which this attack lasts.
+	 * @return String. A description of the attack.
 	 */
 	public String dealPersistentDamageToSelf(int damageDealtPerTurn, int duration) {
 		persistentDamage.add(damageDealtPerTurn);
@@ -310,7 +310,7 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Heals by a certain amount.
-	 * @param healAmount The amount to heal by.
+	 * @param healAmount int. The amount to heal by.
 	 */
 	public void heal(int healAmount) {
 		if(!isAwake) return;
@@ -319,7 +319,7 @@ public class Monster implements Purchaseable{
 	}
 	/**
 	 * Returns if the monster is awake or not.
-	 * @return Whether or not the monster is awake.
+	 * @return boolean. Whether or not the monster is awake.
 	 */
 	public boolean isAwake() {
 		if(health<=0) isAwake = false;
@@ -330,7 +330,7 @@ public class Monster implements Purchaseable{
 	/**
 	 * Carries out necersary logic to perform before a turn, such as dealing persistent damage, and removing damage buffs and persitent
 	 * damage attacks that have run out of duration. More actions may be performed by subclass monsters.
-	 * @return An ArrayList of String messages summarising the actions performed.
+	 * @return ArrayList<String>. A list messages summarising the actions performed.
 	 */
 	public ArrayList<String> preTurnLogic() {
 		ArrayList<String> ret = new ArrayList<String>();
@@ -366,9 +366,9 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Makes a move based on an int move, for the base Monster class there is only one move, 0, which is a basic attack.
-	 * @param move The move to perform (should be an index of attack strings)
-	 * @param enemy The enemy Monster to perform the move against.
-	 * @return A message string summarising the move for display purpases.
+	 * @param move int. The move to perform (should be an index of attack strings)
+	 * @param enemy Monster. The enemy monster to perform the move against.
+	 * @return String. A message summarising the move for display purpases.
 	 */
 	public String makeMove(int move, Monster enemy) {
 		if(move == 0) return enemy.dealDamageToSelf(getTotalDamage());
@@ -377,7 +377,7 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Same as makeMove, but makes a random move instead of taking a move integer to determine the move. Used for the non player monsters.
-	 * @param enemy The enemy Monster
+	 * @param enemy Monster. The enemy monster
 	 */
 	public String makeRandomMove(Monster enemy) {
 		return enemy.dealDamageToSelf(getTotalDamage());
@@ -414,7 +414,7 @@ public class Monster implements Purchaseable{
 	
 	/**
 	 * Like to string but with only the most basic info.
-	 * @return A basic String representation of Monster.
+	 * @return String. A basic representation of Monster.
 	 */
 	public String basicStr() {
 		return String.format("%s, health: %s, damage: %s, level: %s.", name, maxHealth, damage, level);

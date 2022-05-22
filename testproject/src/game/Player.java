@@ -40,10 +40,10 @@ public class Player {
 	/**
 	 * The constructor takes a name, initial gold amount, initial team and inventory. It also initializes the score and 
 	 * active monster index to zero.
-	 * @param name The player's name.
-	 * @param gold The player's initial gold.
-	 * @param team The player's initial team.
-	 * @param inventory The player's initial inventory.
+	 * @param name String. The player's name.
+	 * @param gold int. The player's initial gold.
+	 * @param team ArrayList<Monster> The player's initial team.
+	 * @param inventory ArrayList<Item> The player's initial inventory.
 	 */
 	public Player(String name, int gold, ArrayList<Monster> team, ArrayList<Item> inventory) {
 		this.name=name;
@@ -55,8 +55,8 @@ public class Player {
 	}
 	/**
 	 * Constructor with empty team and inventory.
-	 * @param name The player's name
-	 * @param gold The player's starting gold.
+	 * @param name String. The player's name
+	 * @param gold int. The player's starting gold.
 	 */
 	public Player(String name, int gold) {
 		this(name, gold, new ArrayList<Monster>(), new ArrayList<Item>());
@@ -64,8 +64,8 @@ public class Player {
 	
 	/**
 	 * A static method determining if the given string is a valid name (3-15 characters, no special characters).
-	 * @param potentialName The name to test.
-	 * @return A boolean, true if the name is valid, false if not.
+	 * @param potentialName String. The name to test.
+	 * @return boolean. True if the name is valid, false if not.
 	 */
 	public static boolean isValidName(String potentialName) {
 		if(potentialName.length()>=3 && potentialName.length()<=15) {
@@ -80,14 +80,14 @@ public class Player {
 	
 	/**
 	 * Simple setter for the player's name.
-	 * @param newName The new name.
+	 * @param newName String. The new name of this player.
 	 */
 	public void setName(String newName) {
 		name = newName;
 	}
 	/**
 	 * A simple getter for the player's name.
-	 * @return The player's name.
+	 * @return String. The player's name.
 	 */
 	public String getName() {
 		return name;
@@ -95,14 +95,14 @@ public class Player {
 	
 	/**
 	 * Simple setter for the player's gold.
-	 * @param gold The new amount of gold.
+	 * @param gold int. The new amount of gold.
 	 */
 	public void setGold(int gold) {
 		this.gold = gold;
 	}
 	/**
 	 * A simple getter for the player's gold.
-	 * @return The player's amount of gold.
+	 * @return int. The player's amount of gold.
 	 */
 	public int getGold() {
 		return gold;
@@ -110,7 +110,7 @@ public class Player {
 	
 	/**
 	 * Simple getter for the player's score.
-	 * @return The player's score.
+	 * @return int. The player's score.
 	 */
 	public int getScore() {
 		return score;
@@ -118,7 +118,7 @@ public class Player {
 	
 	/**
 	 * Simple getter for the player's team.
-	 * @return The ArrayList of the player's monsters.
+	 * @return ArrayList<Monster>. A list of the monsters in the player's team.
 	 */
 	public ArrayList<Monster> getTeam() {
 		return team;
@@ -126,7 +126,7 @@ public class Player {
 	
 	/**
 	 * Simple getter for the player's inventory.
-	 * @return The ArrayList of the player's items.
+	 * @return ArrayList<Item>. A list of the items in the player's inventory.
 	 */
 	public ArrayList<Item> getInventory() {
 		return inventory;
@@ -134,8 +134,8 @@ public class Player {
 	
 	/**
 	 * Uses an item on the given monster, removing the item from the invenventory once done.
-	 * @param item The item to use.
-	 * @param monster The Monster the item should be used on.
+	 * @param item Item. The item to use.
+	 * @param monster Monster. The Monster the item should be used on.
 	 */
 	public void useItem(Item item, Monster monster) {
 		inventory.remove(item);
@@ -145,7 +145,7 @@ public class Player {
 	/**
 	 * Sets the active monster index and marks that monster as active during battle, as such this should be used even within the Player
 	 * class instead of setting activeMonsterIndex directly.
-	 * @param index The new index of the active monster.
+	 * @param index int. The new index of the active monster.
 	 */
 	public void setActiveMonsterIndex(int index) {
 		if(index >= team.size()) index = team.size()-1;
@@ -157,7 +157,7 @@ public class Player {
 	
 	/**
 	 * Filters the monsters in the team to return the ones which are awake and aren't the currently active monster.
-	 * @return An ArrayList of Monster, the monsters in the team which may be switched to.
+	 * @return ArrayList<Monster>. The monsters in the team which may be switched to.
 	 */
 	public ArrayList<Monster> getSwitchableMonsters(){
 		ArrayList<Monster> options = new ArrayList<Monster>();
@@ -171,14 +171,14 @@ public class Player {
 	
 	/**
 	 * Adds a monster to the team.
-	 * @param monster The monster to add.
+	 * @param monster Monster. The monster to add.
 	 */
 	public void addMonster(Monster monster) {
 		team.add(monster);
 	}
 	/**
 	 * remove a monster from the team.
-	 * @param monster The monster to remove.
+	 * @param monster Monster. The monster to remove.
 	 */
 	public void removeMonster(Monster monster) {
 		team.remove(monster);
@@ -186,14 +186,14 @@ public class Player {
 	
 	/**
 	 * Adds an Item to the inventory.
-	 * @param item The item to add to the inventory.
+	 * @param item Item. The item to add to the inventory.
 	 */
 	public void addItem(Item item) {
 		inventory.add(item);
 	}
 	/**
 	 * Removes an Item from the inventory.
-	 * @param item The item to remove.
+	 * @param item Item. The item to remove.
 	 */
 	public void removeItem(Item item) {
 		inventory.remove(item);
@@ -201,7 +201,7 @@ public class Player {
 	
 	/**
 	 * Gets the currently active monster.
-	 * @return The currently active Monster.
+	 * @return Monster. The currently active monster.
 	 */
 	public Monster getActiveMonster() {
 		return team.get(activeMonsterIndex);
@@ -209,7 +209,7 @@ public class Player {
 	
 	/**
 	 * Sets the active monster index to the index of the given monster.
-	 * @param monst The Monster to set the active monster to.
+	 * @param monst Monster. The monster to set the active monster to.
 	 */
 	public void setActiveMonster(Monster monst) {
 		setActiveMonsterIndex(team.indexOf(monst));
@@ -218,7 +218,7 @@ public class Player {
 	/**
 	 * A function to check whether the team can still fight and set the active monster variable to the first awake monster
 	 * if the current active monster is fainted.
-	 * @return Returns true if there is at least one monster in the team still able to fight.
+	 * @return boolean. True if there is at least one monster in the team still able to fight.
 	 */
 	public boolean checkIfActiveMonster() {
 		if(team.size()==0) return false;
@@ -237,7 +237,7 @@ public class Player {
 	
 	/**
 	 * Runs preTurnLogic() for each monster in the team, and returns all the messages from the calls. (for status effects and stuff).
-	 * @return An ArrayList of string messages describing any actions taken pre turn, for displaying to the player.
+	 * @return ArrayList<String>. A list of messages describing any actions taken pre turn, for displaying to the player.
 	 */
 	public ArrayList<String> preTurnLogic(){
 		ArrayList<String> ret = new ArrayList<String>();
@@ -272,9 +272,9 @@ public class Player {
 	/**
 	 * Rewards each monster in the team with xp, and rewards the player with an increased score, and if the battle was not a wild
 	 * battle, also rewards the player with gold.
-	 * @param day The current day.
-	 * @param diff The difficulty.
-	 * @param wasWildBattle Whether or not the battle was a wild battle.
+	 * @param day int. The current day.
+	 * @param diff int. The difficulty.
+	 * @param wasWildBattle boolean. Whether or not the battle was a wild battle.
 	 */
 	public void rewardPostBattle(int day, int diff, boolean wasWildBattle) {
 		for(Monster monst : team) {
@@ -287,11 +287,11 @@ public class Player {
 	}
 	
 	/**
-	 * Randomly decides which move to make, 
-	 * @param enemy The enemy Monster, to make the move against if an attack is chosen. If an item may be used, there is a 1/5 chance
+	 * Randomly decides which move to make, If an item may be used, there is a 1/5 chance
 	 * an item will be used. There is a 1/15 chance the currently active monster is swapped out. If neither of these actions take place
 	 * then the currently active monster will make a random attack against the enemy using Monster.makeRandomMove(enemy).
-	 * @return A string describing the move made.
+	 * @param enemy Monster. The enemy monster, to make the move against if an attack is chosen. 
+	 * @return String. A description of the move made.
 	 */
 	public String makeRandomMove(Monster enemy) {
 		Random rand = new Random();

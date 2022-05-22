@@ -15,8 +15,8 @@ public class ItemBuilder {
 	
 	/**
 	 * Creates and returns a full revive item.
-	 * @param price The price of this item.
-	 * @return The desired item.
+	 * @param price int. The price of this item.
+	 * @return Item. The desired revive item.
 	 */
 	public static Item createRevive(int price) {
 		Item item = new Item("Revive Potion", price);
@@ -26,9 +26,9 @@ public class ItemBuilder {
 	
 	/**
 	 * Creates and returns a healing item of the desired price and size.
-	 * @param price The price of the item.
-	 * @param size The size of the heal.
-	 * @return The desired item.
+	 * @param price int. The price of the item.
+	 * @param size ItemBuilder.ItemSize. The size of the heal.
+	 * @return Item. The desired healing item.
 	 */
 	public static Item createHeal(int price, ItemSize size) {
 		String sizeStr = (size == ItemSize.SMALL ? "Small" : (size == ItemSize.MEDIUM ? "Medium" : "Large"));
@@ -40,9 +40,9 @@ public class ItemBuilder {
 	
 	/**
 	 * Creates and returns a damage buff item of the desired price and size.
-	 * @param price The price of the item.
-	 * @param size The size of the damage buff.
-	 * @return The desired item.
+	 * @param price int. The price of the item.
+	 * @param size ItemBuilder.ItemSize. The size of the damage buff.
+	 * @return Item. The desired damage buff item.
 	 */
 	public static Item createBuff(int price, ItemSize size) {
 		String sizeStr = (size == ItemSize.SMALL ? "Small" : (size == ItemSize.MEDIUM ? "Medium" : "Large"));

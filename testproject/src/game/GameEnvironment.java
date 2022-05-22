@@ -56,14 +56,14 @@ public class GameEnvironment {
 	
 	/**
 	 * Setter for the player.
-	 * @param newPlayer The new player.
+	 * @param newPlayer Player. The new player.
 	 */
 	public void setPlayer(Player newPlayer) {
 		player = newPlayer;
 	}
 	/**
 	 * Simple getter for player.
-	 * @return The Player entity.
+	 * @return Player. The player contained in the game environment.
 	 */
 	public Player getPlayer() {
 		return player;
@@ -71,7 +71,7 @@ public class GameEnvironment {
 
 	/**
 	 * Sets the number of days.
-	 * @param numDays The new number of days.
+	 * @param numDays int. The number of days the game should run.
 	 */
 	public void setNumDays(int numDays) {
 		this.numDays = numDays;
@@ -79,7 +79,7 @@ public class GameEnvironment {
 	}
 	/**
 	 * Simple getter for the number of days.
-	 * @return The number of days the game should run.
+	 * @return int. The number of days the game should run.
 	 */
 	public int getNumDays() {
 		return numDays;
@@ -95,7 +95,7 @@ public class GameEnvironment {
 	
 	/**
 	 * Simple setter for the difficulty.
-	 * @param newDiff The new difficulty.
+	 * @param newDiff int. The new difficulty.
 	 */
 	public void setDifficulty(int newDiff) {
 		difficulty = newDiff;
@@ -104,7 +104,7 @@ public class GameEnvironment {
 	}
 	/**
 	 * Simple getter for difficulty.
-	 * @return The difficulty (1 to 3)
+	 * @return int. The difficulty (1 to 3)
 	 */
 	public int getDifficulty() {
 		return difficulty;
@@ -112,7 +112,7 @@ public class GameEnvironment {
 	
 	/**
 	 * Simple getter for the shop.
-	 * @return The Shop entity.
+	 * @return Shop. The shop.
 	 */
 	public Shop getShop() {
 		return shop;
@@ -120,21 +120,21 @@ public class GameEnvironment {
 	
 	/**
 	 * Simple getter for the wildMonster.
-	 * @return The wild monster Monster, null if there is no wild battle on the current day.
+	 * @return Monster. The wild monster, null if there is no wild battle on the current day.
 	 */
 	public Monster getWildBattleMonster() {
 		return wildMonster;
 	}
 	/**
 	 * Simple setter for the wild battle monster.
-	 * @param newMonst The new Monster (or null).
+	 * @param newMonst Monster. The new monster (or null).
 	 */
 	public void setWildBattleMonster(Monster newMonst) {
 		wildMonster = newMonst;
 	}
 	/**
 	 * Simple getter for the battles on the current day.
-	 * @return An ArrayList of Player, the enemy players on the current day.
+	 * @return ArrayList<Player>. The enemy players on the current day.
 	 */
 	public ArrayList<Player> getBattles(){
 		return battles;
@@ -156,8 +156,7 @@ public class GameEnvironment {
 	}
 
 	/**
-	 * Takes a new day value and updates the day, refreshes the player team, refreshes the stock of the shop, and updates the battles.
-	 * @param day The new day value.
+	 * Increments the day, refreshes the player team, refreshes the stock of the shop, and updates the battles.
 	 */
 	public void preDayLogic() {
 		curDay++;
@@ -169,7 +168,7 @@ public class GameEnvironment {
 	/**
 	 * Carries out all events after each day ends, checking for level ups for each monster in the player's team, and checking for
 	 * the random events of monsters leaving or joining the player's team. Returns messages describing the events that took place.
-	 * @return An ArrayList of String messages detailing the random events that took place.
+	 * @return ArrayList<String>. An array of messages detailing the random events that took place.
 	 */
 	public ArrayList<String> postDayLogic() {
 		ArrayList<String> ret = new ArrayList<String>();

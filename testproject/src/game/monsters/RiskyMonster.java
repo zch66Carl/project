@@ -13,8 +13,8 @@ public class RiskyMonster extends Monster {
 	
 	/**
 	 * Calls the Monster constructor, and then adds the attack string of the one shot attack.
-	 * @param name The monsters name.
-	 * @param startLevel The monster's starting level.
+	 * @param name String. The monsters name.
+	 * @param startLevel int. The monster's starting level.
 	 */
 	public RiskyMonster(String name, int startLevel) {
 		super(name, startLevel);
@@ -51,8 +51,8 @@ public class RiskyMonster extends Monster {
 	
 	/**
 	 * Has a 50% chance of one shotting the enemy and a 50% chance of oneshotting itself.
-	 * @param enemy The enemy Monster to apply the debuff to.
-	 * @return A string describing the attack, and who it hit.
+	 * @param enemy Monster. The enemy monster to attack.
+	 * @return String. A description of the attack, and who it hit.
 	 */
 	private String oneShot(Monster enemy) {
 		Random rand = new Random();

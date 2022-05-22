@@ -9,7 +9,7 @@ import game.Player;
 public class GameOverCommandLine {
 	/**
 	 * Displays the final game information (length, gold, score).
-	 * @param env The GameEnvironment entity.
+	 * @param env GameEnvironment. The game environment.
 	 */
 	void run(GameEnvironment env) {
 		IO.textOut("GAME OVER!");
