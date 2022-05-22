@@ -31,7 +31,7 @@ public class ScreenManager {
 		launchMainScreen();
 	}
 	public void launchBattleScreen(Player battle) {
-		BattleScreen battleWindow = new BattleScreen(this, battle);
+		BattleScreen battleWindow = new BattleScreen(this, false, battle);
 	}
 	public void closeBattleScreen(BattleScreen battleWindow) {
 		battleWindow.closeWindow();
