@@ -124,13 +124,10 @@ public class SetupScreen {
 		Monster monsterTwo = Generation.generatePlayerMonster(1, 1);
 		Monster monsterThree = Generation.generatePlayerMonster(1, 1);
 		JComboBox startingMonsterSelection = new JComboBox();
-		startingMonsterSelection.setModel(new DefaultComboBoxModel(new Monster[] {monsterOne,monsterTwo,monsterThree}));
+		startingMonsterSelection.setModel(new DefaultComboBoxModel(new String[] {monsterOne.basicStr(),monsterTwo.basicStr(),monsterThree.basicStr()}));
 		startingMonsterSelection.setSelectedIndex(0);
 		startingMonsterSelection.setBounds(243, 119, 546, 23);
 		frame.getContentPane().add(startingMonsterSelection);
-		
-		Monster selected = new Monster("Default Monster", 1);
-		selected = (Monster) startingMonsterSelection.getSelectedItem();
 		
 		JLabel daysInfo = new JLabel("(Number of days the game will last)");
 		daysInfo.setFont(new Font("SimSun", Font.PLAIN, 14));
@@ -154,7 +151,8 @@ public class SetupScreen {
 				if(Player.isValidName(playerName)) {
 					env.setNumDays(daysSelection.getSelectedIndex()+5);
 					ArrayList<Monster> team = new ArrayList<Monster>();
-					team.add((Monster) startingMonsterSelection.getSelectedItem());
+					int monstInd = startingMonsterSelection.getSelectedIndex();
+					team.add(monstInd==0 ? monsterOne : (monstInd==1 ? monsterTwo : monsterThree));
 					
 					int diff = difficultySelection.getSelectedIndex()+1;
 					int gold = (3 - diff) * 15; //15 on normal, 30 on easy, 0 on hard.
@@ -177,6 +175,7 @@ public class SetupScreen {
 		frame.getContentPane().add(startGameButton);
 		
 		JTextPane difficultyInfo = new JTextPane();
+		difficultyInfo.setEditable(false);
 		difficultyInfo.setText("On higher difficulties, you will earn less gold, and face harder opponents.");
 		difficultyInfo.setBounds(394, 183, 390, 43);
 		frame.getContentPane().add(difficultyInfo);

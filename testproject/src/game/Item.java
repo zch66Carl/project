@@ -144,4 +144,5 @@ public class Item implements Purchaseable{
 		if(isHeal()) return name + ", heal amount: " + healAmount + ".";
 		return name + ", damage buff: " + buffAmount + ".";
 	}
+
 }

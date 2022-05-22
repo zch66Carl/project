@@ -32,6 +32,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ListModel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 
 /**
  * Shop screen allows player to buy and sell items/monsters.
@@ -45,6 +46,7 @@ public class ShopScreen {
 	private JList<String> inventoryList;
 	private JList<String> shopList;
 	private JLabel currentGold;
+	private JTextPane stockPrices;
 	
 	private ScreenManager scrMan;
 	private GameEnvironment env;
@@ -106,9 +108,12 @@ public class ShopScreen {
 		
 		
 		ArrayList<String> listing = new ArrayList<String>();
+		String prices = "";
 		for(int i=0; i<9; i++) {
 			if(shop.getStock()[i] != null) {
-				listing.add(shop.getStock()[i].toString() + " Price: " + shop.getStock()[i].getPrice());
+				if(i<3) listing.add(((Monster)shop.getStock()[i]).basicStr());
+				else listing.add(shop.getStock()[i].toString());
+				prices += shop.getStock()[i].getPrice() + "\n";
 			}
 		}
 		String[] stockList = new String[listing.size()];
@@ -116,6 +121,7 @@ public class ShopScreen {
 			stockList[i] = listing.get(i);
 		}
 		shopList.setListData(stockList);
+		stockPrices.setText(prices);
 		
 		
 		currentGold.setText(Integer.toString(env.getPlayer().getGold()));
@@ -165,7 +171,7 @@ public class ShopScreen {
 		
 		
 		JLabel stocklabel = new JLabel("Stock");
-		stocklabel.setBounds(31, 45, 54, 15);
+		stocklabel.setBounds(31, 59, 54, 15);
 		frame.getContentPane().add(stocklabel);
 		
 		JLabel sellItemLabel = new JLabel("Item");
@@ -189,7 +195,7 @@ public class ShopScreen {
 		DefaultListModel<String> shopListModel = new DefaultListModel<>();
 		shopList = new JList<>(shopListModel);
 		shopList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		shopList.setBounds(31, 86, 702, 220);
+		shopList.setBounds(31, 86, 528, 220);
 		frame.getContentPane().add(shopList);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -226,7 +232,7 @@ public class ShopScreen {
 				update();
 			}
 		});
-		buyButton.setBounds(267, 47, 161, 23);
+		buyButton.setBounds(277, 55, 161, 23);
 		frame.getContentPane().add(buyButton);
 		
 		
@@ -265,6 +271,16 @@ public class ShopScreen {
 		});
 		sellMonsterButton.setBounds(267, 438, 161, 23);
 		frame.getContentPane().add(sellMonsterButton);
+		
+		JLabel priceLabel = new JLabel("Price");
+		priceLabel.setBounds(596, 59, 54, 15);
+		frame.getContentPane().add(priceLabel);
+		
+		stockPrices = new JTextPane();
+		stockPrices.setFont(new Font("Dialog", Font.BOLD, 13));
+		stockPrices.setEditable(false);
+		stockPrices.setBounds(573, 86, 160, 220);
+		frame.getContentPane().add(stockPrices);
 		
 		
 	}

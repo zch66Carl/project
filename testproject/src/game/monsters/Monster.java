@@ -411,4 +411,12 @@ public class Monster implements Purchaseable{
 	public String toString() {
 		return String.format("%s, health: %s/%s, damage: %s/%s, level: %s, %s", name, health, maxHealth, getTotalDamage(), damage, level, isAwake ? "awake." : "fainted.");
 	}
+	
+	/**
+	 * Like to string but with only the most basic info.
+	 * @return A basic String representation of Monster.
+	 */
+	public String basicStr() {
+		return String.format("%s, health: %s, damage: %s, level: %s.", name, maxHealth, damage, level);
+	}
 }
