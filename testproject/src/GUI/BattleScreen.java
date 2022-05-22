@@ -137,13 +137,19 @@ public class BattleScreen {
 				wildMonster.rest();
 				JOptionPane.showMessageDialog(frame, wildMonster.getName() + " joins your team!");
 				pla.addMonster(wildMonster);
-				//TODO: team size check
 				env.setWildBattleMonster(null);
 			}
 			else {
-				//TODO: remove the team battle from the array
+				JOptionPane.showMessageDialog(frame, "Have some gold.");
+				//TODO: REMOVE THE BATTLE FROM THE BATTLE ARRAY
 			}
 			pla.rewardPostBattle(env.getCurDay(), env.getDifficulty(), isWildBattle);
+			
+			if(pla.getTeam().size() > 4) {
+				finishedWindow();
+				scrMan.launchTeamScreen();
+				return;
+			}
 			
 			finishedWindow();
 			scrMan.launchMainScreen();
@@ -190,8 +196,10 @@ public class BattleScreen {
 		battleType.setText(isWildBattle ? "Wild Battle." : "Team Battle.");
 		playerMonsterName.setText(plaMonst.getName());
 		enemyMonsterName.setText(enemy.getName());
-		enemyHealthLabel.setText(enemy.getHealth() + "/" + enemy.getMaxHealth());
-		playerHealthLabel.setText(plaMonst.getHealth() + "/" + plaMonst.getMaxHealth());
+		String info = "Health: " + enemy.getHealth() + "/" + enemy.getMaxHealth() + ". Damage: " + enemy.getDamage() + "/" + enemy.getTotalDamage() + ".";
+		enemyHealthLabel.setText(info);
+		info = "Health: " + plaMonst.getHealth() + "/" + plaMonst.getMaxHealth() + ". Damage: " + plaMonst.getDamage() + "/" + plaMonst.getTotalDamage() + ".";
+		playerHealthLabel.setText(info);
 		
 		Item[] items = new Item[pla.getInventory().size()];
 		for(int i=0;i<items.length;i++) {
@@ -271,22 +279,22 @@ public class BattleScreen {
 				
 		playerMonsterName = new JLabel();
 		playerMonsterName.setIcon(null);
-		playerMonsterName.setBounds(185, 210, 60, 60);
+		playerMonsterName.setBounds(185, 210, 218, 60);
 		panel.add(playerMonsterName);
 		
 		enemyMonsterName = new JLabel();
 		enemyMonsterName.setIcon(null);
-		enemyMonsterName.setBounds(185, 46, 60, 60);
+		enemyMonsterName.setBounds(185, 46, 218, 60);
 		panel.add(enemyMonsterName);
 		
 		enemyHealthLabel = new JLabel();
 		enemyHealthLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		enemyHealthLabel.setBounds(143, 21, 54, 15);
+		enemyHealthLabel.setBounds(143, 21, 196, 15);
 		panel.add(enemyHealthLabel);
 				
 		playerHealthLabel = new JLabel();
 		playerHealthLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		playerHealthLabel.setBounds(143, 282, 54, 15);
+		playerHealthLabel.setBounds(143, 282, 196, 15);
 		panel.add(playerHealthLabel);
 		
 		

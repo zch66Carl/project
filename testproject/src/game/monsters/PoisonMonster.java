@@ -56,7 +56,9 @@ public class PoisonMonster extends Monster {
 	private String poison(Monster enemy) {
 		String ret = "";
 		ret += enemy.dealDamageToSelf(getTotalDamage()/2) + "\n";
-		ret += enemy.dealPersistentDamageToSelf(getTotalDamage()/5, 5);
+		int poison = getTotalDamage()/5;
+		if(poison==0) poison=1;
+		ret += enemy.dealPersistentDamageToSelf(poison, 5);
 		return ret;
 	}
 }
