@@ -194,6 +194,7 @@ public class BattleScreen {
 	private void updateItemUsableMonsters() {
 		try {
 			Item item = (Item) itemSelectionDropDownBox.getSelectedItem();
+			if(item==null) throw new RuntimeException("No selection.");
 			ArrayList<Monster> usableOn = item.getMonstersUsableOn(pla.getTeam());
 			Monster[] usableOnList = new Monster[usableOn.size()];
 			for(int i=0; i<usableOn.size(); i++) {
@@ -202,7 +203,8 @@ public class BattleScreen {
 			itemUsableMonsters.setModel(new DefaultComboBoxModel<Monster>(usableOnList));
 		}
 		catch(Exception exc) {
-			
+			Monster[] monsters = new Monster[0];
+			itemUsableMonsters.setModel(new DefaultComboBoxModel<Monster>(monsters));
 		}
 	}
 	
