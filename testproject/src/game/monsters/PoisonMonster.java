@@ -49,16 +49,16 @@ public class PoisonMonster extends Monster {
 	
 	/**
 	 * The poison attack, dealing half this monster's attack damage to the enemy, and then adding a persistent damage attack of 
-	 * one fifth of this monster's total damage, which lasts for five turns.
+	 * one half of this monster's total damage, which lasts for four turns.
 	 * @param enemy Monster. The enemy monster.
 	 * @return String. A description of the attack.
 	 */
 	private String poison(Monster enemy) {
 		String ret = "";
 		ret += enemy.dealDamageToSelf(getTotalDamage()/2) + "\n";
-		int poison = getTotalDamage()/5;
+		int poison = getTotalDamage()/2;
 		if(poison==0) poison=1;
-		ret += enemy.dealPersistentDamageToSelf(poison, 5);
+		ret += enemy.dealPersistentDamageToSelf(poison, 4);
 		return ret;
 	}
 }

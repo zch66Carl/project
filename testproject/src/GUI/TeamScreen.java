@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 /**
  * Screen that shows all monsters in the team and allows player to rename monster.
@@ -194,6 +195,12 @@ public class TeamScreen {
 		});
 		removeMonsterButton.setBounds(509, 390, 269, 43);
 		frame.getContentPane().add(removeMonsterButton);
+		
+		JTextPane reorderHelpText = new JTextPane();
+		reorderHelpText.setText("Select a monster, and reorder will move it to the top of your team.");
+		reorderHelpText.setEditable(false);
+		reorderHelpText.setBounds(366, 317, 125, 66);
+		frame.getContentPane().add(reorderHelpText);
 		monsterList.getSelectedValue();
 		
 	}

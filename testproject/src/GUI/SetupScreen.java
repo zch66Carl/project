@@ -176,8 +176,8 @@ public class SetupScreen {
 		
 		JTextPane difficultyInfo = new JTextPane();
 		difficultyInfo.setEditable(false);
-		difficultyInfo.setText("On higher difficulties, you will earn less gold, and face harder opponents.");
-		difficultyInfo.setBounds(394, 183, 390, 43);
+		difficultyInfo.setText("On higher difficulties, you will earn less gold, and face harder opponents. Warning: Hard difficulty is very difficult in the early days of the game.");
+		difficultyInfo.setBounds(394, 183, 390, 51);
 		frame.getContentPane().add(difficultyInfo);
 		
 		JButton howToPlayButton = new JButton("How To Play");
