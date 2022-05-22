@@ -163,16 +163,14 @@ public class BattleScreen {
 				return;
 			}
 			
-			finishedWindow();
-			scrMan.launchMainScreen();
+			scrMan.closeBattleScreen(this);
 		}
 		else {
 			if(isWildBattle) JOptionPane.showMessageDialog(frame, wildMonster.getName() + " eliminated your entire team! So Powerful");
 			else JOptionPane.showMessageDialog(frame, enemyTeam.getName() + " won!");
 			if(isWildBattle) wildMonster.rest();
 			else enemyTeam.refreshTeam();
-			finishedWindow();
-			scrMan.launchMainScreen();
+			scrMan.closeBattleScreen(this);
 		}
 	}
 	
@@ -180,8 +178,7 @@ public class BattleScreen {
 		pla.postBattle();
 		if(isWildBattle) wildMonster.rest();
 		else enemyTeam.refreshTeam();
-		finishedWindow();
-		scrMan.launchMainScreen();
+		scrMan.closeBattleScreen(this);
 	}
 	
 	void updateItemUsableMonsters() {

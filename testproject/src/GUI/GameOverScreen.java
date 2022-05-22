@@ -123,25 +123,37 @@ public class GameOverScreen {
 		JLabel daysCompletedLabel = new JLabel("Days Completed:");
 		daysCompletedLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		daysCompletedLabel.setFont(new Font("SimSun", Font.BOLD, 18));
-		daysCompletedLabel.setBounds(45, 208, 195, 42);
+		daysCompletedLabel.setBounds(45, 251, 195, 42);
 		frame.getContentPane().add(daysCompletedLabel);
 		
 		JLabel daysCompleted = new JLabel(Integer.toString(env.getCurDay()));
 		daysCompleted.setHorizontalAlignment(SwingConstants.CENTER);
 		daysCompleted.setFont(new Font("SimSun", Font.BOLD, 18));
-		daysCompleted.setBounds(421, 204, 195, 42);
+		daysCompleted.setBounds(421, 247, 195, 42);
 		frame.getContentPane().add(daysCompleted);
 		
 		JLabel scoreLabel = new JLabel("Score:");
 		scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		scoreLabel.setFont(new Font("SimSun", Font.BOLD, 18));
-		scoreLabel.setBounds(45, 260, 195, 42);
+		scoreLabel.setBounds(45, 303, 195, 42);
 		frame.getContentPane().add(scoreLabel);
 		
 		JLabel currentScore = new JLabel(Integer.toString(env.getPlayer().getScore()));
 		currentScore.setHorizontalAlignment(SwingConstants.CENTER);
 		currentScore.setFont(new Font("SimSun", Font.BOLD, 18));
-		currentScore.setBounds(421, 260, 195, 42);
+		currentScore.setBounds(421, 303, 195, 42);
 		frame.getContentPane().add(currentScore);
+		
+		JLabel spendGoldLabel = new JLabel("Spent Gold:");
+		spendGoldLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		spendGoldLabel.setFont(new Font("Dialog", Font.BOLD, 18));
+		spendGoldLabel.setBounds(45, 197, 195, 42);
+		frame.getContentPane().add(spendGoldLabel);
+		
+		JLabel spentGold = new JLabel(Integer.toString(env.getShop().getGoldSpent()));
+		spentGold.setHorizontalAlignment(SwingConstants.CENTER);
+		spentGold.setFont(new Font("Dialog", Font.BOLD, 18));
+		spentGold.setBounds(421, 193, 195, 42);
+		frame.getContentPane().add(spentGold);
 	}
 }

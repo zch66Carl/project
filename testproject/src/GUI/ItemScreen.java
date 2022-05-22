@@ -79,7 +79,7 @@ public class ItemScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel itemScreenLabel = new JLabel("<dynamic>'s inventory");
+		JLabel itemScreenLabel = new JLabel(env.getPlayer().getName() + "'s inventory");
 		itemScreenLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
 		itemScreenLabel.setBounds(277, 0, 171, 35);
 		frame.getContentPane().add(itemScreenLabel);
