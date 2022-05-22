@@ -218,7 +218,7 @@ public class BattleScreen {
 		battleType.setText(isWildBattle ? "Wild Battle." : ("Team Battle: " + enemyTeam.getName()));
 		playerMonsterName.setText(plaMonst.getName());
 		enemyMonsterName.setText(enemy.getName());
-		enemyTeamSizeLabel.setText("2/2 monsters remaining");
+		enemyTeamSizeLabel.setText("");
 		if(!isWildBattle) {
 			int enemyCount = 0;
 			for(Monster monst : enemyTeam.getTeam()) {
@@ -373,7 +373,7 @@ public class BattleScreen {
 		playerTitleLabel.setBounds(48, 223, 70, 15);
 		panel.add(playerTitleLabel);
 		
-		enemyTeamSizeLabel = new JLabel("");
+		enemyTeamSizeLabel = new JLabel("x/x monsters remaining.");
 		enemyTeamSizeLabel.setBounds(105, 36, 212, 15);
 		panel.add(enemyTeamSizeLabel);
 		
