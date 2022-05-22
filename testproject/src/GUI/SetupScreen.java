@@ -90,7 +90,7 @@ public class SetupScreen {
 		
 		JLabel welcomeMessage = new JLabel("Welcome to Monster Battles");
 		welcomeMessage.setFont(new Font("SimSun", Font.BOLD, 18));
-		welcomeMessage.setBounds(37, 10, 266, 43);
+		welcomeMessage.setBounds(37, 10, 470, 43);
 		frame.getContentPane().add(welcomeMessage);
 		
 		JLabel playerNameLabel = new JLabel("Please Enter Player Name:\r\n\r\n");
@@ -107,12 +107,12 @@ public class SetupScreen {
 		
 		JLabel daysLabel = new JLabel("Days:");
 		daysLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
-		daysLabel.setBounds(436, 70, 40, 29);
+		daysLabel.setBounds(425, 70, 40, 29);
 		frame.getContentPane().add(daysLabel);
 		
 		JComboBox daysSelection = new JComboBox();
 		daysSelection.setModel(new DefaultComboBoxModel(new String[] {"5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}));
-		daysSelection.setBounds(486, 73, 34, 23);
+		daysSelection.setBounds(472, 73, 71, 23);
 		frame.getContentPane().add(daysSelection);
 		
 		JLabel startingMonsterLabel = new JLabel("Choose starting monsters:");
@@ -132,10 +132,10 @@ public class SetupScreen {
 		Monster selected = new Monster("Default Monster", 1);
 		selected = (Monster) startingMonsterSelection.getSelectedItem();
 		
-		JLabel lblNewLabel_9 = new JLabel("(Number of days the game will last)");
-		lblNewLabel_9.setFont(new Font("SimSun", Font.PLAIN, 14));
-		lblNewLabel_9.setBounds(530, 77, 259, 15);
-		frame.getContentPane().add(lblNewLabel_9);
+		JLabel daysInfo = new JLabel("(Number of days the game will last)");
+		daysInfo.setFont(new Font("SimSun", Font.PLAIN, 14));
+		daysInfo.setBounds(549, 77, 240, 15);
+		frame.getContentPane().add(daysInfo);
 		
 		JLabel difficultyLabel = new JLabel("Select Difficulty:");
 		difficultyLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
@@ -176,9 +176,9 @@ public class SetupScreen {
 		startGameButton.setBounds(37, 283, 278, 85);
 		frame.getContentPane().add(startGameButton);
 		
-		JTextPane txtpnOnHigherDifficulties = new JTextPane();
-		txtpnOnHigherDifficulties.setText("On higher difficulties, you will earn less gold, and face harder opponents.");
-		txtpnOnHigherDifficulties.setBounds(394, 183, 390, 43);
-		frame.getContentPane().add(txtpnOnHigherDifficulties);
+		JTextPane difficultyInfo = new JTextPane();
+		difficultyInfo.setText("On higher difficulties, you will earn less gold, and face harder opponents.");
+		difficultyInfo.setBounds(394, 183, 390, 43);
+		frame.getContentPane().add(difficultyInfo);
 	}
 }

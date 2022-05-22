@@ -119,7 +119,7 @@ public class TeamScreen {
 				}
 			}
 		});
-		backButton.setBounds(77, 390, 132, 43);
+		backButton.setBounds(77, 390, 111, 43);
 		frame.getContentPane().add(backButton);
 		
 		DefaultListModel<Monster> monsterListModel = new DefaultListModel<>();
@@ -149,11 +149,11 @@ public class TeamScreen {
 
 			}
 		});
-		renameMonsterButton.setBounds(243, 390, 182, 43);
+		renameMonsterButton.setBounds(200, 390, 154, 43);
 		frame.getContentPane().add(renameMonsterButton);
 		
 		renameMonsterTxt = new JTextField();
-		renameMonsterTxt.setBounds(243, 357, 182, 21);
+		renameMonsterTxt.setBounds(200, 357, 154, 21);
 		frame.getContentPane().add(renameMonsterTxt);
 		renameMonsterTxt.setColumns(10);
 		
@@ -174,10 +174,10 @@ public class TeamScreen {
 				} 
 			}
 		});
-		reorderMonsterButton.setBounds(459, 390, 125, 43);
+		reorderMonsterButton.setBounds(366, 390, 125, 43);
 		frame.getContentPane().add(reorderMonsterButton);
 		
-		JButton removeMonsterButton = new JButton("Remove Monster");
+		JButton removeMonsterButton = new JButton("Remove Monster (Permanent)");
 		removeMonsterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -193,7 +193,7 @@ public class TeamScreen {
 				} 
 			}
 		});
-		removeMonsterButton.setBounds(615, 390, 152, 43);
+		removeMonsterButton.setBounds(509, 390, 269, 43);
 		frame.getContentPane().add(removeMonsterButton);
 		monsterList.getSelectedValue();
 		

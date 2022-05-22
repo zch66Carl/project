@@ -158,12 +158,12 @@ public class BattleScreen {
 			pla.rewardPostBattle(env.getCurDay(), env.getDifficulty(), isWildBattle);
 			
 			if(pla.getTeam().size() > 4) {
-				finishedWindow();
 				scrMan.launchTeamScreen();
-				return;
+				scrMan.justCloseBattleScreen(this);
 			}
-			
-			scrMan.closeBattleScreen(this);
+			else {
+				scrMan.closeBattleScreen(this);
+			}
 		}
 		else {
 			if(isWildBattle) JOptionPane.showMessageDialog(frame, wildMonster.getName() + " eliminated your entire team! So Powerful");

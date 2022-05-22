@@ -42,6 +42,9 @@ public class ScreenManager {
 		battleWindow.closeWindow();
 		launchMainScreen();
 	}
+	public void justCloseBattleScreen(BattleScreen battleWindow) {
+		battleWindow.closeWindow();
+	}
 	public void launchItemsScreen() {
 		ItemScreen itemsWindow = new ItemScreen(this);
 	}

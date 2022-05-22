@@ -152,14 +152,15 @@ public class MainScreen {
 					
 					String selection = (String) JOptionPane.showInputDialog(frame,"Choose a battle to fight:", "Battle Selection", JOptionPane.PLAIN_MESSAGE,null,battles,null);
 	
-					int choice = 0;
+					int choice = -1;
 					for(int i=0; i<battles.length; i++) {
 						if(battles[i] == selection) choice = i;
 					}
 					
-					scrMan.launchBattleScreen(choice);
-	
-					finishedWindow();
+					if(choice!=-1) {
+						scrMan.launchBattleScreen(choice);
+						finishedWindow();
+					}
 				} catch (Exception excep) {
 					scrMan.launchMainScreen();
 				}
@@ -202,6 +203,7 @@ public class MainScreen {
 				env.preDayLogic();
 				if(env.getCurDay()>env.getNumDays()) {
 					scrMan.launchGameOverScreen();
+					finishedWindow();
 				}
 				currentDay.setText(Integer.toString(env.getCurDay()));
 			}
@@ -219,6 +221,7 @@ public class MainScreen {
 		endGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				scrMan.launchGameOverScreen();
+				finishedWindow();
 			}
 		});
 		endGameButton.setFont(new Font("Dialog", Font.PLAIN, 14));
