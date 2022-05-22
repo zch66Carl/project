@@ -140,8 +140,8 @@ public class Item implements Purchaseable{
 	 * Returns a string representation of the item, containing the item name, and healAmount or buffAmount if applicable.
 	 */
 	public String toString() {
-		if(isRevive) return name;
-		if(isHeal()) return name + ", heal amount: " + healAmount;
-		return name + ", damage buff: " + buffAmount;
+		if(isRevive) return name + ".";
+		if(isHeal()) return name + ", heal amount: " + healAmount + ".";
+		return name + ", damage buff: " + buffAmount + ".";
 	}
 }

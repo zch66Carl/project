@@ -96,13 +96,14 @@ public class ShopScreen {
 			currentTeam[i] = monst.toString() + " Sell Price: " + monst.getSellPrice();
 		}
 		teamList.setListData(currentTeam);
-		
+				
 		String[] currentInv = new String[env.getPlayer().getInventory().size()];
 		for(int i=0;i<currentInv.length;i++) {
 			Item item = env.getPlayer().getInventory().get(i);
-			currentTeam[i] = item.toString() + " Sell Price: " + item.getSellPrice();
+			currentInv[i] = item.toString() + ". Sell Price: " + item.getSellPrice();
 		}
-		teamList.setListData(currentInv);
+		inventoryList.setListData(currentInv);
+		
 		
 		ArrayList<String> listing = new ArrayList<String>();
 		for(int i=0; i<9; i++) {
@@ -132,15 +133,15 @@ public class ShopScreen {
 		JLabel shopLabel = new JLabel("Shop");
 		shopLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		shopLabel.setFont(new Font("SimSun", Font.BOLD, 14));
-		shopLabel.setBounds(528, 10, 103, 35);
+		shopLabel.setBounds(0, 10, 103, 35);
 		frame.getContentPane().add(shopLabel);
 		
 		JLabel goldLabel = new JLabel("Gold");
-		goldLabel.setBounds(31, 20, 54, 15);
+		goldLabel.setBounds(267, 20, 54, 15);
 		frame.getContentPane().add(goldLabel);
 		
 		currentGold = new JLabel(Integer.toString(env.getPlayer().getGold()));
-		currentGold.setBounds(95, 20, 54, 15);
+		currentGold.setBounds(333, 20, 54, 15);
 		frame.getContentPane().add(currentGold);
 		
 		JButton inventoryButton = new JButton("Inventory");
@@ -150,7 +151,7 @@ public class ShopScreen {
 				closeWindow();
 			}
 		});
-		inventoryButton.setBounds(148, 16, 127, 23);
+		inventoryButton.setBounds(436, 16, 127, 23);
 		frame.getContentPane().add(inventoryButton);
 		
 		JButton mainScreenButton = new JButton("Main Screen");
@@ -159,7 +160,7 @@ public class ShopScreen {
 				finishedWindow();
 			}
 		});
-		mainScreenButton.setBounds(287, 16, 147, 23);
+		mainScreenButton.setBounds(586, 16, 147, 23);
 		frame.getContentPane().add(mainScreenButton);
 		
 		
@@ -168,15 +169,15 @@ public class ShopScreen {
 		frame.getContentPane().add(stocklabel);
 		
 		JLabel sellItemLabel = new JLabel("Item");
-		sellItemLabel.setBounds(31, 294, 54, 15);
+		sellItemLabel.setBounds(31, 318, 54, 15);
 		frame.getContentPane().add(sellItemLabel);
 		
 		JLabel sellMonsterLabel = new JLabel("Monster");
-		sellMonsterLabel.setBounds(31, 426, 54, 15);
+		sellMonsterLabel.setBounds(31, 442, 127, 15);
 		frame.getContentPane().add(sellMonsterLabel);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(31, 451, 453, 91);
+		scrollPane.setBounds(31, 469, 702, 91);
 		frame.getContentPane().add(scrollPane);
 		
 		DefaultListModel<String> teamListModel = new DefaultListModel<>();
@@ -188,11 +189,11 @@ public class ShopScreen {
 		DefaultListModel<String> shopListModel = new DefaultListModel<>();
 		shopList = new JList<>(shopListModel);
 		shopList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		shopList.setBounds(31, 71, 453, 205);
+		shopList.setBounds(31, 86, 702, 220);
 		frame.getContentPane().add(shopList);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(31, 319, 453, 85);
+		scrollPane_1.setBounds(31, 345, 702, 85);
 		frame.getContentPane().add(scrollPane_1);
 
 		DefaultListModel<String> inventoryListModel = new DefaultListModel<>();
@@ -206,11 +207,9 @@ public class ShopScreen {
 				try {
 					if(shopList.getSelectedIndex() == -1) throw new RuntimeException("Nothing selected");
 					int ind = shopList.getSelectedIndex();
-					Purchaseable purchase;
 					for(int i=0; i<9; i++) {
 						if(shop.getStock()[i] == null) ind++;
 						if(i==ind) {
-							purchase = shop.getStock()[i];
 							break;
 						}
 					}
@@ -220,14 +219,14 @@ public class ShopScreen {
 					}
 					String message = shop.buyPurchaseable(env.getPlayer(), ind);
 					JOptionPane.showMessageDialog(frame, message);
-					update();
 				}
 				catch (Exception excep) {
 					JOptionPane.showMessageDialog(frame, "Please Select an item to buy");
 				}
+				update();
 			}
 		});
-		buyButton.setBounds(496, 152, 161, 23);
+		buyButton.setBounds(267, 47, 161, 23);
 		frame.getContentPane().add(buyButton);
 		
 		
@@ -241,13 +240,13 @@ public class ShopScreen {
 					Item item = env.getPlayer().getInventory().get(inventoryList.getSelectedIndex());
 					String message = shop.sellPurchaseable(env.getPlayer(), item);
 					JOptionPane.showMessageDialog(frame, message);
-					update();
 				} catch (Exception excep) {
 					JOptionPane.showMessageDialog(frame, "Please Select an item to sell");
 				}
+				update();
 			}
 		});
-		sellItemButton.setBounds(496, 350, 161, 23);
+		sellItemButton.setBounds(267, 314, 161, 23);
 		frame.getContentPane().add(sellItemButton);
 		
 		JButton sellMonsterButton = new JButton("Sell Monster");
@@ -258,13 +257,13 @@ public class ShopScreen {
 					Monster monst = env.getPlayer().getTeam().get(teamList.getSelectedIndex());
 					String message = shop.sellPurchaseable(env.getPlayer(), monst);
 					JOptionPane.showMessageDialog(frame, message);
-					update();
 				} catch (Exception excep) {
 					JOptionPane.showMessageDialog(frame, "Please Select an item to sell");
 				}
+				update();
 			}
 		});
-		sellMonsterButton.setBounds(496, 484, 161, 23);
+		sellMonsterButton.setBounds(267, 438, 161, 23);
 		frame.getContentPane().add(sellMonsterButton);
 		
 		
