@@ -17,10 +17,13 @@ import java.awt.Font;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 /**
  * Item screen shows players inventory and team that allows items to be used out of battle.
@@ -28,8 +31,10 @@ import javax.swing.JScrollPane;
  *
  */
 public class ItemScreen {
-
 	private JFrame frame;
+	private JList<Item> inventoryList;
+	private JList<Monster> teamList;
+	
 	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
@@ -37,6 +42,7 @@ public class ItemScreen {
 		scrMan = incScrMan;
 		env = scrMan.getEnv();
 		initialize();
+		updateItems();
 		frame.setVisible(true);
 	}
 	
@@ -70,6 +76,30 @@ public class ItemScreen {
 		initialize();
 	}
 
+	private void updateItems() {
+		DefaultListModel<Item> inventoryListModel = new DefaultListModel<>();
+		inventoryListModel.addAll(env.getPlayer().getInventory());
+		inventoryList.setModel(inventoryListModel);
+		updateMonsters();
+	}
+	
+	private void updateMonsters() {
+		try {
+			Item item = inventoryList.getSelectedValue();
+			ArrayList<Monster> usableOn = item.getMonstersUsableOn(env.getPlayer().getTeam());
+			Monster[] monsters = new Monster[usableOn.size()];
+			for(int i=0; i<usableOn.size(); i++) {
+				monsters[i] = usableOn.get(i);
+			}
+			teamList.setListData(monsters);
+			if(usableOn.size()==0) JOptionPane.showMessageDialog(frame, "This item is not usable on any of your monsters.");
+		}
+		catch (Exception exc){
+			Monster[] monsters = new Monster[0];
+			teamList.setListData(monsters);
+		}
+	}
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -107,9 +137,12 @@ public class ItemScreen {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(55, 55, 301, 117);
 		frame.getContentPane().add(scrollPane);
-		DefaultListModel<Item> inventoryListModel = new DefaultListModel<>();
-		inventoryListModel.addAll(env.getPlayer().getInventory());
-		JList<Item> inventoryList = new JList<>(inventoryListModel);
+		inventoryList = new JList<Item>();
+		inventoryList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				updateMonsters();
+			}
+		});
 		scrollPane.setViewportView(inventoryList);
 		inventoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
@@ -118,9 +151,7 @@ public class ItemScreen {
 		scrollPane_1.setBounds(366, 55, 277, 117);
 		frame.getContentPane().add(scrollPane_1);
 		
-		DefaultListModel<Monster> teamListModel = new DefaultListModel<>();
-		teamListModel.addAll(env.getPlayer().getTeam());
-		JList<Monster> teamList = new JList<>(teamListModel);
+		teamList = new JList<Monster>();
 		teamList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_1.setViewportView(teamList);
 		
@@ -128,28 +159,24 @@ public class ItemScreen {
 		useItemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-				inventoryList.getSelectedValue().useItem(teamList.getSelectedValue());
-				Item[] currentItems = new Item[env.getPlayer().getInventory().size()];
-				for(int i=0;i<currentItems.length;i++) {
-					currentItems[i] = env.getPlayer().getInventory().get(i);
-					
-				}
-				
-				inventoryList.setListData(currentItems);
+					Item item = inventoryList.getSelectedValue();
+					Monster monst = teamList.getSelectedValue();
+					env.getPlayer().useItem(item, monst);
+					updateItems();
 				} 
 				catch(NullPointerException excep) {
-					JOptionPane.showMessageDialog(frame, "No Item To Use");
+					JOptionPane.showMessageDialog(frame, "No Item To Use.");
 				}
 				catch(Exception excep) {
-					JOptionPane.showMessageDialog(frame, "Select Item and Target Monster to use");
+					JOptionPane.showMessageDialog(frame, "Select an item and a monster to use the item on.");
 				}
 			}
 		});
 		useItemButton.setBounds(55, 213, 133, 29);
 		frame.getContentPane().add(useItemButton);
 		
-		JLabel lblNewLabel = new JLabel("Team");
-		lblNewLabel.setBounds(485, 36, 48, 14);
+		JLabel lblNewLabel = new JLabel("Monsters Usable On");
+		lblNewLabel.setBounds(409, 36, 202, 14);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Items");
