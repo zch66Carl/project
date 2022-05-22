@@ -31,6 +31,7 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.beans.PropertyChangeEvent;
+import javax.swing.JTextPane;
 
 /**
  * Battle screen where player fights chosen opponent. Options to switch monster, use items and escape battle.
@@ -39,7 +40,7 @@ import java.beans.PropertyChangeEvent;
  */
 public class BattleScreen {
 
-	private JFrame frame;
+	private JFrame frmMonsterBattler;
 	private JLabel battleType;
 	private JLabel playerMonsterName;
 	private JLabel enemyMonsterName;
@@ -78,9 +79,9 @@ public class BattleScreen {
 			enemy = enemyTeam.getActiveMonster();
 		}
 		update();
-		frame.setVisible(true);
-		if(isWildBattle) JOptionPane.showMessageDialog(frame, wildMonster.getName()+" appears!");
-		else JOptionPane.showMessageDialog(frame, enemyTeam.getName()+" challenges you!");
+		frmMonsterBattler.setVisible(true);
+		if(isWildBattle) JOptionPane.showMessageDialog(frmMonsterBattler, wildMonster.getName()+" appears!");
+		else JOptionPane.showMessageDialog(frmMonsterBattler, enemyTeam.getName()+" challenges you!");
 	}
 	
 	public void postPlayerTurn() {
@@ -99,7 +100,7 @@ public class BattleScreen {
 		}
 		update();
 		if(preTurnMessages.size()>0) {
-			JOptionPane.showMessageDialog(frame, full);
+			JOptionPane.showMessageDialog(frmMonsterBattler, full);
 		}
 		
 		if((isWildBattle && !wildMonster.isAwake()) || (!isWildBattle && !enemyTeam.checkIfActiveMonster())) {
@@ -110,7 +111,7 @@ public class BattleScreen {
 		Monster plaMonst = pla.getActiveMonster();
 		full = "Enemy Turn: \n" + (isWildBattle ? wildMonster.makeRandomMove(plaMonst) : enemyTeam.makeRandomMove(plaMonst));
 		update();
-		JOptionPane.showMessageDialog(frame, full);
+		JOptionPane.showMessageDialog(frmMonsterBattler, full);
 		//check if a risky monster killed itself on its own turn
 		if((isWildBattle && !wildMonster.isAwake()) || (!isWildBattle && !enemyTeam.checkIfActiveMonster())) {
 			endBattle(true);
@@ -131,7 +132,7 @@ public class BattleScreen {
 		}
 		update();
 		if(preTurnMessages.size()>0) {
-			JOptionPane.showMessageDialog(frame, full);
+			JOptionPane.showMessageDialog(frmMonsterBattler, full);
 		}
 		
 		
@@ -144,15 +145,15 @@ public class BattleScreen {
 	public void endBattle(boolean outcome) {
 		pla.postBattle();
 		if(outcome) {
-			JOptionPane.showMessageDialog(frame, "You Won");
+			JOptionPane.showMessageDialog(frmMonsterBattler, "You Won");
 			if(isWildBattle) {
 				wildMonster.rest();
-				JOptionPane.showMessageDialog(frame, wildMonster.getName() + " joins your team!");
+				JOptionPane.showMessageDialog(frmMonsterBattler, wildMonster.getName() + " joins your team!");
 				pla.addMonster(wildMonster);
 				env.setWildBattleMonster(null);
 			}
 			else {
-				JOptionPane.showMessageDialog(frame, "Have some gold.");
+				JOptionPane.showMessageDialog(frmMonsterBattler, "Have some gold.");
 				env.getBattles().remove(enemyTeamIndex);
 			}
 			pla.rewardPostBattle(env.getCurDay(), env.getDifficulty(), isWildBattle);
@@ -166,8 +167,8 @@ public class BattleScreen {
 			}
 		}
 		else {
-			if(isWildBattle) JOptionPane.showMessageDialog(frame, wildMonster.getName() + " eliminated your entire team! So Powerful");
-			else JOptionPane.showMessageDialog(frame, enemyTeam.getName() + " won!");
+			if(isWildBattle) JOptionPane.showMessageDialog(frmMonsterBattler, wildMonster.getName() + " eliminated your entire team! So Powerful");
+			else JOptionPane.showMessageDialog(frmMonsterBattler, enemyTeam.getName() + " won!");
 			if(isWildBattle) wildMonster.rest();
 			else enemyTeam.refreshTeam();
 			scrMan.closeBattleScreen(this);
@@ -242,7 +243,7 @@ public class BattleScreen {
 	}
 	
 	public void closeWindow() {
-		frame.dispose();
+		frmMonsterBattler.dispose();
 	}
 	
 	public void finishedWindow() {
@@ -257,7 +258,7 @@ public class BattleScreen {
 			public void run() {
 				try {
 					BattleScreen window = new BattleScreen();
-					window.frame.setVisible(true);
+					window.frmMonsterBattler.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -276,10 +277,11 @@ public class BattleScreen {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 879, 612);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmMonsterBattler = new JFrame();
+		frmMonsterBattler.setTitle("Monster Battler");
+		frmMonsterBattler.setBounds(100, 100, 879, 612);
+		frmMonsterBattler.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMonsterBattler.getContentPane().setLayout(null);
 				
 		//batle info:
 		
@@ -288,11 +290,11 @@ public class BattleScreen {
 		battleType.setHorizontalAlignment(SwingConstants.CENTER);
 		battleType.setFont(new Font("SimSun", Font.BOLD, 14));
 		battleType.setBounds(27, 10, 488, 41);
-		frame.getContentPane().add(battleType);
+		frmMonsterBattler.getContentPane().add(battleType);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(27, 59, 488, 344);
-		frame.getContentPane().add(panel);
+		frmMonsterBattler.getContentPane().add(panel);
 		panel.setLayout(null);
 				
 		playerMonsterName = new JLabel();
@@ -341,23 +343,23 @@ public class BattleScreen {
 			}
 		});
 		itemSelectionDropDownBox.setBackground(Color.WHITE);
-		itemSelectionDropDownBox.setBounds(564, 148, 177, 23);
-		frame.getContentPane().add(itemSelectionDropDownBox);
+		itemSelectionDropDownBox.setBounds(618, 148, 177, 23);
+		frmMonsterBattler.getContentPane().add(itemSelectionDropDownBox);
 		
 		attackOptions = new JComboBox();
 		attackOptions.setBackground(Color.WHITE);
-		attackOptions.setBounds(564, 272, 177, 24);
-		frame.getContentPane().add(attackOptions);
+		attackOptions.setBounds(618, 272, 177, 24);
+		frmMonsterBattler.getContentPane().add(attackOptions);
 		
 		monsterSwitch = new JComboBox();
 		monsterSwitch.setBackground(Color.WHITE);
-		monsterSwitch.setBounds(564, 59, 177, 24);
-		frame.getContentPane().add(monsterSwitch);
+		monsterSwitch.setBounds(618, 59, 177, 24);
+		frmMonsterBattler.getContentPane().add(monsterSwitch);
 		
 		itemUsableMonsters = new JComboBox();
 		itemUsableMonsters.setBackground(Color.WHITE);
-		itemUsableMonsters.setBounds(564, 183, 177, 24);
-		frame.getContentPane().add(itemUsableMonsters);
+		itemUsableMonsters.setBounds(618, 183, 177, 24);
+		frmMonsterBattler.getContentPane().add(itemUsableMonsters);
 		
 		
 		//buttons:
@@ -370,16 +372,16 @@ public class BattleScreen {
 					int move = attackOptions.getSelectedIndex();
 					message += pla.getActiveMonster().makeMove(move, enemy);
 					update();
-					JOptionPane.showMessageDialog(frame, message);
+					JOptionPane.showMessageDialog(frmMonsterBattler, message);
 					postPlayerTurn();
 				}
 				catch(Exception excep) {
-					JOptionPane.showMessageDialog(frame, "You must select an attack to attack.");
+					JOptionPane.showMessageDialog(frmMonsterBattler, "You must select an attack to attack.");
 				}
 			}
 		});
-		attackButton.setBounds(564, 308, 177, 41);
-		frame.getContentPane().add(attackButton);
+		attackButton.setBounds(618, 308, 177, 41);
+		frmMonsterBattler.getContentPane().add(attackButton);
 		
 		JButton escapeBattleButton = new JButton("Escape Battle");
 		escapeBattleButton.addActionListener(new ActionListener() {
@@ -387,8 +389,8 @@ public class BattleScreen {
 				fleeBattle();
 			}
 		});
-		escapeBattleButton.setBounds(564, 362, 177, 41);
-		frame.getContentPane().add(escapeBattleButton);
+		escapeBattleButton.setBounds(618, 362, 177, 41);
+		frmMonsterBattler.getContentPane().add(escapeBattleButton);
 		
 		
 		JButton changeMonsterButton = new JButton("Change Monster");
@@ -397,20 +399,20 @@ public class BattleScreen {
 				try {
 					Monster monst = (Monster) monsterSwitch.getSelectedItem();
 					pla.setActiveMonster(monst);
-					JOptionPane.showMessageDialog(frame, "Switched to "+pla.getActiveMonster());
+					JOptionPane.showMessageDialog(frmMonsterBattler, "Switched to "+pla.getActiveMonster());
 					update();
 					postPlayerTurn();
 				} 
 				catch(NullPointerException excep) {
-					JOptionPane.showMessageDialog(frame, "No other monsters to be switched to.");
+					JOptionPane.showMessageDialog(frmMonsterBattler, "No other monsters to be switched to.");
 				}
 				catch(Exception excep) {
-					JOptionPane.showMessageDialog(frame, "You must select a monster to switch to that monster.");
+					JOptionPane.showMessageDialog(frmMonsterBattler, "You must select a monster to switch to that monster.");
 				}
 			}
 		});
-		changeMonsterButton.setBounds(564, 95, 177, 41);
-		frame.getContentPane().add(changeMonsterButton);
+		changeMonsterButton.setBounds(618, 95, 177, 41);
+		frmMonsterBattler.getContentPane().add(changeMonsterButton);
 		
 		JButton useItemButton = new JButton("Use Item");
 		useItemButton.addActionListener(new ActionListener() {
@@ -421,19 +423,47 @@ public class BattleScreen {
 					Item[] currentItems = new Item[pla.getInventory().size()];
 					pla.useItem(item, monst);
 					update();
-					JOptionPane.showMessageDialog(frame, "Used Item.");
+					JOptionPane.showMessageDialog(frmMonsterBattler, "Used Item.");
 					postPlayerTurn();
 				} 
 				catch(NullPointerException excep) {
-					JOptionPane.showMessageDialog(frame, "No Item To Use");
+					JOptionPane.showMessageDialog(frmMonsterBattler, "No Item To Use");
 				}
 				catch(Exception excep) {
-					JOptionPane.showMessageDialog(frame, "Select Item and Monster to use the Item on.");
+					JOptionPane.showMessageDialog(frmMonsterBattler, "Select Item and Monster to use the Item on.");
 				}
 			}
 			
 		});
-		useItemButton.setBounds(564, 219, 177, 41);
-		frame.getContentPane().add(useItemButton);
+		useItemButton.setBounds(618, 219, 177, 41);
+		frmMonsterBattler.getContentPane().add(useItemButton);
+		
+		JLabel moveLabel = new JLabel("Make A Move:");
+		moveLabel.setBounds(618, 37, 177, 15);
+		frmMonsterBattler.getContentPane().add(moveLabel);
+		
+		JTextPane changeMonsterText = new JTextPane();
+		changeMonsterText.setEditable(false);
+		changeMonsterText.setText("Change your monster on the field.");
+		changeMonsterText.setBounds(521, 63, 85, 73);
+		frmMonsterBattler.getContentPane().add(changeMonsterText);
+		
+		JTextPane useItemText = new JTextPane();
+		useItemText.setText("Use an item on one of your monsters.");
+		useItemText.setEditable(false);
+		useItemText.setBounds(521, 148, 85, 112);
+		frmMonsterBattler.getContentPane().add(useItemText);
+		
+		JTextPane attackText = new JTextPane();
+		attackText.setText("Attack the enemy monster.");
+		attackText.setEditable(false);
+		attackText.setBounds(521, 276, 85, 73);
+		frmMonsterBattler.getContentPane().add(attackText);
+		
+		JTextPane fleeBattleText = new JTextPane();
+		fleeBattleText.setText("Flee battle.");
+		fleeBattleText.setEditable(false);
+		fleeBattleText.setBounds(521, 364, 85, 39);
+		frmMonsterBattler.getContentPane().add(fleeBattleText);
 	}
 }

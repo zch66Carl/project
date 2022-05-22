@@ -31,7 +31,7 @@ import javax.swing.event.ListSelectionEvent;
  *
  */
 public class ItemScreen {
-	private JFrame frame;
+	private JFrame frmMonsterBattler;
 	private JList<Item> inventoryList;
 	private JList<Monster> teamList;
 	
@@ -43,11 +43,11 @@ public class ItemScreen {
 		env = scrMan.getEnv();
 		initialize();
 		updateItems();
-		frame.setVisible(true);
+		frmMonsterBattler.setVisible(true);
 	}
 	
 	public void closeWindow() {
-		frame.dispose();
+		frmMonsterBattler.dispose();
 	}
 	
 	public void finishedWindow() {
@@ -61,7 +61,7 @@ public class ItemScreen {
 			public void run() {
 				try {
 					ItemScreen window = new ItemScreen();
-					window.frame.setVisible(true);
+					window.frmMonsterBattler.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -92,7 +92,7 @@ public class ItemScreen {
 				monsters[i] = usableOn.get(i);
 			}
 			teamList.setListData(monsters);
-			if(usableOn.size()==0) JOptionPane.showMessageDialog(frame, "This item is not usable on any of your monsters.");
+			if(usableOn.size()==0) JOptionPane.showMessageDialog(frmMonsterBattler, "This item is not usable on any of your monsters.");
 		}
 		catch (Exception exc){
 			Monster[] monsters = new Monster[0];
@@ -104,15 +104,16 @@ public class ItemScreen {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 700, 356);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmMonsterBattler = new JFrame();
+		frmMonsterBattler.setTitle("Monster Battler");
+		frmMonsterBattler.setBounds(100, 100, 700, 356);
+		frmMonsterBattler.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMonsterBattler.getContentPane().setLayout(null);
 		
 		JLabel itemScreenLabel = new JLabel(env.getPlayer().getName() + "'s inventory");
 		itemScreenLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
 		itemScreenLabel.setBounds(277, 0, 171, 35);
-		frame.getContentPane().add(itemScreenLabel);
+		frmMonsterBattler.getContentPane().add(itemScreenLabel);
 		
 		JButton shopButton = new JButton("Shop");
 		shopButton.addActionListener(new ActionListener() {
@@ -122,7 +123,7 @@ public class ItemScreen {
 			}
 		});
 		shopButton.setBounds(292, 213, 133, 29);
-		frame.getContentPane().add(shopButton);
+		frmMonsterBattler.getContentPane().add(shopButton);
 		
 		JButton backButton = new JButton("Back");
 		backButton.addActionListener(new ActionListener() {
@@ -131,12 +132,12 @@ public class ItemScreen {
 			}
 		});
 		backButton.setBounds(510, 213, 133, 29);
-		frame.getContentPane().add(backButton);
+		frmMonsterBattler.getContentPane().add(backButton);
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(55, 55, 301, 117);
-		frame.getContentPane().add(scrollPane);
+		frmMonsterBattler.getContentPane().add(scrollPane);
 		inventoryList = new JList<Item>();
 		inventoryList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
@@ -149,7 +150,7 @@ public class ItemScreen {
 				
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(366, 55, 277, 117);
-		frame.getContentPane().add(scrollPane_1);
+		frmMonsterBattler.getContentPane().add(scrollPane_1);
 		
 		teamList = new JList<Monster>();
 		teamList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -165,22 +166,22 @@ public class ItemScreen {
 					updateItems();
 				} 
 				catch(NullPointerException excep) {
-					JOptionPane.showMessageDialog(frame, "No Item To Use.");
+					JOptionPane.showMessageDialog(frmMonsterBattler, "No Item To Use.");
 				}
 				catch(Exception excep) {
-					JOptionPane.showMessageDialog(frame, "Select an item and a monster to use the item on.");
+					JOptionPane.showMessageDialog(frmMonsterBattler, "Select an item and a monster to use the item on.");
 				}
 			}
 		});
 		useItemButton.setBounds(55, 213, 133, 29);
-		frame.getContentPane().add(useItemButton);
+		frmMonsterBattler.getContentPane().add(useItemButton);
 		
 		JLabel lblNewLabel = new JLabel("Monsters Usable On");
 		lblNewLabel.setBounds(409, 36, 202, 14);
-		frame.getContentPane().add(lblNewLabel);
+		frmMonsterBattler.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Items");
 		lblNewLabel_1.setBounds(173, 36, 48, 14);
-		frame.getContentPane().add(lblNewLabel_1);
+		frmMonsterBattler.getContentPane().add(lblNewLabel_1);
 	}
 }

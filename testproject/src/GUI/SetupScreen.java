@@ -36,7 +36,7 @@ import javax.swing.JTextPane;
  */
 public class SetupScreen {
 
-	private JFrame frame;
+	private JFrame frmMonsterBattler;
 	private JTextField playerNameTextBox;
 	private ScreenManager scrMan;
 	private GameEnvironment env;
@@ -45,11 +45,11 @@ public class SetupScreen {
 		scrMan = incScrMan;
 		env = scrMan.getEnv();
 		initialize();
-		frame.setVisible(true);
+		frmMonsterBattler.setVisible(true);
 	}
 	
 	public void closeWindow() {
-		frame.dispose();
+		frmMonsterBattler.dispose();
 	}
 	
 	public void finishedWindow() {
@@ -64,7 +64,7 @@ public class SetupScreen {
 			public void run() {
 				try {
 					SetupScreen window = new SetupScreen();
-					window.frame.setVisible(true);
+					window.frmMonsterBattler.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -83,42 +83,43 @@ public class SetupScreen {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 857, 491);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmMonsterBattler = new JFrame();
+		frmMonsterBattler.setTitle("Monster Battler");
+		frmMonsterBattler.setBounds(100, 100, 857, 491);
+		frmMonsterBattler.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMonsterBattler.getContentPane().setLayout(null);
 		
 		JLabel welcomeMessage = new JLabel("Welcome to Monster Battles");
 		welcomeMessage.setFont(new Font("SimSun", Font.BOLD, 18));
 		welcomeMessage.setBounds(37, 10, 470, 43);
-		frame.getContentPane().add(welcomeMessage);
+		frmMonsterBattler.getContentPane().add(welcomeMessage);
 		
 		JLabel playerNameLabel = new JLabel("Please Enter Player Name:\r\n\r\n");
 		playerNameLabel.setToolTipText("");
 		playerNameLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
 		playerNameLabel.setBounds(37, 63, 175, 43);
-		frame.getContentPane().add(playerNameLabel);
+		frmMonsterBattler.getContentPane().add(playerNameLabel);
 		
 		playerNameTextBox = new JTextField();
 		playerNameTextBox.setToolTipText("3 to 15 characters without numbers or special character");
 		playerNameTextBox.setBounds(243, 74, 175, 21);
-		frame.getContentPane().add(playerNameTextBox);
+		frmMonsterBattler.getContentPane().add(playerNameTextBox);
 		playerNameTextBox.setColumns(10);
 		
 		JLabel daysLabel = new JLabel("Days:");
 		daysLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
 		daysLabel.setBounds(425, 70, 40, 29);
-		frame.getContentPane().add(daysLabel);
+		frmMonsterBattler.getContentPane().add(daysLabel);
 		
 		JComboBox daysSelection = new JComboBox();
 		daysSelection.setModel(new DefaultComboBoxModel(new String[] {"5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}));
 		daysSelection.setBounds(472, 73, 71, 23);
-		frame.getContentPane().add(daysSelection);
+		frmMonsterBattler.getContentPane().add(daysSelection);
 		
 		JLabel startingMonsterLabel = new JLabel("Choose starting monsters:");
 		startingMonsterLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
 		startingMonsterLabel.setBounds(37, 116, 175, 29);
-		frame.getContentPane().add(startingMonsterLabel);
+		frmMonsterBattler.getContentPane().add(startingMonsterLabel);
 		
 		Monster monsterOne = Generation.generatePlayerMonster(1, 1);
 		Monster monsterTwo = Generation.generatePlayerMonster(1, 1);
@@ -127,22 +128,22 @@ public class SetupScreen {
 		startingMonsterSelection.setModel(new DefaultComboBoxModel(new String[] {monsterOne.basicStr(),monsterTwo.basicStr(),monsterThree.basicStr()}));
 		startingMonsterSelection.setSelectedIndex(0);
 		startingMonsterSelection.setBounds(243, 119, 546, 23);
-		frame.getContentPane().add(startingMonsterSelection);
+		frmMonsterBattler.getContentPane().add(startingMonsterSelection);
 		
 		JLabel daysInfo = new JLabel("(Number of days the game will last)");
 		daysInfo.setFont(new Font("SimSun", Font.PLAIN, 14));
 		daysInfo.setBounds(549, 77, 240, 15);
-		frame.getContentPane().add(daysInfo);
+		frmMonsterBattler.getContentPane().add(daysInfo);
 		
 		JLabel difficultyLabel = new JLabel("Select Difficulty:");
 		difficultyLabel.setFont(new Font("SimSun", Font.PLAIN, 14));
 		difficultyLabel.setBounds(37, 183, 141, 29);
-		frame.getContentPane().add(difficultyLabel);
+		frmMonsterBattler.getContentPane().add(difficultyLabel);
 		
 		JComboBox difficultySelection = new JComboBox();
 		difficultySelection.setModel(new DefaultComboBoxModel(new String[] {"Easy", "Normal", "Hard"}));
 		difficultySelection.setBounds(243, 186, 121, 23);
-		frame.getContentPane().add(difficultySelection);
+		frmMonsterBattler.getContentPane().add(difficultySelection);
 		
 		JButton startGameButton = new JButton("Start Game");
 		startGameButton.addActionListener(new ActionListener() {
@@ -161,7 +162,7 @@ public class SetupScreen {
 					finishedWindow();
 				}
 				else {
-					JOptionPane.showMessageDialog(frame, "Invalid Name, should be 3-15 characters and fully alphabetic.");
+					JOptionPane.showMessageDialog(frmMonsterBattler, "Invalid Name, should be 3-15 characters and fully alphabetic.");
 				}
 			}
 		}
@@ -171,13 +172,30 @@ public class SetupScreen {
 			
 		);
 		startGameButton.setFont(new Font("SimSun", Font.PLAIN, 18));
-		startGameButton.setBounds(37, 283, 278, 85);
-		frame.getContentPane().add(startGameButton);
+		startGameButton.setBounds(37, 283, 364, 85);
+		frmMonsterBattler.getContentPane().add(startGameButton);
 		
 		JTextPane difficultyInfo = new JTextPane();
 		difficultyInfo.setEditable(false);
 		difficultyInfo.setText("On higher difficulties, you will earn less gold, and face harder opponents.");
 		difficultyInfo.setBounds(394, 183, 390, 43);
-		frame.getContentPane().add(difficultyInfo);
+		frmMonsterBattler.getContentPane().add(difficultyInfo);
+		
+		JButton howToPlayButton = new JButton("How To Play");
+		howToPlayButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String howToPlayString = ""
+						+ "Become the strongest by fighting other monster trainers and improving your monster's skills.\n"
+						+ "Buy items and monsters in the shop to give yourself an edge over the competition.\n"
+						+ "Make sure you fight a few battles each day so that your team isn't left in the dust.\n"
+						+ "Experiment with different attack types, and play around with your team order.\n"
+						+ "If you really wan't a challenge, fight the high level wild monsters that appear every few days.\n"
+						+ "Don't forget to have fun.";
+				JOptionPane.showMessageDialog(frmMonsterBattler, howToPlayString);
+			}
+		});
+		howToPlayButton.setFont(new Font("Dialog", Font.PLAIN, 18));
+		howToPlayButton.setBounds(425, 283, 364, 85);
+		frmMonsterBattler.getContentPane().add(howToPlayButton);
 	}
 }
