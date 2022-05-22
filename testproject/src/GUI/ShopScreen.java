@@ -1,7 +1,5 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -9,39 +7,27 @@ import javax.swing.SwingConstants;
 
 import game.GameEnvironment;
 import game.Item;
-import game.Purchaseable;
 import game.Shop;
 import game.monsters.Monster;
 
-import javax.swing.JPanel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Vector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.ListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 /**
  * Shop screen allows player to buy and sell items/monsters.
- * @author chenz
- *
  */
 public class ShopScreen {
 
-	private JFrame frmMonsterBattler;
+	private JFrame frame;
 	private JList<String> teamList;
 	private JList<String> inventoryList;
 	private JList<String> shopList;
@@ -52,45 +38,36 @@ public class ShopScreen {
 	private GameEnvironment env;
 	private Shop shop;
 	
+	/**
+	 * Initializes the gui and gets the game environment from the screen manager.
+	 * @param incScrMan ScreenManager. The screen manager.
+	 */
 	public ShopScreen(ScreenManager incScrMan) {
 		scrMan = incScrMan;
 		env = scrMan.getEnv();
 		shop = env.getShop();
 		initialize();
 		update();
-		frmMonsterBattler.setVisible(true);
+		frame.setVisible(true);
 	}
 	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
-		frmMonsterBattler.dispose();
+		frame.dispose();
 	}
 	
-	public void finishedWindow() {
+	/**
+	 * Calls the screen transistions.
+	 */
+	private void finishedWindow() {
 		scrMan.closeShopScreen(this);
 	}
+	
 	/**
-	 * Launch the application.
+	 * Updates the gui to contain the current stock, the current inventory, the current team and the current gold.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ShopScreen window = new ShopScreen();
-					window.frmMonsterBattler.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public ShopScreen() {
-		initialize();
-	}
-
 	private void update() {
 		String[] currentTeam = new String[env.getPlayer().getTeam().size()];
 		for(int i=0;i<currentTeam.length;i++) {
@@ -128,28 +105,28 @@ public class ShopScreen {
 	}
 	
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the frame and contains the methods for gui inputs.
 	 */
 	private void initialize() {
-		frmMonsterBattler = new JFrame();
-		frmMonsterBattler.setTitle("Monster Battler");
-		frmMonsterBattler.setBounds(100, 100, 747, 603);
-		frmMonsterBattler.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmMonsterBattler.getContentPane().setLayout(null);
+		frame = new JFrame();
+		frame.setTitle("Monster Battler");
+		frame.setBounds(100, 100, 747, 603);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
 		JLabel shopLabel = new JLabel("Shop");
 		shopLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		shopLabel.setFont(new Font("SimSun", Font.BOLD, 14));
 		shopLabel.setBounds(0, 10, 103, 35);
-		frmMonsterBattler.getContentPane().add(shopLabel);
+		frame.getContentPane().add(shopLabel);
 		
 		JLabel goldLabel = new JLabel("Gold");
 		goldLabel.setBounds(267, 20, 54, 15);
-		frmMonsterBattler.getContentPane().add(goldLabel);
+		frame.getContentPane().add(goldLabel);
 		
 		currentGold = new JLabel(Integer.toString(env.getPlayer().getGold()));
 		currentGold.setBounds(333, 20, 54, 15);
-		frmMonsterBattler.getContentPane().add(currentGold);
+		frame.getContentPane().add(currentGold);
 		
 		JButton inventoryButton = new JButton("Inventory");
 		inventoryButton.addActionListener(new ActionListener() {
@@ -159,7 +136,7 @@ public class ShopScreen {
 			}
 		});
 		inventoryButton.setBounds(436, 16, 127, 23);
-		frmMonsterBattler.getContentPane().add(inventoryButton);
+		frame.getContentPane().add(inventoryButton);
 		
 		JButton mainScreenButton = new JButton("Main Screen");
 		mainScreenButton.addActionListener(new ActionListener() {
@@ -168,28 +145,28 @@ public class ShopScreen {
 			}
 		});
 		mainScreenButton.setBounds(586, 16, 147, 23);
-		frmMonsterBattler.getContentPane().add(mainScreenButton);
+		frame.getContentPane().add(mainScreenButton);
 		
 		
 		JLabel stocklabel = new JLabel("Stock");
 		stocklabel.setBounds(31, 59, 54, 15);
-		frmMonsterBattler.getContentPane().add(stocklabel);
+		frame.getContentPane().add(stocklabel);
 		
 		JLabel sellItemLabel = new JLabel("Item");
 		sellItemLabel.setBounds(31, 318, 54, 15);
-		frmMonsterBattler.getContentPane().add(sellItemLabel);
+		frame.getContentPane().add(sellItemLabel);
 		
 		JLabel sellMonsterLabel = new JLabel("Monster");
 		sellMonsterLabel.setBounds(31, 442, 127, 15);
-		frmMonsterBattler.getContentPane().add(sellMonsterLabel);
+		frame.getContentPane().add(sellMonsterLabel);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(31, 469, 702, 91);
-		frmMonsterBattler.getContentPane().add(scrollPane);
+		JScrollPane teamListScrollPane = new JScrollPane();
+		teamListScrollPane.setBounds(31, 469, 702, 91);
+		frame.getContentPane().add(teamListScrollPane);
 		
 		DefaultListModel<String> teamListModel = new DefaultListModel<>();
 		teamList = new JList<>(teamListModel);
-		scrollPane.setViewportView(teamList);
+		teamListScrollPane.setViewportView(teamList);
 		teamList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		
@@ -197,15 +174,15 @@ public class ShopScreen {
 		shopList = new JList<>(shopListModel);
 		shopList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		shopList.setBounds(31, 86, 528, 220);
-		frmMonsterBattler.getContentPane().add(shopList);
+		frame.getContentPane().add(shopList);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(31, 345, 702, 85);
-		frmMonsterBattler.getContentPane().add(scrollPane_1);
+		JScrollPane inventoryScrollPane = new JScrollPane();
+		inventoryScrollPane.setBounds(31, 345, 702, 85);
+		frame.getContentPane().add(inventoryScrollPane);
 
 		DefaultListModel<String> inventoryListModel = new DefaultListModel<>();
 		inventoryList = new JList<>(inventoryListModel);
-		scrollPane_1.setViewportView(inventoryList);
+		inventoryScrollPane.setViewportView(inventoryList);
 		inventoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JButton buyButton = new JButton("Buy");
@@ -221,20 +198,20 @@ public class ShopScreen {
 						}
 					}
 					if(ind < 3 && env.getPlayer().getTeam().size()==4) {
-						JOptionPane.showMessageDialog(frmMonsterBattler, "Can't buy a monster as team is full, go to the team screen to remove a monster.");
+						JOptionPane.showMessageDialog(frame, "Can't buy a monster as team is full, go to the team screen to remove a monster.");
 						return;
 					}
 					String message = shop.buyPurchaseable(env.getPlayer(), ind);
-					JOptionPane.showMessageDialog(frmMonsterBattler, message);
+					JOptionPane.showMessageDialog(frame, message);
 				}
 				catch (Exception excep) {
-					JOptionPane.showMessageDialog(frmMonsterBattler, "Please Select an item to buy");
+					JOptionPane.showMessageDialog(frame, "Please Select an item to buy");
 				}
 				update();
 			}
 		});
 		buyButton.setBounds(277, 55, 161, 23);
-		frmMonsterBattler.getContentPane().add(buyButton);
+		frame.getContentPane().add(buyButton);
 		
 		
 		
@@ -246,15 +223,15 @@ public class ShopScreen {
 					if(inventoryList.getSelectedIndex() == -1) throw new RuntimeException("Nothing selected");
 					Item item = env.getPlayer().getInventory().get(inventoryList.getSelectedIndex());
 					String message = shop.sellPurchaseable(env.getPlayer(), item);
-					JOptionPane.showMessageDialog(frmMonsterBattler, message);
+					JOptionPane.showMessageDialog(frame, message);
 				} catch (Exception excep) {
-					JOptionPane.showMessageDialog(frmMonsterBattler, "Please Select an item to sell");
+					JOptionPane.showMessageDialog(frame, "Please Select an item to sell");
 				}
 				update();
 			}
 		});
 		sellItemButton.setBounds(267, 314, 161, 23);
-		frmMonsterBattler.getContentPane().add(sellItemButton);
+		frame.getContentPane().add(sellItemButton);
 		
 		JButton sellMonsterButton = new JButton("Sell Monster");
 		sellMonsterButton.addActionListener(new ActionListener() {
@@ -263,25 +240,25 @@ public class ShopScreen {
 					if(teamList.getSelectedIndex() == -1) throw new RuntimeException("Nothing selected");
 					Monster monst = env.getPlayer().getTeam().get(teamList.getSelectedIndex());
 					String message = shop.sellPurchaseable(env.getPlayer(), monst);
-					JOptionPane.showMessageDialog(frmMonsterBattler, message);
+					JOptionPane.showMessageDialog(frame, message);
 				} catch (Exception excep) {
-					JOptionPane.showMessageDialog(frmMonsterBattler, "Please Select an item to sell");
+					JOptionPane.showMessageDialog(frame, "Please Select an item to sell");
 				}
 				update();
 			}
 		});
 		sellMonsterButton.setBounds(267, 438, 161, 23);
-		frmMonsterBattler.getContentPane().add(sellMonsterButton);
+		frame.getContentPane().add(sellMonsterButton);
 		
 		JLabel priceLabel = new JLabel("Price");
 		priceLabel.setBounds(596, 59, 54, 15);
-		frmMonsterBattler.getContentPane().add(priceLabel);
+		frame.getContentPane().add(priceLabel);
 		
 		stockPrices = new JTextPane();
 		stockPrices.setFont(new Font("Dialog", Font.BOLD, 13));
 		stockPrices.setEditable(false);
 		stockPrices.setBounds(573, 86, 160, 220);
-		frmMonsterBattler.getContentPane().add(stockPrices);
+		frame.getContentPane().add(stockPrices);
 		
 		
 	}
