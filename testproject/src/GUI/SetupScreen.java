@@ -69,7 +69,7 @@ public class SetupScreen {
 			team.add(monstInd==0 ? monsterOne : (monstInd==1 ? monsterTwo : monsterThree));
 			
 			int diff = difficultySelection.getSelectedIndex()+1;//1-3
-			int gold = (3 - diff) * 15; //15 on normal, 30 on easy, 0 on hard.
+			int gold = (4 - diff) * 15; //30 on normal, 45 on easy, 15 on hard.
 			env.setPlayer(new Player(playerName,gold,team,new ArrayList<Item>()));
 			env.setDifficulty(diff);
 			env.preDayLogic();//Initialize the first day's battles.

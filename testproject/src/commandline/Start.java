@@ -48,7 +48,7 @@ public class Start {
 		else if(monst==1) env.getPlayer().addMonster(two);
 		else env.getPlayer().addMonster(three);
 		
-		env.getPlayer().setGold(15*(3-diff));//start with 0 gold on hard, 30 on easy and 15 on medium.
+		env.getPlayer().setGold(15*(4-diff));//start with 15 gold on hard, 45 on easy and 30 on medium.
 		
 		Main mainRun = new Main();
 		mainRun.run(env);

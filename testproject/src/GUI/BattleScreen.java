@@ -291,7 +291,7 @@ public class BattleScreen {
 			postPlayerTurn();
 		} 
 		catch(NullPointerException excep) {
-			JOptionPane.showMessageDialog(frame, "No Item To Use");
+			JOptionPane.showMessageDialog(frame, "No item to use or no monsters to use the selected item on.");
 		}
 		catch(Exception excep) {
 			JOptionPane.showMessageDialog(frame, "Select Item and Monster to use the Item on.");
@@ -304,16 +304,15 @@ public class BattleScreen {
 	private void changeMonster() {
 		try {
 			Monster monst = (Monster) monsterSwitch.getSelectedItem();
+			if(monst == null) throw new RuntimeException("Null selection.");
 			pla.setActiveMonster(monst);
 			JOptionPane.showMessageDialog(frame, "Switched to "+pla.getActiveMonster());
 			update();
 			postPlayerTurn();
 		} 
-		catch(NullPointerException excep) {
-			JOptionPane.showMessageDialog(frame, "No other monsters to be switched to.");
-		}
 		catch(Exception excep) {
-			JOptionPane.showMessageDialog(frame, "You must select a monster to switch to that monster.");
+			if(pla.getSwitchableMonsters().size()==0) JOptionPane.showMessageDialog(frame, "No other monsters can be switched to.");
+			else JOptionPane.showMessageDialog(frame, "You must select a monster to switch to that monster.");
 		}
 	}
 	
