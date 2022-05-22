@@ -58,7 +58,8 @@ public class BattleScreen {
 	 */
 	public BattleScreen(GameEnvironment incomingEnv, boolean isWildBattle, int enemyTeamIndex) {
 		env = incomingEnv;
-		enemyTeam = env.getBattles().get(enemyTeamIndex);
+		enemyTeam = new Player("tmp", 0);
+		if(!isWildBattle) enemyTeam = env.getBattles().get(enemyTeamIndex);
 		this.enemyTeamIndex = enemyTeamIndex;
 		this.isWildBattle = isWildBattle;
 		this.wildMonster = env.getWildBattleMonster();
