@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -44,6 +45,12 @@ public class BattleScreen {
 	private JLabel enemyMonsterName;
 	private JLabel enemyHealthLabel;
 	private JLabel playerHealthLabel;
+	
+	private JComboBox itemSelectionDropDownBox;
+	private JComboBox attackOptions;
+	private JComboBox monsterSwitch;
+	private JComboBox itemUsableMonsters;
+	
 	
 	private ScreenManager scrMan;
 	private GameEnvironment env;
@@ -159,14 +166,54 @@ public class BattleScreen {
 		scrMan.launchMainScreen();
 	}
 	
+	void updateItemUsableMonsters() {
+		try {
+			Item item = (Item) itemSelectionDropDownBox.getSelectedItem();
+			ArrayList<Monster> usableOn = item.getMonstersUsableOn(pla.getTeam());
+			Monster[] usableOnList = new Monster[usableOn.size()];
+			for(int i=0; i<usableOn.size(); i++) {
+				usableOnList[i] = usableOn.get(i);
+			}
+			itemUsableMonsters.setModel(new DefaultComboBoxModel(usableOnList));
+		}
+		catch(Exception exc) {
+			
+		}
+	}
+	
 	public void update() {
 		pla.checkIfActiveMonster();
 		if(!isWildBattle) enemyTeam.checkIfActiveMonster();
+		
+		Monster plaMonst = pla.getActiveMonster();
+		
 		battleType.setText(isWildBattle ? "Wild Battle." : "Team Battle.");
-		playerMonsterName.setText(pla.getActiveMonster().getName());
+		playerMonsterName.setText(plaMonst.getName());
 		enemyMonsterName.setText(enemy.getName());
 		enemyHealthLabel.setText(enemy.getHealth() + "/" + enemy.getMaxHealth());
-		playerHealthLabel.setText(pla.getActiveMonster().getHealth() + "/" + pla.getActiveMonster().getMaxHealth());
+		playerHealthLabel.setText(plaMonst.getHealth() + "/" + plaMonst.getMaxHealth());
+		
+		Item[] items = new Item[pla.getInventory().size()];
+		for(int i=0;i<items.length;i++) {
+			items[i] = pla.getInventory().get(i);
+		}
+		itemSelectionDropDownBox.setModel(new DefaultComboBoxModel(items));
+		
+		updateItemUsableMonsters();
+		
+		ArrayList<Monster> switchable = pla.getSwitchableMonsters();
+		Monster[] switchableList = new Monster[switchable.size()];
+		for(int i=0; i<switchable.size(); i++) {
+			switchableList[i] = switchable.get(i);
+		}
+		monsterSwitch.setModel(new DefaultComboBoxModel(switchableList));
+		
+		String[] attackStrings = new String[plaMonst.getAttackStrings().size()];
+		for(int i=0; i<plaMonst.getAttackStrings().size(); i++) {
+			attackStrings[i] = plaMonst.getAttackStrings().get(i);
+		}
+		attackOptions.setModel(new DefaultComboBoxModel(attackStrings));
+		
 	}
 	
 	public void closeWindow() {
@@ -209,6 +256,8 @@ public class BattleScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 				
+		//batle info:
+		
 		battleType = new JLabel();
 		battleType.setHorizontalAlignment(SwingConstants.CENTER);
 		battleType.setFont(new Font("SimSun", Font.BOLD, 14));
@@ -241,30 +290,54 @@ public class BattleScreen {
 		panel.add(playerHealthLabel);
 		
 		
+		//moves info:
+		
+		itemSelectionDropDownBox = new JComboBox();
+		itemSelectionDropDownBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateItemUsableMonsters();
+			}
+		});
+		itemSelectionDropDownBox.setBackground(Color.WHITE);
+		itemSelectionDropDownBox.setBounds(564, 148, 177, 23);
+		frame.getContentPane().add(itemSelectionDropDownBox);
+		
+		attackOptions = new JComboBox();
+		attackOptions.setBackground(Color.WHITE);
+		attackOptions.setBounds(564, 272, 177, 24);
+		frame.getContentPane().add(attackOptions);
+		
+		monsterSwitch = new JComboBox();
+		monsterSwitch.setBackground(Color.WHITE);
+		monsterSwitch.setBounds(564, 59, 177, 24);
+		frame.getContentPane().add(monsterSwitch);
+		
+		itemUsableMonsters = new JComboBox();
+		itemUsableMonsters.setBackground(Color.WHITE);
+		itemUsableMonsters.setBounds(564, 183, 177, 24);
+		frame.getContentPane().add(itemUsableMonsters);
+		
+		
+		//buttons:
+		
 		JButton attackButton = new JButton("Attack");
 		attackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String message = "Player turn:\n";
-				message += pla.getActiveMonster().makeMove(0, enemy);
-				update();
-				JOptionPane.showMessageDialog(frame, message);
-				postPlayerTurn();
+				try {
+					String message = "Player turn:\n";
+					int move = attackOptions.getSelectedIndex();
+					message += pla.getActiveMonster().makeMove(move, enemy);
+					update();
+					JOptionPane.showMessageDialog(frame, message);
+					postPlayerTurn();
+				}
+				catch(Exception excep) {
+					JOptionPane.showMessageDialog(frame, "You must select an attack to attack.");
+				}
 			}
 		});
-		attackButton.setBounds(564, 403, 177, 41);
+		attackButton.setBounds(564, 308, 177, 41);
 		frame.getContentPane().add(attackButton);
-		
-		Item[] itemList = new Item[pla.getInventory().size()];
-		for(int i=0;i<itemList.length;i++) {
-			itemList[i] = pla.getInventory().get(i);
-		}
-		JComboBox itemSelectionDropDownBox = new JComboBox();
-		itemSelectionDropDownBox.setBackground(Color.WHITE);
-		itemSelectionDropDownBox.setModel(new DefaultComboBoxModel(itemList));
-		itemSelectionDropDownBox.setBounds(564, 279, 177, 23);
-		frame.getContentPane().add(itemSelectionDropDownBox);
-		
-		
 		
 		JButton escapeBattleButton = new JButton("Escape Battle");
 		escapeBattleButton.addActionListener(new ActionListener() {
@@ -272,63 +345,53 @@ public class BattleScreen {
 				fleeBattle();
 			}
 		});
-		escapeBattleButton.setBounds(564, 446, 177, 41);
+		escapeBattleButton.setBounds(564, 362, 177, 41);
 		frame.getContentPane().add(escapeBattleButton);
 		
-		
-		
-		
-		DefaultListModel<Monster> monsterListModel = new DefaultListModel<>();
-		monsterListModel.addAll(pla.getTeam());
-		JList<Monster> monsterList = new JList<>(monsterListModel);
-		monsterList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		monsterList.setBounds(564, 59, 177, 134);
-		frame.getContentPane().add(monsterList);
-		monsterList.getSelectedValue();
 		
 		JButton changeMonsterButton = new JButton("Change Monster");
 		changeMonsterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pla.setActiveMonster(monsterList.getSelectedValue());
-				JOptionPane.showMessageDialog(frame, "Switched to "+pla.getActiveMonster());
+				try {
+					Monster monst = (Monster) monsterSwitch.getSelectedItem();
+					pla.setActiveMonster(monst);
+					JOptionPane.showMessageDialog(frame, "Switched to "+pla.getActiveMonster());
+					update();
+					postPlayerTurn();
+				} 
+				catch(NullPointerException excep) {
+					JOptionPane.showMessageDialog(frame, "No other monsters to be switched to.");
+				}
+				catch(Exception excep) {
+					JOptionPane.showMessageDialog(frame, "You must select a monster to switch to that monster.");
+				}
 			}
 		});
-		changeMonsterButton.setBounds(564, 226, 177, 41);
+		changeMonsterButton.setBounds(564, 95, 177, 41);
 		frame.getContentPane().add(changeMonsterButton);
 		
 		JButton useItemButton = new JButton("Use Item");
 		useItemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					((Item) itemSelectionDropDownBox.getSelectedItem()).useItem(monsterList.getSelectedValue());
+					Item item = (Item) itemSelectionDropDownBox.getSelectedItem();
+					Monster monst = (Monster) itemUsableMonsters.getSelectedItem();
 					Item[] currentItems = new Item[pla.getInventory().size()];
-					for(int i=0;i<currentItems.length;i++) {
-						currentItems[i] = pla.getInventory().get(i);
-						
-					}
-					
-					itemSelectionDropDownBox.removeItem(itemSelectionDropDownBox.getSelectedItem());
-					
-					} 
-					catch(NullPointerException excep) {
-						JOptionPane.showMessageDialog(frame, "No Item To Use");
-					}
-					catch(Exception excep) {
-						JOptionPane.showMessageDialog(frame, "Select Item and Target Monster to use");
-					}
+					pla.useItem(item, monst);
+					update();
+					JOptionPane.showMessageDialog(frame, "Used Item.");
+					postPlayerTurn();
+				} 
+				catch(NullPointerException excep) {
+					JOptionPane.showMessageDialog(frame, "No Item To Use");
 				}
+				catch(Exception excep) {
+					JOptionPane.showMessageDialog(frame, "Select Item and Monster to use the Item on.");
+				}
+			}
 			
 		});
-		useItemButton.setBounds(564, 314, 177, 41);
+		useItemButton.setBounds(564, 219, 177, 41);
 		frame.getContentPane().add(useItemButton);
-		
-		JLabel availableMonsterLabel = new JLabel("Available Monster");
-		availableMonsterLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		availableMonsterLabel.setBounds(564, 23, 177, 23);
-		frame.getContentPane().add(availableMonsterLabel);
-		
-		JComboBox attackOptions = new JComboBox();
-		attackOptions.setBounds(564, 367, 177, 24);
-		frame.getContentPane().add(attackOptions);
 	}
 }
