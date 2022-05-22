@@ -29,7 +29,8 @@ class GenerationTest {
 		}
 		
 		int normal = 100 - fly - debuff - poison - risky;
-		assertTrue(30 < normal && normal < 50); //40 normal
+		//MIGHT OCCASIONALLY FAIL
+		assertTrue(25 < normal && normal < 55); //40 normal
 		assertTrue(8 < fly && fly < 28); //18 of each
 		assertTrue(8 < debuff && debuff < 28);//^
 		assertTrue(8 < poison && poison < 28);//^
@@ -48,6 +49,7 @@ class GenerationTest {
 			else buff++;
 		}
 		
+		//MIGHT OCCASIONALLY FAIL
 		assertTrue(2 < revive && revive < 17);//about 9 revives (1/11)
 		assertTrue(-25 < heal - buff && heal-buff < 25);//roughly equal.
 	}
