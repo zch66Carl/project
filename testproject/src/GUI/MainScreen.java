@@ -114,6 +114,11 @@ public class MainScreen {
 	 * Ends the day.
 	 */
 	private void endDay() {
+		if(env.getCurDay() >= env.getNumDays()) {
+			gameOverScreenTransistion();
+			return;
+		}
+		
 		ArrayList<String> messages = env.postDayLogic();
 		String full = "Overnight:";
 		for(String str : messages) full += "\n" + str;
@@ -121,9 +126,6 @@ public class MainScreen {
 		JOptionPane.showMessageDialog(frame, full);
 		
 		env.preDayLogic();
-		if(env.getCurDay()>env.getNumDays()) {
-			gameOverScreenTransistion();
-		}
 		currentDay.setText(Integer.toString(env.getCurDay()));
 	}
 	
