@@ -41,7 +41,6 @@ public class BattleScreen {
 	private JComboBox<Monster> monsterSwitch;
 	private JComboBox<Monster> itemUsableMonsters;
 	
-	private ScreenManager scrMan;
 	private GameEnvironment env;
 	private Player pla;
 	private int enemyTeamIndex;
@@ -53,13 +52,12 @@ public class BattleScreen {
 	/**
 	 * The constructor for the battle screen, it initializes the relevant variables, and calls initialize to initialize the gui and then calls update to 
 	 * display the gui properly. Finally it displays a battle start message to the player.
-	 * @param incScrMan ScreenManager. The screen manager, used to get the GameEnvironment, and close the screen when done.
+	 * @param incomingEnv GameEnvironment. The game environment.
 	 * @param isWildBattle boolean. Whether this battle is a wild battle or not.
 	 * @param enemyTeamIndex int. The index of the enemy Player if this is a team battle.
 	 */
-	public BattleScreen(ScreenManager incScrMan, boolean isWildBattle, int enemyTeamIndex) {
-		scrMan = incScrMan;
-		env = scrMan.getEnv();
+	public BattleScreen(GameEnvironment incomingEnv, boolean isWildBattle, int enemyTeamIndex) {
+		env = incomingEnv;
 		enemyTeam = env.getBattles().get(enemyTeamIndex);
 		this.enemyTeamIndex = enemyTeamIndex;
 		this.isWildBattle = isWildBattle;
@@ -161,11 +159,12 @@ public class BattleScreen {
 			pla.rewardPostBattle(env.getCurDay(), env.getDifficulty(), isWildBattle);
 			
 			if(pla.getTeam().size() > 4) {
-				scrMan.launchTeamScreen();
-				scrMan.justCloseBattleScreen(this);
+				new TeamScreen(env);
+				closeWindow();;
 			}
 			else {
-				scrMan.closeBattleScreen(this);
+				new MainScreen(env);
+				closeWindow();
 			}
 		}
 		else {
@@ -173,7 +172,8 @@ public class BattleScreen {
 			else JOptionPane.showMessageDialog(frame, enemyTeam.getName() + " won!");
 			if(isWildBattle) wildMonster.rest();
 			else enemyTeam.refreshTeam();
-			scrMan.closeBattleScreen(this);
+			new MainScreen(env);
+			closeWindow();
 		}
 	}
 	
@@ -184,11 +184,12 @@ public class BattleScreen {
 		pla.postBattle();
 		if(isWildBattle) wildMonster.rest();
 		else enemyTeam.refreshTeam();
-		scrMan.closeBattleScreen(this);
+		new MainScreen(env);
+		closeWindow();
 	}
 	
 	/**
-	 * Updates the drop down selection for monsters to use an item on, as certain items are available for use on different monsters.
+	 * Updates the drop down selection for monsters to use an item on, as certain items are available for use on different monsters. Called when a new item is selected.
 	 */
 	private void updateItemUsableMonsters() {
 		try {
@@ -256,20 +257,69 @@ public class BattleScreen {
 	/**
 	 * Closes the window.
 	 */
-	public void closeWindow() {
+	private void closeWindow() {
 		frame.dispose();
 	}
 	
 	/**
-	 * Method to call the screen transition from within the ActionEvents in initialize().
+	 * Carries out the selected attack.
 	 */
-	public void finishedWindow() {
-		scrMan.closeBattleScreen(this);
+	private void attack() {
+		try {
+			String message = "Player turn:\n";
+			int move = attackOptions.getSelectedIndex();
+			message += pla.getActiveMonster().makeMove(move, enemy);
+			update();
+			JOptionPane.showMessageDialog(frame, message);
+			postPlayerTurn();
+		}
+		catch(Exception excep) {
+			JOptionPane.showMessageDialog(frame, "You must select an attack to attack.");
+		}
 	}
-
 	
 	/**
-	 * Initialize the contents of the frame and contains the methods for when buttons are pressed.
+	 * Called when the use item button is pressed, either uses the selected item on the selected monster, or tells the player they must select and item.
+	 */
+	private void useItem() {
+		try {
+			Item item = (Item) itemSelectionDropDownBox.getSelectedItem();
+			Monster monst = (Monster) itemUsableMonsters.getSelectedItem();
+			pla.useItem(item, monst);
+			update();
+			JOptionPane.showMessageDialog(frame, "Used Item.");
+			postPlayerTurn();
+		} 
+		catch(NullPointerException excep) {
+			JOptionPane.showMessageDialog(frame, "No Item To Use");
+		}
+		catch(Exception excep) {
+			JOptionPane.showMessageDialog(frame, "Select Item and Monster to use the Item on.");
+		}
+	}
+	
+	/**
+	 * Changes the active monster when button pressed.
+	 */
+	private void changeMonster() {
+		try {
+			Monster monst = (Monster) monsterSwitch.getSelectedItem();
+			pla.setActiveMonster(monst);
+			JOptionPane.showMessageDialog(frame, "Switched to "+pla.getActiveMonster());
+			update();
+			postPlayerTurn();
+		} 
+		catch(NullPointerException excep) {
+			JOptionPane.showMessageDialog(frame, "No other monsters to be switched to.");
+		}
+		catch(Exception excep) {
+			JOptionPane.showMessageDialog(frame, "You must select a monster to switch to that monster.");
+		}
+	}
+	
+	
+	/**
+	 * Initialize the contents of the frame and sets the methods for when buttons are pressed.
 	 */
 	private void initialize() {
 		frame = new JFrame();
@@ -362,17 +412,7 @@ public class BattleScreen {
 		JButton attackButton = new JButton("Attack");
 		attackButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String message = "Player turn:\n";
-					int move = attackOptions.getSelectedIndex();
-					message += pla.getActiveMonster().makeMove(move, enemy);
-					update();
-					JOptionPane.showMessageDialog(frame, message);
-					postPlayerTurn();
-				}
-				catch(Exception excep) {
-					JOptionPane.showMessageDialog(frame, "You must select an attack to attack.");
-				}
+				attack();
 			}
 		});
 		attackButton.setBounds(618, 308, 177, 41);
@@ -391,19 +431,7 @@ public class BattleScreen {
 		JButton changeMonsterButton = new JButton("Change Monster");
 		changeMonsterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Monster monst = (Monster) monsterSwitch.getSelectedItem();
-					pla.setActiveMonster(monst);
-					JOptionPane.showMessageDialog(frame, "Switched to "+pla.getActiveMonster());
-					update();
-					postPlayerTurn();
-				} 
-				catch(NullPointerException excep) {
-					JOptionPane.showMessageDialog(frame, "No other monsters to be switched to.");
-				}
-				catch(Exception excep) {
-					JOptionPane.showMessageDialog(frame, "You must select a monster to switch to that monster.");
-				}
+				changeMonster();
 			}
 		});
 		changeMonsterButton.setBounds(618, 95, 177, 41);
@@ -412,20 +440,7 @@ public class BattleScreen {
 		JButton useItemButton = new JButton("Use Item");
 		useItemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Item item = (Item) itemSelectionDropDownBox.getSelectedItem();
-					Monster monst = (Monster) itemUsableMonsters.getSelectedItem();
-					pla.useItem(item, monst);
-					update();
-					JOptionPane.showMessageDialog(frame, "Used Item.");
-					postPlayerTurn();
-				} 
-				catch(NullPointerException excep) {
-					JOptionPane.showMessageDialog(frame, "No Item To Use");
-				}
-				catch(Exception excep) {
-					JOptionPane.showMessageDialog(frame, "Select Item and Monster to use the Item on.");
-				}
+				useItem();
 			}
 			
 		});

@@ -29,18 +29,16 @@ public class TeamScreen {
 	private JFrame frame;
 	private JList<Monster> monsterList;
 	
-	private ScreenManager scrMan;
 	private GameEnvironment env;
 	private Player pla;
 	private JTextField renameMonsterTxt;
 	
 	/**
-	 * Initializes the gui and gets the game environment from the screen manager.
-	 * @param incScrMan ScreenManager. The screen manager.
+	 * Initializes the gui and sets the game environment to the incoming one.
+	 * @param incomingEnv GameEnvironment. The incoming game environment..
 	 */
-	public TeamScreen(ScreenManager incScrMan) {
-		scrMan = incScrMan;
-		env = scrMan.getEnv();
+	public TeamScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
 		pla = env.getPlayer();
 		initialize();
 		frame.setVisible(true);
@@ -61,15 +59,75 @@ public class TeamScreen {
 	/**
 	 * Closes the window.
 	 */
-	public void closeWindow() {
+	private void closeWindow() {
 		frame.dispose();
 	}
 	
 	/**
-	 * Calls the screen transistion.
+	 * Opens the main screen if team size at most 4.
 	 */
-	private void finishedWindow() {
-		scrMan.closeTeamScreen(this);
+	private void mainScreenTransistion() {
+		if(pla.getTeam().size() > 4) {
+			JOptionPane.showMessageDialog(frame, "Must remove monsters to continue, as 4 is the max team size.");
+		}
+		else {
+			new MainScreen(env);
+			closeWindow();
+		}
+	}
+	
+	/**
+	 * Renames the selected monster.
+	 */
+	private void renameMonster() {
+		try {
+			String newName = renameMonsterTxt.getText();
+			if(newName.isEmpty()) {
+				throw new RuntimeException("Name can not be empty");
+			} else {
+				monsterList.getSelectedValue().setName(newName);
+	
+				updateMonsterList();
+			}
+		} 
+		catch (Exception excep) {
+			JOptionPane.showMessageDialog(frame, "Please Select Monster To Rename and can not be empty");
+		} 
+	}
+	
+	/**
+	 * Reorders the selected monster.
+	 */
+	private void reorderMonster() {
+		try {
+			if(monsterList.getSelectedValue() == null) throw new RuntimeException("Didn't select a monster");
+			
+			Monster monst = monsterList.getSelectedValue();
+			pla.removeMonster(monst);
+			pla.getTeam().add(0, monst);
+
+			updateMonsterList();
+		} 
+		catch (Exception excep) {
+			JOptionPane.showMessageDialog(frame, "Please Select Monster To Reorder.");
+		} 
+	}
+	
+	/**
+	 * Removes the selected monster from the player's team.
+	 */
+	private void removeMonster() {
+		try {
+			if(monsterList.getSelectedValue() == null) throw new RuntimeException("Didn't select a monster");
+			
+			Monster monst = monsterList.getSelectedValue();
+			pla.removeMonster(monst);
+			
+			updateMonsterList();
+		} 
+		catch (Exception excep) {
+			JOptionPane.showMessageDialog(frame, "You  Must Select Monster To Remove.");
+		} 
 	}
 	
 	/**
@@ -91,12 +149,7 @@ public class TeamScreen {
 		JButton backButton = new JButton("Main Menu");
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(pla.getTeam().size() > 4) {
-					JOptionPane.showMessageDialog(frame, "Must remove monsters to continue, as 4 is the max team size.");
-				}
-				else {
-					finishedWindow();
-				}
+				mainScreenTransistion();
 			}
 		});
 		backButton.setBounds(77, 390, 111, 43);
@@ -113,20 +166,7 @@ public class TeamScreen {
 		JButton renameMonsterButton = new JButton("Rename Monster");
 		renameMonsterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String newName = renameMonsterTxt.getText();
-					if(newName.isEmpty()) {
-						throw new RuntimeException("Name can not be empty");
-					} else {
-						monsterList.getSelectedValue().setName(newName);
-		
-						updateMonsterList();
-					}
-				} 
-				catch (Exception excep) {
-					JOptionPane.showMessageDialog(frame, "Please Select Monster To Rename and can not be empty");
-				} 
-
+				renameMonster();
 			}
 		});
 		renameMonsterButton.setBounds(200, 390, 154, 43);
@@ -140,18 +180,7 @@ public class TeamScreen {
 		JButton reorderMonsterButton = new JButton("Reorder");
 		reorderMonsterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if(monsterList.getSelectedValue() == null) throw new RuntimeException("Didn't select a monster");
-					
-					Monster monst = monsterList.getSelectedValue();
-					pla.removeMonster(monst);
-					pla.getTeam().add(0, monst);
-		
-					updateMonsterList();
-				} 
-				catch (Exception excep) {
-					JOptionPane.showMessageDialog(frame, "Please Select Monster To Reorder.");
-				} 
+				reorderMonster();
 			}
 		});
 		reorderMonsterButton.setBounds(366, 390, 125, 43);
@@ -160,17 +189,7 @@ public class TeamScreen {
 		JButton removeMonsterButton = new JButton("Remove Monster (Permanent)");
 		removeMonsterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if(monsterList.getSelectedValue() == null) throw new RuntimeException("Didn't select a monster");
-					
-					Monster monst = monsterList.getSelectedValue();
-					pla.removeMonster(monst);
-					
-					updateMonsterList();
-				} 
-				catch (Exception excep) {
-					JOptionPane.showMessageDialog(frame, "You  Must Select Monster To Remove.");
-				} 
+				removeMonster();
 			}
 		});
 		removeMonsterButton.setBounds(509, 390, 269, 43);

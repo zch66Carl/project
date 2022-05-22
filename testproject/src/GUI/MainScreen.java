@@ -18,16 +18,16 @@ import java.awt.event.ActionEvent;
  */
 public class MainScreen {
 	private JFrame frame;
-	private ScreenManager scrMan;
+	private JLabel currentDay;
+	
 	private GameEnvironment env;
 	
 	/**
-	 * The constructor, initializes the gui and gets the game environment from the screen manager.
-	 * @param incScrMan ScreenManager. The screen manager.
+	 * The constructor, initializes the gui and sets the game environment to the incoming one.
+	 * @param incomingEnv GameEnvironment. The game environment.
 	 */
-	public MainScreen(ScreenManager incScrMan) {
-		scrMan = incScrMan;
-		env = scrMan.getEnv();
+	public MainScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
 		initialize();
 		frame.setVisible(true);
 	}
@@ -35,17 +35,99 @@ public class MainScreen {
 	/**
 	 * Closes the window.
 	 */
-	public void closeWindow() {
+	private void closeWindow() {
 		frame.dispose();
 	}
 	
 	/**
-	 * Calls the screen transistion.
+	 * Opens the item screen.
 	 */
-	private void finishedWindow() {
-		scrMan.closeMainScreen(this);
+	private void itemScreenTransistion() {
+		new ItemScreen(env);
+		closeWindow();
 	}
+	/**
+	 * Opens the team screen.
+	 */
+	private void teamScreenTransistion() {
+		new TeamScreen(env);
+		closeWindow();
+	}
+	/**
+	 * Opens the shop screen.
+	 */
+	private void shopScreenTransistion() {
+		new ShopScreen(env);
+		closeWindow();
+	}
+	/**
+	 * Opens the game over screen.
+	 */
+	private void gameOverScreenTransistion() {
+		new GameOverScreen(env);
+		closeWindow();
+	}
+	
+	/**
+	 * Launches a battle after user inputs which one to fight.
+	 */
+	private void chooseBattle() {
+		try {
+			if(env.getBattles().size() == 0 && env.getWildBattleMonster() == null) {
+				JOptionPane.showMessageDialog(frame, "No battles left to fight.");
+				throw new RuntimeException("No battles.");
+			}
+			if(!env.getPlayer().checkIfActiveMonster()) {
+				JOptionPane.showMessageDialog(frame, "Can't battle as team are all fainted.");
+				throw new RuntimeException("All fainted");
+			}
+			
+			String[] battles = new String[env.getBattles().size() + (env.getWildBattleMonster()!=null ? 1 : 0)];
+			for(int i=0;i<battles.length;i++) {
+				if(i==env.getBattles().size()) battles[i] = "Wild Battle.";
+				else battles[i] = env.getBattles().get(i).getName();
+			}
+			
+			String selection = (String) JOptionPane.showInputDialog(frame,"Choose a battle to fight:", "Battle Selection", JOptionPane.PLAIN_MESSAGE,null,battles,null);
 
+			int choice = -1;
+			for(int i=0; i<battles.length; i++) {
+				if(battles[i] == selection) choice = i;
+			}
+			
+			if(choice!=-1) {
+				if(choice >= env.getBattles().size()) {
+					new BattleScreen(env, true, 0);
+				}
+				else{
+					new BattleScreen(env, false, choice);
+				}
+				closeWindow();
+			}
+		} catch (Exception excep) {
+			new MainScreen(env);
+			closeWindow();
+		}
+	}
+	
+	/**
+	 * Ends the day.
+	 */
+	private void endDay() {
+		ArrayList<String> messages = env.postDayLogic();
+		String full = "Overnight:";
+		for(String str : messages) full += "\n" + str;
+		full += "\nYour monsters rested up.";
+		JOptionPane.showMessageDialog(frame, full);
+		
+		env.preDayLogic();
+		if(env.getCurDay()>env.getNumDays()) {
+			gameOverScreenTransistion();
+		}
+		currentDay.setText(Integer.toString(env.getCurDay()));
+	}
+	
+	
 	/**
 	 * Initialize the contents of the frame and contains the methods of gui inputs.
 	 */
@@ -76,7 +158,7 @@ public class MainScreen {
 		dayLabel.setBounds(369, 18, 54, 15);
 		frame.getContentPane().add(dayLabel);
 		
-		JLabel currentDay = new JLabel(Integer.toString(env.getCurDay()));
+		currentDay = new JLabel(Integer.toString(env.getCurDay()));
 		currentDay.setFont(new Font("SimSun", Font.PLAIN, 14));
 		currentDay.setBounds(422, 19, 54, 15);
 		frame.getContentPane().add(currentDay);
@@ -84,8 +166,7 @@ public class MainScreen {
 		JButton itemButton = new JButton("Items");
 		itemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				scrMan.launchItemsScreen();
-				finishedWindow();
+				itemScreenTransistion();
 			}
 		});
 		itemButton.setFont(new Font("SimSun", Font.PLAIN, 14));
@@ -95,8 +176,7 @@ public class MainScreen {
 		JButton teamButton = new JButton("Team");
 		teamButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				scrMan.launchTeamScreen();
-				finishedWindow();
+				teamScreenTransistion();
 			}
 		});
 		teamButton.setFont(new Font("SimSun", Font.PLAIN, 14));
@@ -106,8 +186,7 @@ public class MainScreen {
 		JButton btnShop = new JButton("Shop");
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				scrMan.launchShopScreen();
-				finishedWindow();
+				shopScreenTransistion();
 			}
 		});
 		btnShop.setFont(new Font("SimSun", Font.PLAIN, 14));
@@ -117,37 +196,7 @@ public class MainScreen {
 		JButton battleButton = new JButton("Battle");
 		battleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if(env.getBattles().size() == 0 && env.getWildBattleMonster() == null) {
-						JOptionPane.showMessageDialog(frame, "No battles left to fight.");
-						throw new RuntimeException("No battles.");
-					}
-					if(!env.getPlayer().checkIfActiveMonster()) {
-						JOptionPane.showMessageDialog(frame, "Can't battle as team are all fainted.");
-						throw new RuntimeException("All fainted");
-					}
-					
-					String[] battles = new String[env.getBattles().size() + (env.getWildBattleMonster()!=null ? 1 : 0)];
-					for(int i=0;i<battles.length;i++) {
-						if(i==env.getBattles().size()) battles[i] = "Wild Battle.";
-						else battles[i] = env.getBattles().get(i).getName();
-					}
-					
-					String selection = (String) JOptionPane.showInputDialog(frame,"Choose a battle to fight:", "Battle Selection", JOptionPane.PLAIN_MESSAGE,null,battles,null);
-	
-					int choice = -1;
-					for(int i=0; i<battles.length; i++) {
-						if(battles[i] == selection) choice = i;
-					}
-					
-					if(choice!=-1) {
-						scrMan.launchBattleScreen(choice);
-						finishedWindow();
-					}
-				} catch (Exception excep) {
-					scrMan.launchMainScreen();
-				}
-				
+				chooseBattle();
 			}
 		});
 		battleButton.setFont(new Font("SimSun", Font.PLAIN, 14));
@@ -177,18 +226,7 @@ public class MainScreen {
 		JButton endDayButton = new JButton("End Day");
 		endDayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<String> messages = env.postDayLogic();
-				String full = "Overnight:";
-				for(String str : messages) full += "\n" + str;
-				full += "\nYour monsters rested up.";
-				JOptionPane.showMessageDialog(frame, full);
-				
-				env.preDayLogic();
-				if(env.getCurDay()>env.getNumDays()) {
-					scrMan.launchGameOverScreen();
-					finishedWindow();
-				}
-				currentDay.setText(Integer.toString(env.getCurDay()));
+				endDay();
 			}
 		});
 		endDayButton.setFont(new Font("SimSun", Font.PLAIN, 14));
@@ -203,8 +241,7 @@ public class MainScreen {
 		JButton endGameButton = new JButton("End Game");
 		endGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				scrMan.launchGameOverScreen();
-				finishedWindow();
+				gameOverScreenTransistion();
 			}
 		});
 		endGameButton.setFont(new Font("Dialog", Font.PLAIN, 14));

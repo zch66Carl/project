@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import game.GameEnvironment;
@@ -19,16 +20,14 @@ import java.awt.event.ActionEvent;
 public class GameOverScreen {
 
 	private JFrame frame;
-	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
 	/**
-	 * Initializes the screen, getting the game environment from the screen manager.
-	 * @param incScrMan ScreenManager. The screen manager.
+	 * Initializes the gui and sets the game environment.
+	 * @param incomingEnv GameEnvironment. The incoming game environment.
 	 */
-	public GameOverScreen(ScreenManager incScrMan) {
-		scrMan = incScrMan;
-		env = scrMan.getEnv();
+	public GameOverScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
 		initialize();
 		frame.setVisible(true);
 	}
@@ -36,15 +35,24 @@ public class GameOverScreen {
 	/**
 	 * Closes the window.
 	 */
-	public void closeWindow() {
+	private void closeWindow() {
 		frame.dispose();
 	}
 	
 	/**
-	 * Method to call the screen transition.
+	 * Restarts the game.
 	 */
-	private void finishedWindow() {
-		scrMan.closeGameOverScreen(this);
+	private void restartGame() {
+		new SetupScreen();
+		closeWindow();
+	}
+	
+	/**
+	 * Exits the game.
+	 */
+	private void exitGame() {
+		JOptionPane.showMessageDialog(frame, "Thank you for playing.");
+		System.exit(0);
 	}
 	
 	/**
@@ -90,7 +98,7 @@ public class GameOverScreen {
 		JButton restartButton = new JButton("Restart Game");
 		restartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				finishedWindow();
+				restartGame();
 			}
 		});
 		restartButton.setFont(new Font("SimSun", Font.PLAIN, 18));
@@ -100,7 +108,7 @@ public class GameOverScreen {
 		JButton exitGameButton = new JButton("Exit Game");
 		exitGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				exitGame();
 			}
 		});
 		exitGameButton.setFont(new Font("SimSun", Font.PLAIN, 18));

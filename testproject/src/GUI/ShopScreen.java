@@ -34,17 +34,15 @@ public class ShopScreen {
 	private JLabel currentGold;
 	private JTextPane stockPrices;
 	
-	private ScreenManager scrMan;
 	private GameEnvironment env;
 	private Shop shop;
 	
 	/**
-	 * Initializes the gui and gets the game environment from the screen manager.
-	 * @param incScrMan ScreenManager. The screen manager.
+	 * Initializes the gui and sets the game environment to the incoming one.
+	 * @param incomingEnv GameEnvironment. The incoming game environment.
 	 */
-	public ShopScreen(ScreenManager incScrMan) {
-		scrMan = incScrMan;
-		env = scrMan.getEnv();
+	public ShopScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
 		shop = env.getShop();
 		initialize();
 		update();
@@ -54,15 +52,8 @@ public class ShopScreen {
 	/**
 	 * Closes the window.
 	 */
-	public void closeWindow() {
+	private void closeWindow() {
 		frame.dispose();
-	}
-	
-	/**
-	 * Calls the screen transistions.
-	 */
-	private void finishedWindow() {
-		scrMan.closeShopScreen(this);
 	}
 	
 	/**
@@ -105,6 +96,77 @@ public class ShopScreen {
 	}
 	
 	/**
+	 * Opens the item screen.
+	 */
+	private void itemScreenTransistion() {
+		new ItemScreen(env);
+		closeWindow();
+	}
+	/**
+	 * Opens the mains screen.
+	 */
+	private void mainScreenTransistion() {
+		new MainScreen(env);
+		closeWindow();
+	}
+	
+	/**
+	 * Attempts to buy the selected item.
+	 */
+	private void buy() {
+		try {
+			if(shopList.getSelectedIndex() == -1) throw new RuntimeException("Nothing selected");
+			int ind = shopList.getSelectedIndex();
+			for(int i=0; i<9; i++) {
+				if(shop.getStock()[i] == null) ind++;
+				if(i==ind) {
+					break;
+				}
+			}
+			if(ind < 3 && env.getPlayer().getTeam().size()==4) {
+				JOptionPane.showMessageDialog(frame, "Can't buy a monster as team is full, go to the team screen to remove a monster.");
+				return;
+			}
+			String message = shop.buyPurchaseable(env.getPlayer(), ind);
+			JOptionPane.showMessageDialog(frame, message);
+		}
+		catch (Exception excep) {
+			JOptionPane.showMessageDialog(frame, "Please Select an item to buy");
+		}
+		update();
+	}
+	
+	/**
+	 * Attempts to sell the selected monster.
+	 */
+	private void sellMonster() {
+		try {
+			if(teamList.getSelectedIndex() == -1) throw new RuntimeException("Nothing selected");
+			Monster monst = env.getPlayer().getTeam().get(teamList.getSelectedIndex());
+			String message = shop.sellPurchaseable(env.getPlayer(), monst);
+			JOptionPane.showMessageDialog(frame, message);
+		} catch (Exception excep) {
+			JOptionPane.showMessageDialog(frame, "Please Select an item to sell");
+		}
+		update();
+	}
+	
+	/**
+	 * Attempts to sell the selected item.
+	 */
+	private void sellItem() {
+		try {
+			if(inventoryList.getSelectedIndex() == -1) throw new RuntimeException("Nothing selected");
+			Item item = env.getPlayer().getInventory().get(inventoryList.getSelectedIndex());
+			String message = shop.sellPurchaseable(env.getPlayer(), item);
+			JOptionPane.showMessageDialog(frame, message);
+		} catch (Exception excep) {
+			JOptionPane.showMessageDialog(frame, "Please Select an item to sell");
+		}
+		update();
+	}
+	
+	/**
 	 * Initialize the contents of the frame and contains the methods for gui inputs.
 	 */
 	private void initialize() {
@@ -131,8 +193,7 @@ public class ShopScreen {
 		JButton inventoryButton = new JButton("Inventory");
 		inventoryButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				scrMan.launchItemsScreen();
-				closeWindow();
+				itemScreenTransistion();
 			}
 		});
 		inventoryButton.setBounds(436, 16, 127, 23);
@@ -141,7 +202,7 @@ public class ShopScreen {
 		JButton mainScreenButton = new JButton("Main Screen");
 		mainScreenButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				finishedWindow();
+				mainScreenTransistion();
 			}
 		});
 		mainScreenButton.setBounds(586, 16, 147, 23);
@@ -188,26 +249,7 @@ public class ShopScreen {
 		JButton buyButton = new JButton("Buy");
 		buyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if(shopList.getSelectedIndex() == -1) throw new RuntimeException("Nothing selected");
-					int ind = shopList.getSelectedIndex();
-					for(int i=0; i<9; i++) {
-						if(shop.getStock()[i] == null) ind++;
-						if(i==ind) {
-							break;
-						}
-					}
-					if(ind < 3 && env.getPlayer().getTeam().size()==4) {
-						JOptionPane.showMessageDialog(frame, "Can't buy a monster as team is full, go to the team screen to remove a monster.");
-						return;
-					}
-					String message = shop.buyPurchaseable(env.getPlayer(), ind);
-					JOptionPane.showMessageDialog(frame, message);
-				}
-				catch (Exception excep) {
-					JOptionPane.showMessageDialog(frame, "Please Select an item to buy");
-				}
-				update();
+				buy();
 			}
 		});
 		buyButton.setBounds(277, 55, 161, 23);
@@ -219,15 +261,7 @@ public class ShopScreen {
 		JButton sellItemButton = new JButton("Sell Item");
 		sellItemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if(inventoryList.getSelectedIndex() == -1) throw new RuntimeException("Nothing selected");
-					Item item = env.getPlayer().getInventory().get(inventoryList.getSelectedIndex());
-					String message = shop.sellPurchaseable(env.getPlayer(), item);
-					JOptionPane.showMessageDialog(frame, message);
-				} catch (Exception excep) {
-					JOptionPane.showMessageDialog(frame, "Please Select an item to sell");
-				}
-				update();
+				sellItem();
 			}
 		});
 		sellItemButton.setBounds(267, 314, 161, 23);
@@ -236,15 +270,7 @@ public class ShopScreen {
 		JButton sellMonsterButton = new JButton("Sell Monster");
 		sellMonsterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if(teamList.getSelectedIndex() == -1) throw new RuntimeException("Nothing selected");
-					Monster monst = env.getPlayer().getTeam().get(teamList.getSelectedIndex());
-					String message = shop.sellPurchaseable(env.getPlayer(), monst);
-					JOptionPane.showMessageDialog(frame, message);
-				} catch (Exception excep) {
-					JOptionPane.showMessageDialog(frame, "Please Select an item to sell");
-				}
-				update();
+				sellMonster();
 			}
 		});
 		sellMonsterButton.setBounds(267, 438, 161, 23);

@@ -31,16 +31,14 @@ public class ItemScreen {
 	private JList<Item> inventoryList;
 	private JList<Monster> teamList;
 	
-	private ScreenManager scrMan;
 	private GameEnvironment env;
 	
 	/**
-	 * Creates the item screen, initializing the gui and getting the game environment from the screen manager.
-	 * @param incScrMan ScreenManager. The screen manager.
+	 * Creates the item screen, initializing the gui and sets the game environment.
+	 * @param incomingEnv GameEnvironment. The incoming game environment.
 	 */
-	public ItemScreen(ScreenManager incScrMan) {
-		scrMan = incScrMan;
-		env = scrMan.getEnv();
+	public ItemScreen(GameEnvironment incomingEnv) {
+		env = incomingEnv;
 		initialize();
 		updateItems();
 		frame.setVisible(true);
@@ -49,15 +47,8 @@ public class ItemScreen {
 	/**
 	 * Closes the window.
 	 */
-	public void closeWindow() {
+	private void closeWindow() {
 		frame.dispose();
-	}
-	
-	/**
-	 * Calls the screen transistion.
-	 */
-	private void finishedWindow() {
-		scrMan.closeItemsScreen(this);
 	}
 	
 	/**
@@ -91,6 +82,40 @@ public class ItemScreen {
 	}
 	
 	/**
+	 * Changes to the shop screen.
+	 */
+	private void shopTransistion() {
+		new ShopScreen(env);
+		closeWindow();
+	}
+	
+	/**
+	 * Changes to the main screen.
+	 */
+	private void mainTransistion() {
+		new MainScreen(env);
+		closeWindow();
+	}
+	
+	/**
+	 * Attempts to use the selected item on the selected monster.
+	 */
+	private void useItem() {
+		try {
+			Item item = inventoryList.getSelectedValue();
+			Monster monst = teamList.getSelectedValue();
+			env.getPlayer().useItem(item, monst);
+			updateItems();
+		} 
+		catch(NullPointerException excep) {
+			JOptionPane.showMessageDialog(frame, "No Item To Use.");
+		}
+		catch(Exception excep) {
+			JOptionPane.showMessageDialog(frame, "Select an item and a monster to use the item on.");
+		}
+	}
+	
+	/**
 	 * Initialize the contents of the frame and contains the methods for buttons.
 	 */
 	private void initialize() {
@@ -108,8 +133,7 @@ public class ItemScreen {
 		JButton shopButton = new JButton("Shop");
 		shopButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				scrMan.launchShopScreen();
-				closeWindow();
+				shopTransistion();
 			}
 		});
 		shopButton.setBounds(292, 213, 133, 29);
@@ -118,7 +142,7 @@ public class ItemScreen {
 		JButton backButton = new JButton("Back");
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				finishedWindow();
+				mainTransistion();
 			}
 		});
 		backButton.setBounds(510, 213, 133, 29);
@@ -149,18 +173,7 @@ public class ItemScreen {
 		JButton useItemButton = new JButton("Use Item");
 		useItemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Item item = inventoryList.getSelectedValue();
-					Monster monst = teamList.getSelectedValue();
-					env.getPlayer().useItem(item, monst);
-					updateItems();
-				} 
-				catch(NullPointerException excep) {
-					JOptionPane.showMessageDialog(frame, "No Item To Use.");
-				}
-				catch(Exception excep) {
-					JOptionPane.showMessageDialog(frame, "Select an item and a monster to use the item on.");
-				}
+				useItem();
 			}
 		});
 		useItemButton.setBounds(55, 213, 133, 29);

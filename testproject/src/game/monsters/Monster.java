@@ -358,7 +358,7 @@ public class Monster implements Purchaseable{
 		persistentDamageDuration = newPersistDur;
 				
 		for(int dam : persistentDamage) {
-			ret.add(dealDamageToSelf(dam));
+			ret.add(dealDamageToSelf(dam) + " (Poison)");
 		}
 		
 		return ret;
@@ -378,6 +378,7 @@ public class Monster implements Purchaseable{
 	/**
 	 * Same as makeMove, but makes a random move instead of taking a move integer to determine the move. Used for the non player monsters.
 	 * @param enemy Monster. The enemy monster
+	 * @return String. A string describing the random move.
 	 */
 	public String makeRandomMove(Monster enemy) {
 		return enemy.dealDamageToSelf(getTotalDamage());
